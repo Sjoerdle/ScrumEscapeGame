@@ -201,12 +201,12 @@ class QuestionTest {
         ArrayList<Question> vragen = new ArrayList();
         vragen.add(new OpenQuestion("Hoe lang duurt een sprint?", "2 weken"));
 
-        ArrayList pBackLogAntwoorden = new ArrayList();
-        pBackLogAntwoorden.add("Scrum Master");
-        pBackLogAntwoorden.add("Product Owner");
-        pBackLogAntwoorden.add("Development Team");
+        ArrayList mp1Antwoorden = new ArrayList();
+        mp1Antwoorden.add("Scrum Master");
+        mp1Antwoorden.add("Product Owner");
+        mp1Antwoorden.add("Development Team");
 
-        vragen.add(new MultipleChoice("Wie is verantwoordelijk voor het bijhouden van de Product Backlog?", pBackLogAntwoorden, 2));
+        vragen.add(new MultipleChoice("Wie is verantwoordelijk voor het bijhouden van de Product Backlog?", mp1Antwoorden, 2));
 
         Map<String, String> matchPairs = new HashMap<>();
         matchPairs.put("Scrum Master", "Verantwoordelijk voor het bevorderen en ondersteunen van Scrum zoals gedefinieerd in de Scrum Guide");
