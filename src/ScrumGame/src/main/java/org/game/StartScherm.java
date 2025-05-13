@@ -122,7 +122,7 @@ public class StartScherm {
         running = false;
     }
 
-    private void clearScreen() {
+    public void clearScreen() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();

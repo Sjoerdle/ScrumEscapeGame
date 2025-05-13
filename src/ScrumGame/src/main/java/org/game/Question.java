@@ -1,9 +1,11 @@
 package org.game;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Collections;
 
 
 interface Question {
@@ -99,6 +101,8 @@ class PuzzleQuestion implements Question {
     private Map<String, String> matchPairs;
     private List<String> terms;
     private List<String> definitions;
+    private List<String> shuffledDefinitions;
+    private Map<Integer, Integer> definitionMapping;
 
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
@@ -110,8 +114,25 @@ class PuzzleQuestion implements Question {
         this.definitions = new ArrayList<>(matchPairs.values());
     }
 
+    private void shuffleDefinitions() {
+        shuffledDefinitions = new ArrayList<>(definitions);
+
+        // Randomize de volgorde
+        Collections.shuffle(shuffledDefinitions);
+
+        // Bewaar de mapping tussen de nieuwe en oude posities
+        definitionMapping = new HashMap<>();
+        for (int i = 0; i < shuffledDefinitions.size(); i++) {
+            String shuffledDef = shuffledDefinitions.get(i);
+            int originalIndex = definitions.indexOf(shuffledDef);
+            definitionMapping.put(i, originalIndex);
+        }
+    }
+
     @Override
     public void displayQuestion() {
+        shuffleDefinitions();
+
         System.out.println("\n" + question);
         System.out.println("\nTermen:");
         for (int i = 0; i < terms.size(); i++) {
@@ -119,12 +140,12 @@ class PuzzleQuestion implements Question {
         }
 
         System.out.println("\nDefinities:");
-        for (int i = 0; i < definitions.size(); i++) {
-            System.out.println((char)('A' + i) + ". " + definitions.get(i));
+        for (int i = 0; i < shuffledDefinitions.size(); i++) {
+            System.out.println((char)('A' + i) + ". " + shuffledDefinitions.get(i));
         }
 
         System.out.println("\nVoor elke term, geef de bijbehorende definitie-letter (A-" +
-                (char)('A' + definitions.size() - 1) + ")");
+                (char)('A' + shuffledDefinitions.size() - 1) + ")");
     }
 
     @Override
@@ -144,8 +165,8 @@ class PuzzleQuestion implements Question {
                 char letter = answer.charAt(0);
                 int index = letter - 'A';
 
-                if (index >= 0 && index < definitions.size()) {
-                    String selectedDefinition = definitions.get(index);
+                if (index >= 0 && index < shuffledDefinitions.size()) {
+                    String selectedDefinition = shuffledDefinitions.get(index);
                     userAnswers.put(term, selectedDefinition);
 
                     if (selectedDefinition.equals(matchPairs.get(term))) {
@@ -166,6 +187,37 @@ class PuzzleQuestion implements Question {
                 System.out.println(term + " → " + matchPairs.get(term));
             }
             return false;
+        }
+    }
+}
+
+
+class QuestionTest {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StartScherm startScreen = new StartScherm();
+        startScreen.clearScreen();
+        ArrayList<Question> vragen = new ArrayList();
+        vragen.add(new OpenQuestion("Hoe lang duurt een sprint?", "2 weken"));
+
+        ArrayList pBackLogAntwoorden = new ArrayList();
+        pBackLogAntwoorden.add("Scrum Master");
+        pBackLogAntwoorden.add("Product Owner");
+        pBackLogAntwoorden.add("Development Team");
+
+        vragen.add(new MultipleChoice("Wie is verantwoordelijk voor het bijhouden van de Product Backlog?", pBackLogAntwoorden, 2));
+
+        Map<String, String> matchPairs = new HashMap<>();
+        matchPairs.put("Scrum Master", "Verantwoordelijk voor het bevorderen en ondersteunen van Scrum zoals gedefinieerd in de Scrum Guide");
+        matchPairs.put("Sprint", "Een tijdsperiode van maximaal een maand waarin een 'Done', bruikbaar en potentieel verscheepbaar product-increment wordt gemaakt");
+        matchPairs.put("Daily Scrum", "Een dagelijkse 15-minuten tijdboxed gebeurtenis voor het Development Team om activiteiten te synchroniseren");
+        matchPairs.put("Definition of Done", "Een gedeeld begrip van wanneer werk aan een product-increment is voltooid");
+        matchPairs.put("Product Backlog", "Een geordende lijst van alles wat bekend is dat nodig is in het product");
+
+        vragen.add(new PuzzleQuestion("Vul de juiste Scrum definities in bij de termen", matchPairs));
+
+        for (Question question : vragen) {
+            question.askQuestion(scanner);
         }
     }
 }
