@@ -192,6 +192,7 @@ class PuzzleQuestion implements Question {
 }
 
 
+//Alleen voor test
 class QuestionTest {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
