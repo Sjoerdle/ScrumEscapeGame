@@ -9,16 +9,19 @@ import java.util.Scanner;
 class QuestionTest {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        //Open vraag
         ArrayList<Question> vragen = new ArrayList();
         vragen.add(new OpenQuestion("Hoe lang duurt een sprint?", "2 weken"));
 
+        //Multiple Choice
         ArrayList mp1Antwoorden = new ArrayList();
         mp1Antwoorden.add("Scrum Master");
         mp1Antwoorden.add("Product Owner");
         mp1Antwoorden.add("Development Team");
-
         vragen.add(new MultipleChoice("Wie is verantwoordelijk voor het bijhouden van de Product Backlog?", mp1Antwoorden, 2));
 
+        //Matching pairs
         Map<String, String> matchPairs = new HashMap<>();
         matchPairs.put("Scrum Master", "Verantwoordelijk voor het bevorderen en ondersteunen van Scrum zoals gedefinieerd in de Scrum Guide");
         matchPairs.put("Sprint", "Een tijdsperiode van maximaal een maand waarin een 'Done', bruikbaar en potentieel verscheepbaar product-increment wordt gemaakt");
