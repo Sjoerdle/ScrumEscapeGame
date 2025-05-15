@@ -110,8 +110,7 @@ public class Game {
             }
         }
 
-        scanner.close();
-    }
+}
 
     // Check if a move is valid (not into walls)
     private boolean isValidMove(int x, int y) {
