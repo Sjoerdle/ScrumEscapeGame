@@ -14,6 +14,8 @@ public class Room {
     private char[][] map;
     private int mapWidth;
     private int mapHeight;
+    private int startX;
+    private int startY;
 
     public Room(String mapPath)
     {
@@ -76,6 +78,12 @@ public class Room {
             if (lines[i].startsWith("+") || lines[i].startsWith("|")) {
                 for (int j = 0; j < lines[i].length() && j < cols; j++) {
                     this.map[mapRowIndex][j] = lines[i].charAt(j);
+
+                    // Find the start position 'P'
+                    if (lines[i].charAt(j) == 'P') {
+                        this.startX = j;
+                        this.startY = mapRowIndex;
+                    }
                 }
                 mapRowIndex++;
             }
@@ -137,5 +145,13 @@ public class Room {
 
     public int getMapHeight() {
         return mapHeight;
+    }
+
+    public int getStartX() {
+        return startX;
+    }
+
+    public int getStartY() {
+        return startY;
     }
 }
