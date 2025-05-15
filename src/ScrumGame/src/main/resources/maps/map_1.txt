@@ -1,7 +1,7 @@
 name=Room 2
 instruction=
 nextRoom=
-monsters=
+monsters=monster_0.txt;monster_1.txt
 +---------------+
 |P              |
 |               |
