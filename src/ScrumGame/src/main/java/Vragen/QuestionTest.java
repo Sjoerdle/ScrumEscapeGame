@@ -12,23 +12,29 @@ class QuestionTest {
         ArrayList<Question> vragen = new ArrayList();
 
         //Multiple choice
-        ArrayList mp1Antwoorden = new ArrayList();
-        vragen.add(new MultipleChoice(loadQuestion("Q1.txt", mp1Antwoorden), mp1Antwoorden, 3));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ1.txt"), loadAnswers("MultipleChoiceQ1.txt"), 3));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ2"), loadAnswers("MultipleChoiceQ2"),2));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ3"), loadAnswers("MultipleChoiceQ3"), 2));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ4"), loadAnswers("MultipleChoiceQ4"), 4));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ5"), loadAnswers("MultipleChoiceQ5"), 1));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ6"), loadAnswers("MultipleChoiceQ6"), 3));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ7"), loadAnswers("MultipleChoiceQ7"), 2));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ8"), loadAnswers("MultipleChoiceQ8"), 1));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ9"), loadAnswers("MultipleChoiceQ9"), 4));
+        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ10"), loadAnswers("MultipleChoiceQ10"), 2));
+
 
         for (Question question : vragen) {
             question.askQuestion(scanner);
         }
     }
 
-    private static String loadQuestion(String questionPath, ArrayList antwoorden) {
+    private static ArrayList loadAnswers(String questionPath) {
         String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
         String[] lines = contents.split("\n");
-        String vraag = "";
-
+        ArrayList antwoorden = new ArrayList();
         for (String line : lines) {
-            if (line.startsWith("vraag=")) {
-                vraag = line.substring(6);
-            } else if (line.startsWith("antwoord1=")) {
+            if (line.startsWith("antwoord1=")) {
                 String antwoord1 = line.substring(10);
                 antwoorden.add(antwoord1);
             } else if (line.startsWith("antwoord2=")) {
@@ -40,6 +46,19 @@ class QuestionTest {
             } else if (line.startsWith("antwoord4=")) {
                 String antwoord4 = line.substring(10);
                 antwoorden.add(antwoord4);
+            }
+        }
+        return antwoorden;
+    }
+
+    private static String loadQuestion(String questionPath) {
+        String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
+        String[] lines = contents.split("\n");
+        String vraag = "";
+
+        for (String line : lines) {
+            if (line.startsWith("vraag=")) {
+                vraag = line.substring(6);
             }
         }
         return vraag;
