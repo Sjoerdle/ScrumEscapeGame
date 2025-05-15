@@ -4,7 +4,6 @@ import org.game.Resources;
 
 import java.util.*;
 
-//Alleen voor test
 class QuestionTest {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -13,24 +12,23 @@ class QuestionTest {
         ArrayList<Question> vragen = new ArrayList();
 
         //Multiple choice
-        String questionPath = "Q1.txt";
-
         ArrayList mp1Antwoorden = new ArrayList();
-        loadAntwoorden(questionPath, mp1Antwoorden);
-        vragen.add(new MultipleChoice("Hoe lang duurt een sprint?", mp1Antwoorden, 3));
+        vragen.add(new MultipleChoice(loadQuestion("Q1.txt", mp1Antwoorden), mp1Antwoorden, 3));
 
         for (Question question : vragen) {
             question.askQuestion(scanner);
         }
     }
 
-
-    private static void loadAntwoorden(String questionPath, ArrayList antwoorden) {
+    private static String loadQuestion(String questionPath, ArrayList antwoorden) {
         String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
         String[] lines = contents.split("\n");
+        String vraag = "";
 
         for (String line : lines) {
-            if (line.startsWith("antwoord1=")) {
+            if (line.startsWith("vraag=")) {
+                vraag = line.substring(6);
+            } else if (line.startsWith("antwoord1=")) {
                 String antwoord1 = line.substring(10);
                 antwoorden.add(antwoord1);
             } else if (line.startsWith("antwoord2=")) {
@@ -44,5 +42,6 @@ class QuestionTest {
                 antwoorden.add(antwoord4);
             }
         }
+        return vraag;
     }
 }
