@@ -1,0 +1,5 @@
+vraag=Hoe lang duurt een sprint?
+antwoord1=2 dagen
+antwoord2=2 maanden
+antwoord3=2 weken
+antwoord4=1 week
