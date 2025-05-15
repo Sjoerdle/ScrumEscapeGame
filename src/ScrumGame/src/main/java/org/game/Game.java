@@ -17,9 +17,8 @@ public class Game {
     public void renderRoom() {
         char[][] map = currentRoom.getMap();
 
-        // Clear the console (platform dependent, this works for many terminals)
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        StartScherm clearScreen = new StartScherm();
+        clearScreen.clearScreen();
 
         // Show room name and instruction
         System.out.println("Room: " + currentRoom.getName());
