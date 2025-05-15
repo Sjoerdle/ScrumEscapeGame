@@ -8,59 +8,65 @@ class QuestionTest {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        //Open vraag
-        ArrayList<Question> vragen = new ArrayList();
+        ArrayList<Question> vragen = new ArrayList<>();
 
-        //Multiple choice
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ1.txt"), loadAnswers("MultipleChoiceQ1.txt"), 3));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ2"), loadAnswers("MultipleChoiceQ2"),2));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ3"), loadAnswers("MultipleChoiceQ3"), 2));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ4"), loadAnswers("MultipleChoiceQ4"), 4));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ5"), loadAnswers("MultipleChoiceQ5"), 1));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ6"), loadAnswers("MultipleChoiceQ6"), 3));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ7"), loadAnswers("MultipleChoiceQ7"), 2));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ8"), loadAnswers("MultipleChoiceQ8"), 1));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ9"), loadAnswers("MultipleChoiceQ9"), 4));
-        vragen.add(new MultipleChoice(loadQuestion("MultipleChoiceQ10"), loadAnswers("MultipleChoiceQ10"), 2));
+        //laad vragen
+        for (int i = 1; i <= 10; i++) {
+            String questionPath = "MultipleChoiceQ" + i;
+            String question = loadQuestion(questionPath);
+            ArrayList<String> answers = loadAnswers(questionPath);
+            int correctIndex = findCorrectAnswer(questionPath);
 
+            vragen.add(new MultipleChoice(question, answers, correctIndex));
+        }
 
+        //stel vragen
         for (Question question : vragen) {
             question.askQuestion(scanner);
         }
     }
 
-    private static ArrayList loadAnswers(String questionPath) {
-        String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
-        String[] lines = contents.split("\n");
-        ArrayList antwoorden = new ArrayList();
-        for (String line : lines) {
-            if (line.startsWith("antwoord1=")) {
-                String antwoord1 = line.substring(10);
-                antwoorden.add(antwoord1);
-            } else if (line.startsWith("antwoord2=")) {
-                String antwoord2 = line.substring(10);
-                antwoorden.add(antwoord2);
-            } else if (line.startsWith("antwoord3=")) {
-                String antwoord3 = line.substring(10);
-                antwoorden.add(antwoord3);
-            } else if (line.startsWith("antwoord4=")) {
-                String antwoord4 = line.substring(10);
-                antwoorden.add(antwoord4);
-            }
-        }
-        return antwoorden;
-    }
-
     private static String loadQuestion(String questionPath) {
         String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
         String[] lines = contents.split("\n");
-        String vraag = "";
 
         for (String line : lines) {
             if (line.startsWith("vraag=")) {
-                vraag = line.substring(6);
+                return line.substring(6);
             }
         }
-        return vraag;
+        return "";
+    }
+
+    private static ArrayList<String> loadAnswers(String questionPath) {
+        String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
+        String[] lines = contents.split("\n");
+        ArrayList<String> antwoorden = new ArrayList<>();
+
+        for (String line : lines) {
+            if (line.startsWith("correct=")) {
+                antwoorden.add(line.substring(8));
+            } else if (line.startsWith("antwoord")) {
+                antwoorden.add(line.substring(line.indexOf('=') + 1));
+            }
+        }
+
+        return antwoorden;
+    }
+
+    private static int findCorrectAnswer(String questionPath) {
+        String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
+        String[] lines = contents.split("\n");
+
+        int teller = 1;
+        for (String line : lines) {
+            if (line.startsWith("correct=")) {
+                return teller;
+            } else if (line.startsWith("antwoord")) {
+                teller++;
+            }
+        }
+
+        return -1;
     }
 }

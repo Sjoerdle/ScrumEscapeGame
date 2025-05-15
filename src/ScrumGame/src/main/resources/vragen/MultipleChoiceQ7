@@ -1,5 +1,5 @@
 vraag=Wat gebeurt er tijdens de Sprint Review?
-antwoord1=Het team plant het werk voor de volgende sprint
-antwoord2=Het team presenteert het geleverde werk aan stakeholders
-antwoord3=Het team bespreekt interne conflicten
-antwoord4=Het team past de Definition of Done aan
+antwoord=Het team plant het werk voor de volgende sprint
+correct=Het team presenteert het geleverde werk aan stakeholders
+antwoord=Het team bespreekt interne conflicten
+antwoord=Het team past de Definition of Done aan

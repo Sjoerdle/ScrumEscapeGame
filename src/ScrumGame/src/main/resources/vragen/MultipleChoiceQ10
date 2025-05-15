@@ -1,5 +1,5 @@
 vraag=Wat is de Definition of Done?
-antwoord1=Een lijst met alle bugs in de software
-antwoord2=Een checklist van criteria waaraan een product moet voldoen om als af te worden beschouwd
-antwoord3=Een lijst met niet-afgeronde taken
-antwoord4=Een opsomming van de wensen van de klant
+antwoord=Een lijst met alle bugs in de software
+correct=Een checklist van criteria waaraan een product moet voldoen om als af te worden beschouwd
+antwoord=Een lijst met niet-afgeronde taken
+antwoord=Een opsomming van de wensen van de klant

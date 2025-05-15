@@ -1,5 +1,5 @@
 vraag=Welk Scrum-artifact geeft een overzicht van al het werk dat gedaan moet worden?
-antwoord1=De Product Backlog
-antwoord2=De Definition of Done
-antwoord3=Het Sprintplan
-antwoord4=Het Burndown Chart
+correct=De Product Backlog
+antwoord=De Definition of Done
+antwoord=Het Sprintplan
+antwoord=Het Burndown Chart

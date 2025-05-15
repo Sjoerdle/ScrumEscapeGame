@@ -1,5 +1,5 @@
 vraag=Wie is verantwoordelijk voor het maximaliseren van de waarde van het product?
-antwoord1=De Scrum Master
-antwoord2=De Product Owner
-antwoord3=Het Development Team
-antwoord4=De Projectmanager
+antwoord=De Scrum Master
+correct=De Product Owner
+antwoord=Het Development Team
+antwoord=De Projectmanager
