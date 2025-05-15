@@ -3,13 +3,17 @@ package org.game;
 public class Speler {
     String naam;
     int score;
-    int locatie;
+    int X;
+    int Y;
+    int hp;
     int deathCount;
 
-    public Speler(String naam) {
+    public Speler(String naam, int X, int Y) {
         this.naam = naam;
         this.score = 0;
-        this.locatie = 0;
+        this.X = X;
+        this.Y = Y;
+        this.hp = 100;
         this.deathCount = 0;
     }
 
@@ -29,12 +33,33 @@ public class Speler {
         this.score = score;
     }
 
-    public int getLocatie() {
-        return locatie;
+    public int getX() {
+        return X;
     }
 
-    public void setLocatie(int locatie) {
-        this.locatie = locatie;
+    public int getY() {
+        return Y;
+    }
+
+    public void setLocation(int X, int Y) {
+        this.X = X;
+        this.Y = Y;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getHp () {
+        return hp;
+    }
+
+    public void heal() {
+        this.hp += 33;
+    }
+
+    public void takeDamage() {
+        this.hp -= 33;
     }
 
     public int getDeathCount() {
