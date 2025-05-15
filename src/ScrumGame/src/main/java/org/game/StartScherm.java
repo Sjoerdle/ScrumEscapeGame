@@ -61,6 +61,8 @@ public class StartScherm {
 
     private void startGame() {
         System.out.println("\nGame wordt gestart...");
+        Game game = new Game();
+        game.start();
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
         scanner.nextLine();
     }
