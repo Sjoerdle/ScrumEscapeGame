@@ -15,9 +15,9 @@ class QuestionTest {
             String questionPath = "MultipleChoiceQ" + i;
             String question = loadQuestion(questionPath);
             ArrayList<String> answers = loadAnswers(questionPath);
-            int correctIndex = findCorrectAnswer(questionPath);
+            int correctAnswer = findCorrectAnswer(questionPath);
 
-            vragen.add(new MultipleChoice(question, answers, correctIndex));
+            vragen.add(new MultipleChoice(question, answers, correctAnswer));
         }
 
         //stel vragen
