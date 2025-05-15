@@ -1,0 +1,9 @@
+definitie1=Grafiek die visueel toont hoeveel werk nog resteert gedurende een sprint
+definitie2=Gemiddeld aantal story-points dat een team per sprint oplevert
+definitie3=Voltooid productdeel dat aan het einde van de sprint potentieel releasable is
+definitie4=Checklist die bepaalt of een backlog-item genoeg detail heeft om in een sprint te worden opgepakt
+
+term1=Increment
+term2=Velocity
+term3=Burndown Chart
+term4=Definition of Ready

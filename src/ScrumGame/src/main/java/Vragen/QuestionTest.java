@@ -10,7 +10,7 @@ class QuestionTest {
 
         ArrayList<Question> vragen = new ArrayList<>();
 
-        //laad vragen
+        //laad MultipleChoice vragen
         for (int i = 1; i <= 10; i++) {
             String questionPath = "MultipleChoiceQ" + i;
             String question = loadQuestion(questionPath);
@@ -18,6 +18,23 @@ class QuestionTest {
             int correctAnswer = findCorrectAnswer(questionPath);
 
             vragen.add(new MultipleChoice(question, answers, correctAnswer));
+        }
+
+        //laad Open vragen
+        for (int i = 1; i <= 5; i++) {
+            String questionPath = "OpenQ" + i;
+            String question = loadQuestion(questionPath);
+            String correctAnswer = loadAnswers(questionPath).get(0);
+
+            vragen.add(new OpenQuestion(question, correctAnswer));
+        }
+
+        //laad Puzzel vragen
+        for (int i = 1; i <= 3; i++) {
+            String questionPath = "PuzzelQ" + i;
+            HashMap<String, String> puzzleItems = loadPuzzleItems(questionPath);
+
+            vragen.add(new PuzzleQuestion(puzzleItems));
         }
 
         //stel vragen
@@ -52,6 +69,33 @@ class QuestionTest {
         }
 
         return antwoorden;
+    }
+
+    private static HashMap<String, String> loadPuzzleItems(String questionPath) {
+        String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
+        String[] lines = contents.split("\n");
+
+        HashMap<String, String> puzzleItems = new HashMap<>();
+        ArrayList<String> terms = new ArrayList<>();
+        ArrayList<String> definitions = new ArrayList<>();
+
+        // Eerst alle termen en definities verzamelen
+        for (String line : lines) {
+            if (line.startsWith("term")) {
+                String term = line.substring(line.indexOf('=') + 1);
+                terms.add(term);
+            } else if (line.startsWith("definitie")) {
+                String definitie = line.substring(line.indexOf('=') + 1);
+                definitions.add(definitie);
+            }
+        }
+
+        // Nu de termen en definities koppelen in de HashMap
+        for (int i = 0; i < terms.size() && i < definitions.size(); i++) {
+            puzzleItems.put(terms.get(i), definitions.get(i));
+        }
+
+        return puzzleItems;
     }
 
     private static int findCorrectAnswer(String questionPath) {

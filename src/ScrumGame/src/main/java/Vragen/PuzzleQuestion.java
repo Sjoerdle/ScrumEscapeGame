@@ -13,8 +13,8 @@ public class PuzzleQuestion implements Question {
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
 
-    public PuzzleQuestion(String question, Map<String, String> matchPairs) {
-        this.question = question;
+    public PuzzleQuestion(Map<String, String> matchPairs) {
+        this.question = "Match de termen met hun definities.";
         this.matchPairs = matchPairs;
         this.terms = new ArrayList<>(matchPairs.keySet());
         this.definitions = new ArrayList<>(matchPairs.values());
