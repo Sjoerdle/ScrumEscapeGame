@@ -4,46 +4,60 @@ import org.game.Resources;
 
 import java.util.*;
 
-class QuestionTest {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+public class QuestionLoader {
+    private ArrayList<Question> vragen = new ArrayList<>();
 
-        ArrayList<Question> vragen = new ArrayList<>();
+    public QuestionLoader() {
+        loadMultipleChoiceVragen();
+        loadPuzzelVragen();
+        loadOpenVragen();
+    }
 
-        //laad MultipleChoice vragen
-        for (int i = 1; i <= 10; i++) {
-            String questionPath = "MultipleChoiceQ" + i;
-            String question = loadQuestion(questionPath);
-            ArrayList<String> answers = loadAnswers(questionPath);
-            int correctAnswer = findCorrectAnswer(questionPath);
+    private void loadMultipleChoiceVragen() {
+        for(int i = 1; i <= Integer.MAX_VALUE; i++){
+            if (Resources.exists("vragen/MultipleChoiceQ" + i)) {
+                String questionPath = "MultipleChoiceQ" + i;
+                String question = loadQuestion(questionPath);
+                ArrayList<String> answers = loadAnswers(questionPath);
+                int correctAnswer = findCorrectAnswer(questionPath);
 
-            vragen.add(new MultipleChoice(question, answers, correctAnswer));
-        }
-
-        //laad Open vragen
-        for (int i = 1; i <= 5; i++) {
-            String questionPath = "OpenQ" + i;
-            String question = loadQuestion(questionPath);
-            String correctAnswer = loadAnswers(questionPath).get(0);
-
-            vragen.add(new OpenQuestion(question, correctAnswer));
-        }
-
-        //laad Puzzel vragen
-        for (int i = 1; i <= 3; i++) {
-            String questionPath = "PuzzelQ" + i;
-            HashMap<String, String> puzzleItems = loadPuzzleItems(questionPath);
-
-            vragen.add(new PuzzleQuestion(puzzleItems));
-        }
-
-        //stel vragen
-        for (Question question : vragen) {
-            question.askQuestion(scanner);
+                vragen.add(new MultipleChoice(question, answers, correctAnswer));
+            } else {
+                break;
+            }
         }
     }
 
-    private static String loadQuestion(String questionPath) {
+    private void loadPuzzelVragen() {
+        for (int i = 1; i <= Integer.MAX_VALUE; i++) {
+            if (Resources.exists("vragen/PuzzelQ" + i)) {
+                String questionPath = "PuzzelQ" + i;
+                HashMap<String, String> puzzleItems = loadPuzzleItems(questionPath);
+
+                if (!puzzleItems.isEmpty()) {
+                    vragen.add(new PuzzleQuestion(puzzleItems));
+                }
+            } else {
+                break;
+            }
+        }
+    }
+
+    private void loadOpenVragen() {
+        for (int i = 1; i <= Integer.MAX_VALUE; i++) {
+            if (Resources.exists("vragen/OpenQ" + i)) {
+                String questionPath = "OpenQ" + i;
+                String question = loadQuestion(questionPath);
+                String correctAnswer = loadAnswers(questionPath).get(0);
+
+                vragen.add(new OpenQuestion(question, correctAnswer));
+            } else {
+                break;
+            }
+        }
+    }
+
+    private String loadQuestion(String questionPath) {
         String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
         String[] lines = contents.split("\n");
 
@@ -55,7 +69,7 @@ class QuestionTest {
         return "";
     }
 
-    private static ArrayList<String> loadAnswers(String questionPath) {
+    private ArrayList<String> loadAnswers(String questionPath) {
         String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
         String[] lines = contents.split("\n");
         ArrayList<String> antwoorden = new ArrayList<>();
@@ -71,7 +85,7 @@ class QuestionTest {
         return antwoorden;
     }
 
-    private static HashMap<String, String> loadPuzzleItems(String questionPath) {
+    private HashMap<String, String> loadPuzzleItems(String questionPath) {
         String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
         String[] lines = contents.split("\n");
 
@@ -79,7 +93,7 @@ class QuestionTest {
         ArrayList<String> terms = new ArrayList<>();
         ArrayList<String> definitions = new ArrayList<>();
 
-        // Eerst alle termen en definities verzamelen
+        //verzamel termen en definities
         for (String line : lines) {
             if (line.startsWith("term")) {
                 String term = line.substring(line.indexOf('=') + 1);
@@ -90,7 +104,7 @@ class QuestionTest {
             }
         }
 
-        // Nu de termen en definities koppelen in de HashMap
+        //koppel termen en definities in hasmap
         for (int i = 0; i < terms.size() && i < definitions.size(); i++) {
             puzzleItems.put(terms.get(i), definitions.get(i));
         }
@@ -98,7 +112,7 @@ class QuestionTest {
         return puzzleItems;
     }
 
-    private static int findCorrectAnswer(String questionPath) {
+    private int findCorrectAnswer(String questionPath) {
         String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
         String[] lines = contents.split("\n");
 
@@ -112,5 +126,9 @@ class QuestionTest {
         }
 
         return -1;
+    }
+
+    public ArrayList<Question> getVragen() {
+        return vragen;
     }
 }

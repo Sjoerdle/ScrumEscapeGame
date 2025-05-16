@@ -1,5 +1,6 @@
 package org.game;
 
+import Vragen.QuestionLoader;
 import org.game.rooms.Room;
 import org.jline.terminal.Terminal;
 
@@ -13,11 +14,13 @@ public class Game {
         currentRoom = new Room("map_0.txt");
         speler = new Speler("Gameboii", currentRoom.getStartX(), currentRoom.getStartY());
         console = new Console();
+        questionLoader = new QuestionLoader();
     }
 
     public static Room currentRoom;
     public static Speler speler;
     public static org.game.Console console;
+    public static QuestionLoader questionLoader;
 
     // Render the current room to the console
     public void renderRoom() {
