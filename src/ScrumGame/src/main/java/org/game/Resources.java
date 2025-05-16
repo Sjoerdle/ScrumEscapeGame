@@ -11,10 +11,28 @@ import java.util.List;
 
 public class Resources {
 
-    // get a file from the resources folder
-    // works everywhere, IDEA, unit test and JAR file.
-    public static InputStream getFileFromResourceAsStream(String fileName) {
+    /**
+     * Checks if a resource exists in the classpath.
+     *
+     * @param resourceName the name of the resource to check
+     * @return true if the resource exists, false otherwise
+     */
+    public static boolean exists(String resourceName) {
+        ClassLoader classLoader = Resources.class.getClassLoader();
+        URL url = classLoader.getResource(resourceName);
+        return url != null;
+    }
 
+    /**
+     * Gets a file from the resources folder as an InputStream.
+     * This method works consistently across different environments:
+     * IDE, unit tests, and JAR files.
+     *
+     * @param fileName the name of the resource file to retrieve
+     * @return InputStream containing the file content
+     * @throws IllegalArgumentException if the file is not found
+     */
+    public static InputStream getFileFromResourceAsStream(String fileName) {
         // The class loader that loaded the class
         ClassLoader classLoader = Resources.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(fileName);
@@ -25,9 +43,17 @@ public class Resources {
         } else {
             return inputStream;
         }
-
     }
 
+    /**
+     * Gets a file from the resources folder as a String.
+     * Reads the entire file content and returns it as a single String with
+     * newline characters preserved.
+     *
+     * @param fileName the name of the resource file to retrieve
+     * @return String containing the file content
+     * @throws IllegalArgumentException if the file is not found (propagated from getFileFromResourceAsStream)
+     */
     public static String getFileFromResouceAsString(String fileName) {
         InputStream inputStream = getFileFromResourceAsStream(fileName);
 
@@ -47,36 +73,4 @@ public class Resources {
         }
         return output;
     }
-
-    // print input stream
-//    private static void printInputStream(InputStream is) {
-//
-//        try (InputStreamReader streamReader =
-//                     new InputStreamReader(is, StandardCharsets.UTF_8);
-//             BufferedReader reader = new BufferedReader(streamReader)) {
-//
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                System.out.println(line);
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    // print a file
-//    private static void printFile(File file) {
-//
-//        List<String> lines;
-//        try {
-//            lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-//            lines.forEach(System.out::println);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-
 }
