@@ -1,6 +1,10 @@
 package org.game;
 
 import org.game.rooms.Room;
+import org.jline.terminal.Terminal;
+
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Scanner;
 
 public class Game {
@@ -8,10 +12,12 @@ public class Game {
     {
         currentRoom = new Room("map_0.txt");
         speler = new Speler("Gameboii", currentRoom.getStartX(), currentRoom.getStartY());
+        console = new Console();
     }
 
     public static Room currentRoom;
     public static Speler speler;
+    public static org.game.Console console;
 
     // Render the current room to the console
     public void renderRoom() {
@@ -44,15 +50,42 @@ public class Game {
         System.out.println();
     }
 
+    /**
+     * Reads a single key from the console and returns its ASCII code.
+     * @return The ASCII code of the pressed key, or -1 if an error occurs
+     */
+    public static int readSingleKey() {
+        try {
+            Reader reader = System.console().reader();
+            int key = reader.read();
+            return key;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        } catch (NullPointerException e) {
+            // This happens if System.console() returns null (e.g., when running in some IDEs)
+            System.err.println("Console is not available in this environment");
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+
     // Take user input and process movement
-    public void handleInput() {
+    public void handleInput() throws IOException {
         Scanner scanner = new Scanner(System.in);
+        // Haal de terminal uit de console klasse
+        Terminal terminal = console.getTerminal();
 
         while (true) {
             System.out.println("Use WASD to move (W=up, A=left, S=down, D=right), Q to quit:");
-            String input = scanner.nextLine().toLowerCase();
 
-            if (input.equals("q")) {
+            int key = readSingleKey();
+
+//            while (key == -2) key = terminal.reader().read(1);
+            char c = Character.toLowerCase((char)key);
+
+            if (c == 'q') {
                 System.out.println("Thanks for playing!");
                 break;
             }
@@ -60,22 +93,22 @@ public class Game {
             int newX = speler.getX();
             int newY = speler.getY();
 
-            // Calculate new position based on input
-            switch (input) {
-                case "w":
+            // Bereken de nieuwe positie op basis van input
+            switch (Character.toLowerCase(c)) {
+                case 'w':
                     newY--;
                     break;
-                case "s":
+                case 's':
                     newY++;
                     break;
-                case "a":
+                case 'a':
                     newX--;
                     break;
-                case "d":
+                case 'd':
                     newX++;
                     break;
                 default:
-                    System.out.println("Invalid input! Use WASD keys or Q to quit.");
+                    // Negeer andere toetsen
                     continue;
             }
 
@@ -133,7 +166,14 @@ public class Game {
     public void start() {
         System.out.println("Welcome to the Game!");
         renderRoom();
-        handleInput();
+
+        try
+        {
+            handleInput();
+        } catch (IOException ex)
+        {
+            ex.printStackTrace(System.out);
+        }
     }
 
     public static void main(String[] args) {
