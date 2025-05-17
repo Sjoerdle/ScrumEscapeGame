@@ -9,8 +9,7 @@ import java.io.Reader;
 import java.util.Scanner;
 
 public class Game {
-    public Game()
-    {
+    public Game() {
         currentRoom = new Room("map_0.txt");
         speler = new Speler("Gameboii", currentRoom.getStartX(), currentRoom.getStartY());
         console = new Console();
@@ -55,6 +54,7 @@ public class Game {
 
     /**
      * Reads a single key from the console and returns its ASCII code.
+     *
      * @return The ASCII code of the pressed key, or -1 if an error occurs
      */
     public static int readSingleKey() {
@@ -86,7 +86,7 @@ public class Game {
             int key = readSingleKey();
 
 //            while (key == -2) key = terminal.reader().read(1);
-            char c = Character.toLowerCase((char)key);
+            char c = Character.toLowerCase((char) key);
 
             if (c == 'q') {
                 System.out.println("Thanks for playing!");
@@ -144,8 +144,7 @@ public class Game {
                 System.out.println("You can't move there - there's a wall!");
             }
         }
-
-}
+    }
 
     // Check if a move is valid (not into walls)
     private boolean isValidMove(int x, int y) {
@@ -170,11 +169,9 @@ public class Game {
         System.out.println("Welcome to the Game!");
         renderRoom();
 
-        try
-        {
+        try {
             handleInput();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace(System.out);
         }
     }

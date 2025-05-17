@@ -5,7 +5,10 @@ import org.game.Resources;
 import java.util.*;
 
 public class QuestionLoader {
-    private ArrayList<Question> vragen = new ArrayList<>();
+    private ArrayList<Question> alleVragen = new ArrayList<>(); //Voor monsters met alle vragen
+    private ArrayList<MultipleChoice> multipleChoiceVragen = new ArrayList<>(); // Voor monsters met alleen multiple choice vragen>
+    private ArrayList<OpenQuestion> openVragen = new ArrayList<>(); // Voor monsters met alleen open vragen
+    private ArrayList<PuzzleQuestion> puzzelVragen = new ArrayList<>(); // Voor monsters met alleen puzzelvragen
 
     public QuestionLoader() {
         loadMultipleChoiceVragen();
@@ -21,7 +24,8 @@ public class QuestionLoader {
                 ArrayList<String> answers = loadAnswers(questionPath);
                 int correctAnswer = findCorrectAnswer(questionPath);
 
-                vragen.add(new MultipleChoice(question, answers, correctAnswer));
+                multipleChoiceVragen.add(new MultipleChoice(question, answers, correctAnswer));
+                alleVragen.add(new MultipleChoice(question, answers, correctAnswer));
             } else {
                 break;
             }
@@ -35,7 +39,8 @@ public class QuestionLoader {
                 HashMap<String, String> puzzleItems = loadPuzzleItems(questionPath);
 
                 if (!puzzleItems.isEmpty()) {
-                    vragen.add(new PuzzleQuestion(puzzleItems));
+                    puzzelVragen.add(new PuzzleQuestion(puzzleItems));
+                    alleVragen.add(new PuzzleQuestion(puzzleItems));
                 }
             } else {
                 break;
@@ -50,7 +55,8 @@ public class QuestionLoader {
                 String question = loadQuestion(questionPath);
                 String correctAnswer = loadAnswers(questionPath).get(0);
 
-                vragen.add(new OpenQuestion(question, correctAnswer));
+                openVragen.add(new OpenQuestion(question, correctAnswer));
+                alleVragen.add(new OpenQuestion(question, correctAnswer));
             } else {
                 break;
             }
@@ -128,7 +134,23 @@ public class QuestionLoader {
         return -1;
     }
 
-    public ArrayList<Question> getVragen() {
-        return vragen;
+    public ArrayList<Question> getAlleVragen() {
+        Collections.shuffle(alleVragen);
+        return alleVragen;
+    }
+
+    public ArrayList<MultipleChoice> getMultipleChoiceVragen() {
+        Collections.shuffle(multipleChoiceVragen);
+        return multipleChoiceVragen;
+    }
+
+    public ArrayList<OpenQuestion> getOpenVragen() {
+        Collections.shuffle(openVragen);
+        return openVragen;
+    }
+
+    public ArrayList<PuzzleQuestion> getPuzzelVragen() {
+        Collections.shuffle(puzzelVragen);
+        return puzzelVragen;
     }
 }
