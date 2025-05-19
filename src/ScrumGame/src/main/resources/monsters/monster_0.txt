@@ -1,0 +1,7 @@
+questionType=multiple_choice
+questionCount=1
+ .-.
+(o o) boo!
+| O \
+ \   \
+  `~~~'
