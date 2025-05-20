@@ -3,7 +3,7 @@ package Vragen;
 import java.util.Scanner;
 
 
-interface Question {
+public interface Question {
     boolean askQuestion(Scanner scanner);
     void displayQuestion();
 }

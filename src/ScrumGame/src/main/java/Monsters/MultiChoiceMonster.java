@@ -1,18 +1,38 @@
 package Monsters;
 
+import Vragen.MultipleChoice;
+import Vragen.Question;
+import org.game.Game;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
 public class MultiChoiceMonster extends Monster {
+    String filePath;
+    Scanner scanner = new Scanner(System.in);
+    ArrayList<MultipleChoice> questions = Game.questionLoader.getMultipleChoiceVragen();
+
+    public MultiChoiceMonster(String filePath) {
+        this.filePath = filePath;
+    }
+
     @Override
     protected void toonIntroductie() {
-        System.out.println("Beantwoord de vragen om het monster te verslaan!");
+        System.out.println("Je bent een monster tegengekomen!");
+        System.out.println("beantwoord de vragen om te ontsnappen!");
     }
 
     @Override
     protected void geefOpdracht() {
-        
+        Random random = new Random();
+        int randomIndex = random.nextInt(questions.size());
+        Question randomQuestion = questions.get(randomIndex);
+        randomQuestion.askQuestion(scanner);
     }
 
     @Override
-    protected boolean controleerAntwoord(String antwoord) {
+    protected boolean controleerAntwoord(String antwoord){
 
         return false;
     }

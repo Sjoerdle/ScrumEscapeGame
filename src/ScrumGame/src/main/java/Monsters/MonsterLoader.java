@@ -9,8 +9,8 @@ import java.util.Map;
 public class MonsterLoader {
     private List<Monster> monsters = new ArrayList<>();
 
-    public MonsterLoader(String bestandsNaam) {
-        Map<String, String> variabelen = laadVariabelen(bestandsNaam);
+    public MonsterLoader(String filePath) {
+        Map<String, String> variabelen = laadVariabelen(filePath);
 
         if (variabelen.containsKey("questionType")) {
             String questionType = variabelen.get("questionType");
@@ -18,17 +18,17 @@ public class MonsterLoader {
             //Controleer op combinaties van types
             if (variabelen.containsKey("questionType1") && variabelen.containsKey("questionType2")) {
                 // Maak een MixMonster voor combinaties van types
-                monsters.add(new MixMonster(bestandsNaam, variabelen));
+                monsters.add(new MixMonster(filePath));
             } else {
                 switch (questionType) {
                     case "multiple_choice":
-                        monsters.add(new MultiChoiceMonster(bestandsNaam, variabelen));
+                        monsters.add(new MultiChoiceMonster(filePath));
                         break;
                     case "open":
-                        monsters.add(new OpenMonster(bestandsNaam, variabelen));
+                        monsters.add(new OpenMonster(filePath));
                         break;
                     case "puzzle":
-                        monsters.add(new PuzzleMonster(bestandsNaam, variabelen));
+                        monsters.add(new PuzzleMonster(filePath));
                         break;
                     default:
                         System.err.println("Onbekend vraagtype: " + questionType);
@@ -36,7 +36,7 @@ public class MonsterLoader {
                 }
             }
         } else {
-            System.err.println("Geen questionType gevonden in het bestand: " + bestandsNaam);
+            System.err.println("Geen questionType gevonden in het bestand: " + filePath);
         }
     }
 
@@ -53,18 +53,18 @@ public class MonsterLoader {
                     // Controleer specifiek voor open,puzzle combinatie
                     if (variabelen.get("questionType1").equals("open") &&
                             variabelen.get("questionType2").equals("puzzle")) {
-                        monsters.add(new MixMonster(bestandsNaam, variabelen));
+                        monsters.add(new MixMonster(bestandsNaam));
                     } else {
                         // Voor andere combinaties kies een standaard type op basis van eerste type
                         switch (variabelen.get("questionType1")) {
                             case "multiple_choice":
-                                monsters.add(new MultiChoiceMonster(bestandsNaam, variabelen));
+                                monsters.add(new MultiChoiceMonster(bestandsNaam));
                                 break;
                             case "open":
-                                monsters.add(new OpenMonster(bestandsNaam, variabelen));
+                                monsters.add(new OpenMonster(bestandsNaam));
                                 break;
                             case "puzzle":
-                                monsters.add(new PuzzleMonster(bestandsNaam, variabelen));
+                                monsters.add(new PuzzleMonster(bestandsNaam));
                                 break;
                             default:
                                 System.err.println("Onbekend vraagtype: " + questionType);
@@ -75,13 +75,13 @@ public class MonsterLoader {
                     // Kies het juiste type monster op basis van questionType
                     switch (questionType) {
                         case "multiple_choice":
-                            monsters.add(new MultiChoiceMonster(bestandsNaam, variabelen));
+                            monsters.add(new MultiChoiceMonster(bestandsNaam));
                             break;
                         case "open":
-                            monsters.add(new OpenMonster(bestandsNaam, variabelen));
+                            monsters.add(new OpenMonster(bestandsNaam));
                             break;
                         case "puzzle":
-                            monsters.add(new PuzzleMonster(bestandsNaam, variabelen));
+                            monsters.add(new PuzzleMonster(bestandsNaam));
                             break;
                         default:
                             System.err.println("Onbekend vraagtype: " + questionType);
