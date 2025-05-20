@@ -134,6 +134,17 @@ public class Game {
                     // Monster encounter - empty implementation for now
                     System.out.println("You encountered a monster! (Not implemented yet)");
                     continue;
+                } else if (destination == 'K') {
+                    //Key, to open a door, pick it up
+                    speler.addKey();
+                    System.out.println("You've picked up a key!");
+                    currentRoom.getMap()[newY][newX] = ' ';
+                    speler.setLocation(newX, newY);
+                } else if (destination == 'D') {
+                    //Door, needs a key to open
+                    System.out.println("You've opened a door!");
+                    currentRoom.getMap()[newY][newX] = ' ';
+                    speler.setLocation(newX, newY);
                 } else {
                     // Normal move
                     speler.setLocation(newX, newY);
@@ -155,6 +166,18 @@ public class Game {
         }
 
         char cell = currentRoom.getMap()[y][x];
+
+        if (cell == 'D')
+        {
+            if (speler.hasKey())
+            {
+                speler.removeKey();
+                return true;
+            } else {
+                System.out.println("This door is locked, you need a key!");
+                return false;
+            }
+        }
 
         // Can't move into walls
         if (cell == '+' || cell == '-' || cell == '|') {

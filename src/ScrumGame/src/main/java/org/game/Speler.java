@@ -7,6 +7,7 @@ public class Speler {
     int Y;
     int hp;
     int deathCount;
+    int keyCount = 0;
 
     public Speler(String naam, int X, int Y) {
         this.naam = naam;
@@ -69,4 +70,10 @@ public class Speler {
     public void addDeath(int deathCount) {
         this.deathCount += 1;
     }
+
+    public int getKeyCount() { return keyCount; }
+    public void setKeyCount(int keyCount) { this.keyCount = keyCount; }
+    public void addKey() { this.keyCount++; }
+    public void removeKey() { this.keyCount--; if (this.keyCount < 0) this.keyCount = 0; }
+    public boolean hasKey() { return this.keyCount > 0; }
 }
