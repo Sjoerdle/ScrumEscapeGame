@@ -1,5 +1,6 @@
 package org.game;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class StartScherm {
@@ -124,9 +125,29 @@ public class StartScherm {
         running = false;
     }
 
-    public void clearScreen() {
-        for (int i = 0; i < 50; i++) {
-            System.out.println("\n");
+    public static void clearScreen() {
+        try {
+            // Detecteer het operating system
+            String os = System.getProperty("os.name").toLowerCase();
+
+            ProcessBuilder processBuilder;
+
+            if (os.contains("win")) {
+                // Windows: gebruik cls commando
+                processBuilder = new ProcessBuilder("cmd", "/c", "cls");
+            } else {
+                // Linux/Mac/Unix: gebruik clear commando
+                processBuilder = new ProcessBuilder("clear");
+            }
+
+            // Voer het commando uit
+            Process process = processBuilder.inheritIO().start();
+            process.waitFor();
+
+        } catch (IOException | InterruptedException e) {
+            // Als het native commando niet werkt, gebruik ANSI escape codes
+            System.out.print("\033[2J\033[H");
+            System.out.flush();
         }
     }
 }
