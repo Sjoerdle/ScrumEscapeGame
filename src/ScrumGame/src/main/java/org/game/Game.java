@@ -24,7 +24,7 @@ public class Game {
     public static QuestionLoader questionLoader;
 
     // Render the current room to the console
-    public void renderRoom() {
+    public void renderRoom(String message) {
         char[][] map = currentRoom.getMap();
 
         Console.clearConsole();
@@ -51,6 +51,7 @@ public class Game {
             System.out.println();
         }
         System.out.println();
+        System.out.println(message);
     }
 
     /**
@@ -120,6 +121,7 @@ public class Game {
             if (isValidMove(newX, newY)) {
                 // Check what's at the new position
                 char destination = currentRoom.getMap()[newY][newX];
+                String message = "";
 
                 if (destination == 'E') {
                     // Exit - load next room
@@ -133,7 +135,7 @@ public class Game {
                     }
                 } else if (destination == 'M') {
                     // Monster encounter - empty implementation for now
-                    System.out.println("You encountered a monster! (Not implemented yet)");
+                    System.out.println("You encountered a monster!");
 
                     Collections.shuffle(Game.questionLoader.getAlleVragen());
                     Question question = Game.questionLoader.getAlleVragen().getFirst();
@@ -145,14 +147,14 @@ public class Game {
                 } else if (destination == 'K') {
                     //Key, to open a door, pick it up
                     speler.addKey();
-                    System.out.println("You've picked up a key!");
+                    message = "Je hebt een sleutel opgepakt!";
 
                     //empty tile
                     currentRoom.getMap()[newY][newX] = ' ';
                     speler.setLocation(newX, newY);
                 } else if (destination == 'D') {
                     //Door, needs a key to open
-                    System.out.println("You've opened a door!");
+                    message = "Je hebt een deur geopend!";
                     currentRoom.getMap()[newY][newX] = ' ';
                     speler.setLocation(newX, newY);
                 } else {
@@ -160,7 +162,7 @@ public class Game {
                     speler.setLocation(newX, newY);
                 }
 
-                renderRoom();
+                renderRoom(message);
             } else {
                 System.out.println("You can't move there - there's a wall!");
             }
@@ -200,7 +202,7 @@ public class Game {
     // Main game loop
     public void start() {
         System.out.println("Welcome to the Game!");
-        renderRoom();
+        renderRoom("");
 
         try {
             handleInput();
