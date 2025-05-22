@@ -1,11 +1,13 @@
 package org.game;
 
+import Vragen.Question;
 import Vragen.QuestionLoader;
 import org.game.rooms.Room;
 import org.jline.terminal.Terminal;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Game {
@@ -133,11 +135,20 @@ public class Game {
                 } else if (destination == 'M') {
                     // Monster encounter - empty implementation for now
                     System.out.println("You encountered a monster! (Not implemented yet)");
-                    continue;
+
+                    Collections.shuffle(Game.questionLoader.getAlleVragen());
+                    Question question = Game.questionLoader.getAlleVragen().getFirst();
+
+                    question.askQuestion(scanner);
+
+                    currentRoom.getMap()[newY][newX] = ' ';
+                    speler.setLocation(newX, newY);
                 } else if (destination == 'K') {
                     //Key, to open a door, pick it up
                     speler.addKey();
                     System.out.println("You've picked up a key!");
+
+                    //empty tile
                     currentRoom.getMap()[newY][newX] = ' ';
                     speler.setLocation(newX, newY);
                 } else if (destination == 'D') {
