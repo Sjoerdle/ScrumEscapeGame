@@ -74,8 +74,8 @@ public class StartScherm {
         System.out.println("UITLEG SCRUM ESCAPE BUILDING");
         System.out.println("===============================================");
         System.out.println("Je zit opgesloten in een Scrum gebouw en moet ontsnappen.");
-        System.out.println("Navigeer door de verschillende ruimtes, los puzzels op,");
-        System.out.println("verzamel items en gebruik Scrum-principes om te ontsnappen.");
+        System.out.println("Navigeer door de verschillende ruimtes, vecht monster, ");
+        System.out.println("los puzzels op, en gebruik Scrum-principes om te ontsnappen.");
         System.out.println("===============================================");
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
         scanner.nextLine();
@@ -87,14 +87,10 @@ public class StartScherm {
         System.out.println("COMMANDS EN CONTROLS");
         System.out.println("===============================================");
         System.out.println("Voorbeeld commandos");
-        System.out.println("- noord/n: Beweeg naar het noorden");
-        System.out.println("- oost/o: Beweeg naar het oosten");
-        System.out.println("- zuid/z: Beweeg naar het zuiden");
-        System.out.println("- west/w: Beweeg naar het westen");
-        System.out.println("- pak [item]: Pak een item op");
-        System.out.println("- gebruik [item]: Gebruik een item");
-        System.out.println("- bekijk [object/item]: Bekijk een object of item");
-        System.out.println("- inventaris/i: Bekijk je inventaris");
+        System.out.println("W: beweeg naar voren");
+        System.out.println("S: beweeg naar achteren");
+        System.out.println("A: beweeg naar links");
+        System.out.println("D: beweeg naar rechts");
         System.out.println("- help/h: Toon beschikbare commands");
         System.out.println("===============================================");
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
@@ -109,7 +105,7 @@ public class StartScherm {
         System.out.println("Scrum Escape Building");
         System.out.println("Een terminal avonturenspel");
         System.out.println("\nOntworpen en ontwikkeld door:");
-        System.out.println("Stefaan Molenaar /n");
+        System.out.println("Stefaan Molenaar");
         System.out.println("Benjamin van Teeseling");
         System.out.println("Roderick Schravendeel");
         System.out.println("Sjoerd Lunshof");
