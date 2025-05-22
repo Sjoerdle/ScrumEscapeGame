@@ -1,5 +1,6 @@
 package org.game;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class StartScherm {
@@ -123,4 +124,5 @@ public class StartScherm {
         System.out.println("Tot de volgende keer!");
         running = false;
     }
+
 }
