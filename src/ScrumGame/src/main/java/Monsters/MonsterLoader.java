@@ -1,157 +1,177 @@
 package Monsters;
 
-import org.game.Resources;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import org.game.Game;
+import org.game.Resources;
 
 public class MonsterLoader {
-    private List<Monster> monsters = new ArrayList<>();
+    private ArrayList<OpenMonster> openMonsters;
+    private ArrayList<MultiChoiceMonster> multiChoiceMonsters;
+    private ArrayList<PuzzleMonster> puzzleMonsters;
+    private ArrayList<MixMonster> mixMonsters;
 
-    public MonsterLoader(String bestandsNaam) {
-        Map<String, String> variabelen = laadVariabelen(bestandsNaam);
-
-        if (variabelen.containsKey("questionType")) {
-            String questionType = variabelen.get("questionType");
-
-            //Controleer op combinaties van types
-            if (variabelen.containsKey("questionType1") && variabelen.containsKey("questionType2")) {
-                // Maak een MixMonster voor combinaties van types
-                monsters.add(new MixMonster(bestandsNaam, variabelen));
-            } else {
-                switch (questionType) {
-                    case "multiple_choice":
-                        monsters.add(new MultiChoiceMonster(bestandsNaam, variabelen));
-                        break;
-                    case "open":
-                        monsters.add(new OpenMonster(bestandsNaam, variabelen));
-                        break;
-                    case "puzzle":
-                        monsters.add(new PuzzleMonster(bestandsNaam, variabelen));
-                        break;
-                    default:
-                        System.err.println("Onbekend vraagtype: " + questionType);
-                        break;
-                }
-            }
-        } else {
-            System.err.println("Geen questionType gevonden in het bestand: " + bestandsNaam);
-        }
-    }
-
-    public MonsterLoader(String[] bestandsNamen) {
-        for (String bestandsNaam : bestandsNamen) {
-            Map<String, String> variabelen = laadVariabelen(bestandsNaam);
-
-            // Bepaal welk type monster we moeten aanmaken op basis van questionType
-            if (variabelen.containsKey("questionType")) {
-                String questionType = variabelen.get("questionType");
-
-                // Controleer of er meerdere types zijn
-                if (variabelen.containsKey("questionType1") && variabelen.containsKey("questionType2")) {
-                    // Controleer specifiek voor open,puzzle combinatie
-                    if (variabelen.get("questionType1").equals("open") &&
-                            variabelen.get("questionType2").equals("puzzle")) {
-                        monsters.add(new MixMonster(bestandsNaam, variabelen));
-                    } else {
-                        // Voor andere combinaties kies een standaard type op basis van eerste type
-                        switch (variabelen.get("questionType1")) {
-                            case "multiple_choice":
-                                monsters.add(new MultiChoiceMonster(bestandsNaam, variabelen));
-                                break;
-                            case "open":
-                                monsters.add(new OpenMonster(bestandsNaam, variabelen));
-                                break;
-                            case "puzzle":
-                                monsters.add(new PuzzleMonster(bestandsNaam, variabelen));
-                                break;
-                            default:
-                                System.err.println("Onbekend vraagtype: " + questionType);
-                                break;
-                        }
-                    }
-                } else {
-                    // Kies het juiste type monster op basis van questionType
-                    switch (questionType) {
-                        case "multiple_choice":
-                            monsters.add(new MultiChoiceMonster(bestandsNaam, variabelen));
-                            break;
-                        case "open":
-                            monsters.add(new OpenMonster(bestandsNaam, variabelen));
-                            break;
-                        case "puzzle":
-                            monsters.add(new PuzzleMonster(bestandsNaam, variabelen));
-                            break;
-                        default:
-                            System.err.println("Onbekend vraagtype: " + questionType);
-                            break;
-                    }
-                }
-            } else {
-                System.err.println("Geen questionType gevonden in het bestand: " + bestandsNaam);
-            }
-        }
-    }
-
-
-    public List<Monster> getMonsters() {
-        return monsters;
-    }
-
-    public Monster getMonster(int index) {
-        if (index >= 0 && index < monsters.size()) {
-            return monsters.get(index);
-        }
-        return null;
-    }
-
-    public int getAantalMonsters() {
-        return monsters.size();
+    public MonsterLoader() {
+        this.openMonsters = new ArrayList<>();
+        this.multiChoiceMonsters = new ArrayList<>();
+        this.puzzleMonsters = new ArrayList<>();
+        this.mixMonsters = new ArrayList<>();
     }
 
     /**
-     * Leest een tekstbestand en haalt de variabelen eruit.
-     * Variabelen zijn regels in het formaat "naam=waarde".
-     *
-     * @param bestandsNaam Het pad naar het bestandsnaam in de resources/vragen map
-     * @return Een Map met alle gevonden variabelen
+     * Leest een monster configuratie bestand en maakt het bijbehorende monster object aan
+     * @param filePath Het pad naar het configuratie bestand
      */
-    public static Map<String, String> laadVariabelen(String bestandsNaam) {
-        Map<String, String> variabelen = new HashMap<>();
+    public void loadMonsterFromFile(String filePath) {
+        String contents = Resources.getFileFromResouceAsString("monsters/" + filePath);
+        String[] lines = contents.split("\n");
 
-        String inhoud = Resources.getFileFromResouceAsString("vragen/" + bestandsNaam);
-        if (inhoud == null || inhoud.isEmpty()) {
-            System.err.println("Kon bestand niet laden: " + bestandsNaam);
-            return variabelen;
-        }
+        String questionTypes = "";
+        int questionCount = 0;
 
-        String[] regels = inhoud.split("\n");
-
-        for (String regel : regels) {
-            regel = regel.trim();
-
-            if (regel.contains("=")) {
-                String[] delen = regel.split("=", 2);
-                String naam = delen[0].trim();
-                String waarde = delen.length > 1 ? delen[1].trim() : "";
-
-                // meerdere variabelen
-                if (naam.equals("questionType") && waarde.contains(",")) {
-                    String[] types = waarde.split(",");
-                    for (int i = 0; i < types.length; i++) {
-                        if (i == 0) {
-                            variabelen.put("questionType", types[i].trim());
-                        }
-                        variabelen.put("questionType" + (i + 1), types[i].trim());
-                    }
-                } else {
-                    // Gewone variabele
-                    variabelen.put(naam, waarde);
-                }
+        for (String line : lines) {
+            if (line.startsWith("questionType=")) {
+                questionTypes = line.substring(13);
+            } else if (line.startsWith("questionCount=")) {
+                questionCount = Integer.parseInt(line.substring(14));
             }
         }
 
-        return variabelen;
+        if (questionTypes.isEmpty() || questionCount == 0) {
+            System.err.println("Ongeldig bestandsformaat: " + filePath);
+            return;
+        }
+
+        // Split de question types op komma's
+        String[] questionTypeArray = questionTypes.split(",");
+
+        // Maak monsters aan gebaseerd op de types
+        createMonstersFromTypes(questionTypeArray, questionCount, filePath);
+    }
+
+    /**
+     * Maakt monster objecten aan gebaseerd op de gegeven types
+     */
+    private void createMonstersFromTypes(String[] questionTypes, int questionCount, String filePath) {
+        for (String type : questionTypes) {
+            type = type.trim().toLowerCase();
+
+            switch (type) {
+                case "open":
+                    OpenMonster openMonster = new OpenMonster(filePath, questionCount);
+                    openMonsters.add(openMonster);
+                    break;
+
+                case "multiple_choice":
+                case "multiple":
+                    MultiChoiceMonster multiChoiceMonster = new MultiChoiceMonster(filePath, questionCount);
+                    multiChoiceMonsters.add(multiChoiceMonster);
+                    break;
+
+                case "puzzle":
+                    PuzzleMonster puzzleMonster = new PuzzleMonster(filePath, questionCount);
+                    puzzleMonsters.add(puzzleMonster);
+                    break;
+
+                case "mix":
+                    MixMonster mixMonster = new MixMonster(filePath, questionCount);
+                    mixMonsters.add(mixMonster);
+                    break;
+
+                default:
+                    System.err.println("Onbekend question type: " + type + " in bestand: " + filePath);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Laadt alle monster bestanden uit een directory
+     * @param directoryPath Het pad naar de directory met monster bestanden
+     */
+    public void loadAllMonstersFromDirectory(String directoryPath) {
+        java.io.File directory = new java.io.File(directoryPath);
+
+        if (!directory.exists() || !directory.isDirectory()) {
+            System.err.println("Directory bestaat niet of is geen directory: " + directoryPath);
+            return;
+        }
+
+        java.io.File[] files = directory.listFiles();
+        if (files != null) {
+            for (java.io.File file : files) {
+                if (file.isFile() && file.getName().endsWith(".txt")) {
+                    loadMonsterFromFile(file.getAbsolutePath());
+                }
+            }
+        }
+    }
+
+    // Getter methoden voor de verschillende monster ArrayLists
+    public ArrayList<OpenMonster> getOpenMonsters() {
+        return openMonsters;
+    }
+
+    public ArrayList<MultiChoiceMonster> getMultiChoiceMonsters() {
+        return multiChoiceMonsters;
+    }
+
+    public ArrayList<PuzzleMonster> getPuzzleMonsters() {
+        return puzzleMonsters;
+    }
+
+    public ArrayList<MixMonster> getMixMonsters() {
+        return mixMonsters;
+    }
+
+    /**
+     * Geeft alle monsters terug in één lijst
+     */
+    public ArrayList<Monster> getAllMonsters() {
+        ArrayList<Monster> allMonsters = new ArrayList<>();
+        allMonsters.addAll(openMonsters);
+        allMonsters.addAll(multiChoiceMonsters);
+        allMonsters.addAll(puzzleMonsters);
+        allMonsters.addAll(mixMonsters);
+        return allMonsters;
+    }
+
+    /**
+     * Print informatie over alle geladen monsters
+     */
+    public void printMonsterInfo() {
+        System.out.println("=== Monster Loader Informatie ===");
+        System.out.println("Open Monsters: " + openMonsters.size());
+        System.out.println("Multiple Choice Monsters: " + multiChoiceMonsters.size());
+        System.out.println("Puzzle Monsters: " + puzzleMonsters.size());
+        System.out.println("Mix Monsters: " + mixMonsters.size());
+        System.out.println("Totaal aantal monsters: " + getAllMonsters().size());
+    }
+
+    /**
+     * Voorbeeld van hoe de klasse te gebruiken
+     */
+    public static void main(String[] args) {
+        Game game = new Game();
+        MonsterLoader loader = new MonsterLoader();
+
+        // Laad een enkel monster bestand
+        loader.loadMonsterFromFile("monster_Open.txt");
+
+        // Of laad alle bestanden uit een directory
+        // loader.loadAllMonstersFromDirectory("monsters/");
+
+        // Print informatie
+        loader.printMonsterInfo();
+
+        // Gebruik de monsters
+        ArrayList<OpenMonster> openMonsters = loader.getOpenMonsters();
+        for (OpenMonster monster : openMonsters) {
+            // Doe iets met het monster
+            monster.geefOpdracht();
+        }
     }
 }

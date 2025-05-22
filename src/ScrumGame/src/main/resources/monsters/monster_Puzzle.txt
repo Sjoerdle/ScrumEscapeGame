@@ -1,0 +1,2 @@
+questionType=puzzle
+questionCount=2
