@@ -1,8 +1,5 @@
 package Monsters;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.game.Game;
@@ -31,14 +28,22 @@ public class MonsterLoader {
 
         String questionTypes = "";
         int questionCount = 0;
+        StringBuilder asciiBuilder = new StringBuilder();
+        boolean isReadingAscii = false;
 
         for (String line : lines) {
             if (line.startsWith("questionType=")) {
                 questionTypes = line.substring(13);
             } else if (line.startsWith("questionCount=")) {
                 questionCount = Integer.parseInt(line.substring(14));
+            } else if (!line.trim().isEmpty()) {
+                isReadingAscii = true;
+                asciiBuilder.append(line).append("\n");
+        }else {
+            asciiBuilder.append(line).append("\n");
             }
         }
+        String asciiArt = asciiBuilder.toString().trim();
 
         if (questionTypes.isEmpty() || questionCount == 0) {
             System.err.println("Ongeldig bestandsformaat: " + filePath);
@@ -47,37 +52,37 @@ public class MonsterLoader {
 
         // Split de question types op komma's
         String[] questionTypeArray = questionTypes.split(",");
-
+        String ascii = asciiBuilder.toString();
         // Maak monsters aan gebaseerd op de types
-        createMonstersFromTypes(questionTypeArray, questionCount, filePath);
+        createMonstersFromTypes(questionTypeArray, questionCount, filePath, ascii);
     }
 
     /**
      * Maakt monster objecten aan gebaseerd op de gegeven types
      */
-    private void createMonstersFromTypes(String[] questionTypes, int questionCount, String filePath) {
+    private void createMonstersFromTypes(String[] questionTypes, int questionCount, String filePath, String asciiArt) {
         for (String type : questionTypes) {
             type = type.trim().toLowerCase();
 
             switch (type) {
                 case "open":
-                    OpenMonster openMonster = new OpenMonster(filePath, questionCount);
+                    OpenMonster openMonster = new OpenMonster(filePath, questionCount, asciiArt);
                     openMonsters.add(openMonster);
                     break;
 
                 case "multiple_choice":
                 case "multiple":
-                    MultiChoiceMonster multiChoiceMonster = new MultiChoiceMonster(filePath, questionCount);
+                    MultiChoiceMonster multiChoiceMonster = new MultiChoiceMonster(filePath, questionCount, asciiArt);
                     multiChoiceMonsters.add(multiChoiceMonster);
                     break;
 
                 case "puzzle":
-                    PuzzleMonster puzzleMonster = new PuzzleMonster(filePath, questionCount);
+                    PuzzleMonster puzzleMonster = new PuzzleMonster(filePath, questionCount, asciiArt);
                     puzzleMonsters.add(puzzleMonster);
                     break;
 
                 case "mix":
-                    MixMonster mixMonster = new MixMonster(filePath, questionCount);
+                    MixMonster mixMonster = new MixMonster(filePath, questionCount, asciiArt);
                     mixMonsters.add(mixMonster);
                     break;
 
@@ -159,7 +164,7 @@ public class MonsterLoader {
         MonsterLoader loader = new MonsterLoader();
 
         // Laad een enkel monster bestand
-        loader.loadMonsterFromFile("monster_Open.txt");
+        loader.loadMonsterFromFile("monster_OpenPuzzle.txt");
 
         // Of laad alle bestanden uit een directory
         // loader.loadAllMonstersFromDirectory("monsters/");
@@ -169,8 +174,7 @@ public class MonsterLoader {
 
         // Gebruik de monsters
         ArrayList<OpenMonster> openMonsters = loader.getOpenMonsters();
-        for (OpenMonster monster : openMonsters) {
-            // Doe iets met het monster
+        for (Monster monster : loader.getAllMonsters()) {
             monster.geefOpdracht();
         }
     }
