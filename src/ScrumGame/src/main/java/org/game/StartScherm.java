@@ -21,7 +21,7 @@ public class StartScherm {
     }
 
     private void displayMenu() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("Welkom bij de Scrum Escape Building game!");
         System.out.println("Kies een optie: ");
@@ -69,32 +69,28 @@ public class StartScherm {
     }
 
     private void showInstructions() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("UITLEG SCRUM ESCAPE BUILDING");
         System.out.println("===============================================");
         System.out.println("Je zit opgesloten in een Scrum gebouw en moet ontsnappen.");
-        System.out.println("Navigeer door de verschillende ruimtes, los puzzels op,");
-        System.out.println("verzamel items en gebruik Scrum-principes om te ontsnappen.");
+        System.out.println("Navigeer door de verschillende ruimtes, vecht monster, ");
+        System.out.println("los puzzels op, en gebruik Scrum-principes om te ontsnappen.");
         System.out.println("===============================================");
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
         scanner.nextLine();
     }
 
     private void showCommands() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("COMMANDS EN CONTROLS");
         System.out.println("===============================================");
         System.out.println("Voorbeeld commandos");
-        System.out.println("- noord/n: Beweeg naar het noorden");
-        System.out.println("- oost/o: Beweeg naar het oosten");
-        System.out.println("- zuid/z: Beweeg naar het zuiden");
-        System.out.println("- west/w: Beweeg naar het westen");
-        System.out.println("- pak [item]: Pak een item op");
-        System.out.println("- gebruik [item]: Gebruik een item");
-        System.out.println("- bekijk [object/item]: Bekijk een object of item");
-        System.out.println("- inventaris/i: Bekijk je inventaris");
+        System.out.println("W: beweeg naar voren");
+        System.out.println("S: beweeg naar achteren");
+        System.out.println("A: beweeg naar links");
+        System.out.println("D: beweeg naar rechts");
         System.out.println("- help/h: Toon beschikbare commands");
         System.out.println("===============================================");
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
@@ -102,14 +98,14 @@ public class StartScherm {
     }
 
     private void showCredits() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("CREDITS");
         System.out.println("===============================================");
         System.out.println("Scrum Escape Building");
         System.out.println("Een terminal avonturenspel");
         System.out.println("\nOntworpen en ontwikkeld door:");
-        System.out.println("Stefaan Molenaar /n");
+        System.out.println("Stefaan Molenaar");
         System.out.println("Benjamin van Teeseling");
         System.out.println("Roderick Schravendeel");
         System.out.println("Sjoerd Lunshof");
@@ -125,29 +121,4 @@ public class StartScherm {
         running = false;
     }
 
-    public static void clearScreen() {
-        try {
-            // Detecteer het operating system
-            String os = System.getProperty("os.name").toLowerCase();
-
-            ProcessBuilder processBuilder;
-
-            if (os.contains("win")) {
-                // Windows: gebruik cls commando
-                processBuilder = new ProcessBuilder("cmd", "/c", "cls");
-            } else {
-                // Linux/Mac/Unix: gebruik clear commando
-                processBuilder = new ProcessBuilder("clear");
-            }
-
-            // Voer het commando uit
-            Process process = processBuilder.inheritIO().start();
-            process.waitFor();
-
-        } catch (IOException | InterruptedException e) {
-            // Als het native commando niet werkt, gebruik ANSI escape codes
-            System.out.print("\033[2J\033[H");
-            System.out.flush();
-        }
-    }
 }
