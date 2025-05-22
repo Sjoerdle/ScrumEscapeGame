@@ -10,11 +10,13 @@ import java.util.Scanner;
 
 public class OpenMonster extends Monster {
     String filePath;
+    int questionCount;
     Scanner scanner = new Scanner(System.in);
     ArrayList<OpenQuestion> questions = Game.questionLoader.getOpenVragen();
 
-    public OpenMonster(String filePath) {
+    public OpenMonster(String filePath, int questionCount) {
         this.filePath = filePath;
+        this.questionCount = questionCount;
     }
 
     @Override
@@ -25,10 +27,12 @@ public class OpenMonster extends Monster {
 
     @Override
     protected void geefOpdracht() {
-        Random random = new Random();
-        int randomIndex = random.nextInt(questions.size());
-        Question randomQuestion = questions.get(randomIndex);
-        randomQuestion.askQuestion(scanner);
+        for (int i = 0; i < questionCount; i++) {
+            Random random = new Random();
+            int randomIndex = random.nextInt(questions.size());
+            Question randomQuestion = questions.get(randomIndex);
+            randomQuestion.askQuestion(scanner);
+        }
     }
 
     @Override
