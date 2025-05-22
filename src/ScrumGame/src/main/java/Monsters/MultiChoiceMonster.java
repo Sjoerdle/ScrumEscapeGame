@@ -25,11 +25,7 @@ public class MultiChoiceMonster extends Monster {
     protected void toonIntroductie() {
         System.out.println("Je bent een monster tegengekomen!");
         System.out.println("beantwoord de vragen om te ontsnappen!");
-        if(asciiArt != null && !asciiArt.isBlank()){
-            System.out.println(asciiArt);
-        }else{
-            System.out.println("[Geen ASCII-art beschikbaar]");
-        }
+        toonAsciiArt();
     }
 
     private void toonAsciiArt(){
