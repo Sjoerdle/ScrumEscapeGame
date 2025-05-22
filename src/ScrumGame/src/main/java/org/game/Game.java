@@ -27,8 +27,7 @@ public class Game {
     public void renderRoom() {
         char[][] map = currentRoom.getMap();
 
-        StartScherm clearScreen = new StartScherm();
-        clearScreen.clearScreen();
+        Console.clearConsole();
 
         // Show room name and instruction
         System.out.println("Room: " + currentRoom.getName());

@@ -20,7 +20,7 @@ public class StartScherm {
     }
 
     private void displayMenu() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("Welkom bij de Scrum Escape Building game!");
         System.out.println("Kies een optie: ");
@@ -68,7 +68,7 @@ public class StartScherm {
     }
 
     private void showInstructions() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("UITLEG SCRUM ESCAPE BUILDING");
         System.out.println("===============================================");
@@ -81,7 +81,7 @@ public class StartScherm {
     }
 
     private void showCommands() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("COMMANDS EN CONTROLS");
         System.out.println("===============================================");
@@ -101,7 +101,7 @@ public class StartScherm {
     }
 
     private void showCredits() {
-        clearScreen();
+        Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("CREDITS");
         System.out.println("===============================================");
@@ -122,11 +122,5 @@ public class StartScherm {
         System.out.println("\nBedankt voor het spelen van Scrum Escape Building!");
         System.out.println("Tot de volgende keer!");
         running = false;
-    }
-
-    public void clearScreen() {
-        for (int i = 0; i < 50; i++) {
-            System.out.println("\n");
-        }
     }
 }
