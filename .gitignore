@@ -22,37 +22,9 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-
-# IntelliJ IDEA
-**/.idea/workspace.xml           # User-specific workspace settings and window layout
-**/.idea/usage.statistics.xml    # IDE usage statistics and telemetry data
-**/.idea/shelf/                  # Shelved changes (local uncommitted changes)
-**/.idea/tasks.xml               # Task and issue tracker integration settings
-**/.idea/dictionaries/           # Custom spelling dictionaries
-**/.idea/httpRequests/           # HTTP client request history and logs
-**/.idea/dataSources/            # Database connection configurations
-**/.idea/dataSources.local.xml   # Local database connection settings
-**/.idea/sqlDataSources.xml      # SQL data source configurations
-**/.idea/dynamic.xml             # Dynamic plugin configurations
-**/.idea/uiDesigner.xml          # GUI designer settings and configurations
-**/.idea/gradle.xml              # Gradle build system settings and cache
-**/.idea/libraries/              # Library definitions and configurations
-**/.idea/jarRepositories.xml     # JAR repository configurations
-**/.idea/compiler.xml            # Compiler settings and output paths
-**/.idea/modules/                # Module-specific configuration files
-**/.idea/caches/                 # IDE caches and temporary files
-**/.idea/sonarlint/              # SonarLint plugin settings and cache
-
-# IntelliJ IDEA files that shouldn't be in the gitignore 
-# (they're commented out here to ensure these rules are not active)
-# IntelliJ IDEA files that shouldn't be in the gitignore 
-# (they're commented out here to ensure these rules are not active)
-
-# .idea/misc.xml                  # Project SDK and language level settings
-# .idea/modules.xml               # Module configuration (if using IntelliJ modules)
-# .idea/vcs.xml                   # Version control settings
-# .idea/codeStyles/               # Code formatting rules
-# .idea/inspectionProfiles/       # Code inspection settings
-# .idea/runConfigurations/        # Shared run configurations
-# .idea/encodings.xml             # File encoding settings
-# .idea/copyright/                # Copyright profiles
+src/.idea/vcs.xml
+src/ScrumGame/.idea/misc.xml
+src/ScrumGame/.idea/misc.xml
+src/.idea/workspace.xml
+src/ScrumGame/.idea/misc.xml
+/src/ScrumGame/.idea/misc.xml
