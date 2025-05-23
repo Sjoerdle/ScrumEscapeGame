@@ -21,7 +21,7 @@ public class MixMonster extends Monster {
     }
 
     @Override
-    protected void toonIntroductie() {
+    public void toonIntroductie() {
         System.out.println("Je bent een monster tegengekomen!");
         System.out.println("beantwoord de vragen om te ontsnappen!");
         toonAsciiArt();
@@ -36,7 +36,7 @@ public class MixMonster extends Monster {
     }
 
     @Override
-    protected void geefOpdracht() {
+    public void geefOpdracht() {
         toonIntroductie();
         for (int i = 0; i < questionCount; i++) {
             Random random = new Random();

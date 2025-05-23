@@ -14,8 +14,8 @@ public abstract class Monster {
     }
         // Deze 3 methoden MOETEN worden geïmplementeerd door elke subklasse
 
-    protected abstract void toonIntroductie();
-    protected abstract void geefOpdracht();
+    public abstract void toonIntroductie();
+    public abstract void geefOpdracht();
     protected abstract boolean controleerAntwoord(String antwoord);
 
 

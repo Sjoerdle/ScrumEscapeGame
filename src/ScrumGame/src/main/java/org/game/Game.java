@@ -2,6 +2,8 @@ package org.game;
 
 import Vragen.Question;
 import Vragen.QuestionLoader;
+import Monsters.MonsterLoader;
+import Monsters.Monster;
 import org.game.rooms.Room;
 import org.jline.terminal.Terminal;
 
@@ -16,12 +18,14 @@ public class Game {
         speler = new Speler("Gameboii", currentRoom.getStartX(), currentRoom.getStartY());
         console = new Console();
         questionLoader = new QuestionLoader();
+        monsterLoader = new MonsterLoader();
     }
 
     public static Room currentRoom;
     public static Speler speler;
     public static org.game.Console console;
     public static QuestionLoader questionLoader;
+    public static MonsterLoader monsterLoader;
 
     // Render the current room to the console
     public void renderRoom(String message) {
@@ -137,10 +141,8 @@ public class Game {
                     // Monster encounter - empty implementation for now
                     System.out.println("You encountered a monster!");
 
-                    Collections.shuffle(Game.questionLoader.getAlleVragen());
-                    Question question = Game.questionLoader.getAlleVragen().getFirst();
-
-                    question.askQuestion(scanner);
+                    Monster monster = Game.monsterLoader.loadAllMonsters().getFirst();
+                    monster.geefOpdracht();
 
                     currentRoom.getMap()[newY][newX] = ' ';
                     speler.setLocation(newX, newY);

@@ -1,6 +1,7 @@
 package Monsters;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.game.Game;
 import org.game.Resources;
@@ -156,26 +157,83 @@ public class MonsterLoader {
         System.out.println("Totaal aantal monsters: " + getAllMonsters().size());
     }
 
+    public ArrayList<Monster> loadAllMonsters() {
+        // Lijst van alle monster bestanden in je resources/monsters directory
+        String[] monsterFiles = {
+                "monster_MultiChoice.txt",
+                "monster_Open.txt",
+                "monster_OpenPuzzle.txt",
+                "monster_Puzzle.txt"
+        };
+
+
+        for (String fileName : monsterFiles) {
+            try {
+                loadMonsterFromFile(fileName);
+            } catch (Exception e) {
+                System.err.println("✗ Fout bij laden van " + fileName + ": " + e.getMessage());
+            }
+        }
+
+        return getAllMonsters();
+    }
+
     /**
      * Voorbeeld van hoe de klasse te gebruiken
      */
     public static void main(String[] args) {
-        Game game = new Game();
+        // 1. Maak een MonsterLoader aan
         MonsterLoader loader = new MonsterLoader();
+        Game game = new Game();
 
-        // Laad een enkel monster bestand
-        loader.loadMonsterFromFile("monster_OpenPuzzle.txt");
+        // 3. Krijg alle monsters in één ArrayList
+        ArrayList<Monster> alleMonsters = loader.loadAllMonsters();
 
-        // Of laad alle bestanden uit een directory
-        // loader.loadAllMonstersFromDirectory("monsters/");
+        // 4. Check of er monsters zijn geladen
+        if (alleMonsters.isEmpty()) {
+            System.out.println("Geen monsters geladen!");
+            return;
+        }
 
-        // Print informatie
+        // 5. Print informatie over geladen monsters
         loader.printMonsterInfo();
 
-        // Gebruik de monsters
-        ArrayList<OpenMonster> openMonsters = loader.getOpenMonsters();
-        for (Monster monster : loader.getAllMonsters()) {
+        // 6. Selecteer een random monster
+        Random random = new Random();
+        int randomIndex = random.nextInt(alleMonsters.size());
+        Monster randomMonster = alleMonsters.get(randomIndex);
+
+        // 7. Gebruik het random monster
+        System.out.println("\n=== Random Monster Geselecteerd ===");
+        randomMonster.geefOpdracht();
+
+        // Extra: Als je meerdere random monsters wilt
+        System.out.println("\n=== 3 Random Monsters ===");
+        for (int i = 0; i < 3 && i < alleMonsters.size(); i++) {
+            int index = random.nextInt(alleMonsters.size());
+            Monster monster = alleMonsters.get(index);
+            System.out.println("Monster " + (i + 1) + ":");
             monster.geefOpdracht();
+            System.out.println();
         }
+    }
+
+    // Helper methode om een random monster te krijgen
+    public static Monster getRandomMonster(ArrayList<Monster> monsters) {
+        if (monsters.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        return monsters.get(random.nextInt(monsters.size()));
+    }
+
+    // Helper methode om een random monster van een specifiek type te krijgen
+    public static OpenMonster getRandomOpenMonster(MonsterLoader loader) {
+        ArrayList<OpenMonster> openMonsters = loader.getOpenMonsters();
+        if (openMonsters.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        return openMonsters.get(random.nextInt(openMonsters.size()));
     }
 }
