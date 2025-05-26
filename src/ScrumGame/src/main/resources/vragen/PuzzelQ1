@@ -7,3 +7,8 @@ term1=Increment
 term2=Velocity
 term3=Burndown Chart
 term4=Definition of Ready
+
+helpHint=Increment = werkend product, Velocity = snelheid van het team, Burndown Chart = grafiek van resterend werk, Definition of Ready = checklist voor backlog items.
+
+funnyHint=Increment: wat je kunt laten zien aan je baas, Velocity: hoe snel jullie team rent, Burndown Chart: de grafiek die hoopt naar beneden te gaan, Definition of Ready: "Is dit klaar om aan te beginnen?"
+
