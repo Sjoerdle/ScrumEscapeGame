@@ -1,6 +1,7 @@
 package Monsters;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import org.game.Game;
@@ -142,6 +143,8 @@ public class MonsterLoader {
         allMonsters.addAll(multiChoiceMonsters);
         allMonsters.addAll(puzzleMonsters);
         allMonsters.addAll(mixMonsters);
+        Collections.shuffle(allMonsters); // Tijdelijke functie???
+
         return allMonsters;
     }
 
