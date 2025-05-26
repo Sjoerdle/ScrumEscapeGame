@@ -3,3 +3,5 @@ antwoord=De voortgang bespreken met de klant
 antwoord=De taken voor de komende week plannen
 antwoord=De backlog herprioriteren
 correct=De samenwerking en voortgang van het team afstemmen
+HelpHint = De Daily Scrum is geen statusmeeting voor de baas, maar een kort moment waarop het team zichzelf op één lijn brengt om samen goed verder te kunnen werken.
+funnyHint = Het is geen koffieklets of karaoke — het team komt samen om te zeggen: “Dit heb ik gedaan, dit ga ik doen, en help... die bug bijt!”

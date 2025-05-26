@@ -3,3 +3,12 @@ correct=De Product Backlog
 antwoord=De Definition of Done
 antwoord=Het Sprintplan
 antwoord=Het Burndown Chart
+HelpHint = Dit artifact is als de to-do lijst van het hele product. Alles wat het team nog moet bouwen, staat hier netjes (of minder netjes) op een rij.
+funnyHint = Het is als een magische boodschappenlijst — maar in plaats van melk en eieren staat er: “API bouwen”, “bug fixen” en “wereld verbeteren”!
+
+
+
+
+
+
+
