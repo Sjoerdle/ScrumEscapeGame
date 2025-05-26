@@ -35,4 +35,8 @@ public class OpenQuestion implements Question {
             return false;
         }
     }
+
+    public boolean isGoedBeantwoord() {
+        return goedBeantwoord;
+    }
 }
