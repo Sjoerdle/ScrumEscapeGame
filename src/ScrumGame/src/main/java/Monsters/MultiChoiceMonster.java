@@ -39,11 +39,25 @@ public class MultiChoiceMonster extends Monster {
     @Override
     public void geefOpdracht() {
         toonIntroductie();
-        for (int i = 0; i < questionCount; i++) {
+        int correcteAntwoorden = 0;
+        int pogingen = 0;
+        final int MAX_POGINGEN = questionCount * 3; // Voorkom oneindige lus
+
+        while (correcteAntwoorden < questionCount && pogingen < MAX_POGINGEN) {
             Random random = new Random();
             int randomIndex = random.nextInt(questions.size());
             Question randomQuestion = questions.get(randomIndex);
-            randomQuestion.askQuestion(scanner);
+
+            if (randomQuestion.isGoedBeantwoord()){
+                continue;
+        }
+
+            boolean isCorrect = randomQuestion.askQuestion(scanner);
+            pogingen++;
+
+            if (isCorrect){
+                correcteAntwoorden++;
+            }
         }
     }
 

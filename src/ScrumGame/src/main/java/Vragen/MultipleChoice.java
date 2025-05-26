@@ -2,19 +2,31 @@ package Vragen;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 public class MultipleChoice implements Question {
     private String question;
     private List<String> options;
     private int correctAnswer;
+    private String helpHint;
+    private String funnyHint;
+    private Random random;
 
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
 
     public MultipleChoice(String question, List<String> options, int correctAnswer) {
+        this(question, options, correctAnswer, "", "");
+    }
+
+    public MultipleChoice(String question, List<String> options, int correctAnswer, String helpHint, String funnyHint) {
         this.question = question;
         this.options = options;
         this.correctAnswer = correctAnswer;
+        this.helpHint = helpHint;
+        this.funnyHint = funnyHint;
+        this.random = new Random();
+
     }
 
     @Override
@@ -38,8 +50,19 @@ public class MultipleChoice implements Question {
                 goedBeantwoord = true;
                 return true;
             } else {
-                System.out.println("Dat is helaas niet juist. Het correcte antwoord was: " + correctAnswer);
-                return false;
+                 if (!helpHint.isEmpty() || !funnyHint.isEmpty()) {
+                     boolean useHelpHint = helpHint.isEmpty() ? false :
+                             (funnyHint.isEmpty() ? true : random.nextBoolean());
+
+                     if(useHelpHint) {
+                         System.out.println("\nHINT: " + helpHint);
+                     }else{
+                         System.out.println("\nHINT: " + funnyHint);
+                     }
+                 } else {
+                     System.out.println("Dat is helaas niet juist.");
+                 };
+                 return false;
             }
         } catch (NumberFormatException e) {
             System.out.println("Ongeldige invoer. Voer een nummer in tussen 1 en " + options.size());

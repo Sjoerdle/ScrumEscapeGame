@@ -23,9 +23,18 @@ public class QuestionLoader {
                 String question = loadQuestion(questionPath);
                 ArrayList<String> answers = loadAnswers(questionPath);
                 int correctAnswer = findCorrectAnswer(questionPath);
+                Map<String, String> hints = loadHints(questionPath);
 
-                multipleChoiceVragen.add(new MultipleChoice(question, answers, correctAnswer));
-                alleVragen.add(new MultipleChoice(question, answers, correctAnswer));
+                MultipleChoice mc = new MultipleChoice(
+                        question,
+                        answers,
+                        correctAnswer,
+                        hints.getOrDefault("helpHint", ""),
+                        hints.getOrDefault("funnyHint", "")
+                );
+
+                multipleChoiceVragen.add(mc);
+                alleVragen.add(mc);
             } else {
                 break;
             }
@@ -54,9 +63,17 @@ public class QuestionLoader {
                 String questionPath = "OpenQ" + i;
                 String question = loadQuestion(questionPath);
                 String correctAnswer = loadAnswers(questionPath).get(0);
+                Map<String, String> hints = loadHints(questionPath);
 
-                openVragen.add(new OpenQuestion(question, correctAnswer));
-                alleVragen.add(new OpenQuestion(question, correctAnswer));
+                OpenQuestion oq = new OpenQuestion(
+                        question,
+                        correctAnswer,
+                        hints.getOrDefault("helpHint", ""),
+                        hints.getOrDefault("funnyHint", "")
+                );
+
+               openVragen.add(oq);
+               alleVragen.add(oq);
             } else {
                 break;
             }
@@ -89,6 +106,23 @@ public class QuestionLoader {
         }
 
         return antwoorden;
+    }
+
+    private Map<String, String> loadHints(String questionPath) {
+        String contents = Resources.getFileFromResouceAsString("vragen/" + questionPath);
+        String[] lines = contents.split("\n");
+        Map<String, String> hints = new HashMap<>();
+
+        for (String line : lines) {
+            line = line.trim();
+            if (line.startsWith("helpHint")) {
+                hints.put("helpHint", line.substring(line.indexOf('=') + 1));
+            }else if (line.startsWith("funnyHint")) {
+                hints.put("funnyHint", line.substring(line.indexOf('=') + 1));
+            }
+        }
+
+        return hints;
     }
 
     private HashMap<String, String> loadPuzzleItems(String questionPath) {

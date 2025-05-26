@@ -1,17 +1,29 @@
 package Vragen;
 
 import java.util.Scanner;
+import java.util.Random;
+
 
 public class OpenQuestion implements Question {
     private String question;
     private String correctAnswer;
+    private String helpHint;
+    private String funnyHint;
+    private Random random;
 
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
 
     public OpenQuestion(String question, String correctAnswer) {
+        this(question, correctAnswer, "", "");
+    }
+
+    public OpenQuestion(String question, String correctAnswer, String helpHint, String funnyHint) {
         this.question = question;
         this.correctAnswer = correctAnswer.toLowerCase();
+        this.helpHint = helpHint;
+        this.funnyHint = funnyHint;
+        this.random = new Random();
     }
 
     @Override
@@ -30,8 +42,20 @@ public class OpenQuestion implements Question {
             System.out.println("Correct! Goed gedaan.");
             goedBeantwoord = true;
             return true;
+
         } else {
-            System.out.println("Dat is helaas niet juist. Het correcte antwoord was: " + correctAnswer);
+            if (!helpHint.isEmpty() || !funnyHint.isEmpty()) {
+                boolean useHelpHint = helpHint.isEmpty() ? false :
+                        (funnyHint.isEmpty() ? true : random.nextBoolean());
+
+                if (useHelpHint) {
+                    System.out.println("\nHINT: " + helpHint);
+                } else {
+                    System.out.println("\nHINT: " + funnyHint);
+                }
+            } else {
+                System.out.println("Dat is helaas niet juist.");
+            }
             return false;
         }
     }
