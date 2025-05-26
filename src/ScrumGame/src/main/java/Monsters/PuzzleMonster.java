@@ -1,5 +1,6 @@
 package Monsters;
 
+import Vragen.OpenQuestion;
 import Vragen.PuzzleQuestion;
 import Vragen.Question;
 import org.game.Game;
@@ -38,14 +39,25 @@ public class PuzzleMonster extends Monster {
 
     @Override
     public void geefOpdracht() {
-        for (int i = 0; i < questionCount; i++) {
+        toonIntroductie();
+        int correcteAntwoorden = 0;
+
+        while (correcteAntwoorden < 2) {
             Random random = new Random();
             int randomIndex = random.nextInt(questions.size());
             Question randomQuestion = questions.get(randomIndex);
-            randomQuestion.askQuestion(scanner);
+
+            if (randomQuestion.isGoedBeantwoord()) {
+                continue;
+            }
+
+            boolean isCorrect = randomQuestion.askQuestion(scanner);
+
+            if (isCorrect) {
+                correcteAntwoorden++;
+            }
         }
     }
-
     @Override
     protected boolean controleerAntwoord(String antwoord){
 

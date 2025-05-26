@@ -46,4 +46,8 @@ public class MultipleChoice implements Question {
             return false;
         }
     }
+
+    public boolean isGoedBeantwoord() {
+        return goedBeantwoord;
+    }
 }

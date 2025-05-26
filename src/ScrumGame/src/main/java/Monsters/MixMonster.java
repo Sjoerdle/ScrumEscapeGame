@@ -38,11 +38,22 @@ public class MixMonster extends Monster {
     @Override
     public void geefOpdracht() {
         toonIntroductie();
-        for (int i = 0; i < questionCount; i++) {
+        int correcteAntwoorden = 0;
+
+        while (correcteAntwoorden < 2) {
             Random random = new Random();
             int randomIndex = random.nextInt(questions.size());
             Question randomQuestion = questions.get(randomIndex);
-            randomQuestion.askQuestion(scanner);
+
+            if (randomQuestion.isGoedBeantwoord()) {
+                continue;
+            }
+
+            boolean isCorrect = randomQuestion.askQuestion(scanner);
+
+            if (isCorrect) {
+                correcteAntwoorden++;
+            }
         }
     }
 

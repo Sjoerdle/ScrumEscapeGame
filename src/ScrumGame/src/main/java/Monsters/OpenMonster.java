@@ -47,7 +47,7 @@ public class OpenMonster extends Monster {
             int randomIndex = random.nextInt(questions.size());
             Question randomQuestion = questions.get(randomIndex);
 
-            if (((OpenQuestion) randomQuestion).isGoedBeantwoord()) {
+            if (randomQuestion.isGoedBeantwoord()) {
                 continue;
             }
 
