@@ -1,2 +1,5 @@
 vraag=Hoe heet de checklist die bepaalt wanneer een productincrement als ‘af’ wordt beschouwd?
 correct=Definition of Done
+
+helpHint=Denk aan een checklist die bepaalt wanneer iets klaar/compleet is.
+funnyHint=De lijst die voorkomt dat je zegt "Het werkt op mijn laptop!"

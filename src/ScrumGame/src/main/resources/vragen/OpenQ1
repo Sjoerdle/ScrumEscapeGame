@@ -1,2 +1,5 @@
 vraag=Wie is de persoon die verantwoordelijk is voor het beheren en prioriteren van de product backlog?
 correct=Product Owner
+
+helpHint=Denk aan de rol die beslist wat er gebouwd wordt en in welke volgorde.
+funnyHint=De baas van de wishlist die altijd "Dit is high priority!" roept!

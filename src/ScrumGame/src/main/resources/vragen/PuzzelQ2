@@ -7,3 +7,7 @@ term1=Sprint Planning
 term2=Sprint Retrospective
 term3=Backlog Refinement
 term4=Time-box
+
+helpHint=Sprint Planning = plannen van de komende sprint, Sprint Retrospective = terugkijken en verbeteren, Backlog Refinement = backlog items verfijnen, Time-box = tijdslimiet.
+
+funnyHint=Sprint Planning: "Wat gaan we doen?", Sprint Retrospective: "Hoe ging het?", Backlog Refinement: backlog poetsen tot het glanst, Time-box: de wekker die Scrum meetings eindigt!
