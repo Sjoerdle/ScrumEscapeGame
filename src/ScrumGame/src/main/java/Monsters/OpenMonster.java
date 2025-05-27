@@ -1,11 +1,11 @@
 package Monsters;
 
 import Vragen.OpenQuestion;
-import Vragen.Question;
+import Vragen.IQuestion;
 import org.game.Game;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class OpenMonster extends Monster {
     int questionCount;
     String asciiArt;
     Scanner scanner = new Scanner(System.in);
-    ArrayList<OpenQuestion> questions = Game.questionLoader.getOpenVragen();
+    List<IQuestion> questions = Game.questionLoader.getOpenVragen();
 
     public OpenMonster(String filePath, int questionCount, String asciiArt) {
         this.filePath = filePath;
@@ -46,7 +46,7 @@ public class OpenMonster extends Monster {
         while (correcteAntwoorden < 2) {
             Random random = new Random();
             int randomIndex = random.nextInt(questions.size());
-            Question randomQuestion = questions.get(randomIndex);
+            IQuestion randomQuestion = questions.get(randomIndex);
 
             if (randomQuestion.isGoedBeantwoord()) {
                 continue;

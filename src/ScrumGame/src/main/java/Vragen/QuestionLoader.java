@@ -5,7 +5,10 @@ import org.game.Resources;
 import java.util.*;
 
 public class QuestionLoader {
-    private ArrayList<Question> alleVragen = new ArrayList<>(); //Voor monsters met alle vragen
+    private ArrayList<IQuestion> alleVragen = new ArrayList<>(); //Voor monsters met alle vragen
+
+
+
     private ArrayList<MultipleChoice> multipleChoiceVragen = new ArrayList<>(); // Voor monsters met alleen multiple choice vragen>
     private ArrayList<OpenQuestion> openVragen = new ArrayList<>(); // Voor monsters met alleen open vragen
     private ArrayList<PuzzleQuestion> puzzelVragen = new ArrayList<>(); // Voor monsters met alleen puzzelvragen
@@ -168,23 +171,30 @@ public class QuestionLoader {
         return -1;
     }
 
-    public ArrayList<Question> getAlleVragen() {
+    private List<IQuestion> filterQuestions(QuestionType questionType)
+    {
+        return alleVragen.stream()
+                .filter(q -> q.getQuestionType() == questionType)
+                .toList();
+    }
+
+    public ArrayList<IQuestion> getAlleVragen() {
         Collections.shuffle(alleVragen);
         return alleVragen;
     }
 
-    public ArrayList<MultipleChoice> getMultipleChoiceVragen() {
-        Collections.shuffle(multipleChoiceVragen);
-        return multipleChoiceVragen;
+    public List<IQuestion> getMultipleChoiceVragen() {
+        Collections.shuffle(alleVragen);
+        return filterQuestions(QuestionType.MultipleChoice);
     }
 
-    public ArrayList<OpenQuestion> getOpenVragen() {
-        Collections.shuffle(openVragen);
-        return openVragen;
+    public List<IQuestion> getOpenVragen() {
+        Collections.shuffle(alleVragen);
+        return filterQuestions(QuestionType.Open);
     }
 
-    public ArrayList<PuzzleQuestion> getPuzzelVragen() {
-        Collections.shuffle(puzzelVragen);
-        return puzzelVragen;
+    public List<IQuestion> getPuzzelVragen() {
+        Collections.shuffle(alleVragen);
+        return filterQuestions(QuestionType.Puzzle);
     }
 }

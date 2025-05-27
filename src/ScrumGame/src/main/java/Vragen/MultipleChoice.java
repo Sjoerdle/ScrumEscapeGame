@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
 
-public class MultipleChoice implements Question {
+public class MultipleChoice implements IQuestion {
     private String question;
     private List<String> options;
     private int correctAnswer;
@@ -73,4 +73,5 @@ public class MultipleChoice implements Question {
     public boolean isGoedBeantwoord() {
         return goedBeantwoord;
     }
+    public QuestionType getQuestionType() { return QuestionType.MultipleChoice;}
 }
