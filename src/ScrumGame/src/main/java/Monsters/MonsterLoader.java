@@ -216,7 +216,7 @@ public class MonsterLoader {
             int index = random.nextInt(alleMonsters.size());
             Monster monster = alleMonsters.get(index);
             System.out.println("Monster " + (i + 1) + ":");
-            monster.geefOpdracht();
+            monster.toonAsciiArt();
             System.out.println();
         }
     }

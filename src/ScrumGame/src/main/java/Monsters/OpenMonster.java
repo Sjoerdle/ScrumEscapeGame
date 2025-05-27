@@ -29,7 +29,8 @@ public class OpenMonster extends Monster {
         toonAsciiArt();
     }
 
-    private void toonAsciiArt(){
+    @Override
+    public void toonAsciiArt(){
         if(asciiArt != null && !asciiArt.isEmpty()) {
             System.out.println(asciiArt);
         }else{

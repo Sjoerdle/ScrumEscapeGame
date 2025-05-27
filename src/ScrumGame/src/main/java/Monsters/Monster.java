@@ -42,4 +42,6 @@ public abstract class Monster {
         if (isCorrect ) return;
         System.out.println("Probeer het nog eens. Hint: ...");
     }
+
+    public abstract void toonAsciiArt();
 }
