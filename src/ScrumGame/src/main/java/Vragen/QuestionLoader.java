@@ -7,12 +7,6 @@ import java.util.*;
 public class QuestionLoader {
     private ArrayList<IQuestion> alleVragen = new ArrayList<>(); //Voor monsters met alle vragen
 
-
-
-    private ArrayList<MultipleChoice> multipleChoiceVragen = new ArrayList<>(); // Voor monsters met alleen multiple choice vragen>
-    private ArrayList<OpenQuestion> openVragen = new ArrayList<>(); // Voor monsters met alleen open vragen
-    private ArrayList<PuzzleQuestion> puzzelVragen = new ArrayList<>(); // Voor monsters met alleen puzzelvragen
-
     public QuestionLoader() {
         loadMultipleChoiceVragen();
         loadPuzzelVragen();
@@ -36,7 +30,7 @@ public class QuestionLoader {
                         hints.getOrDefault("funnyHint", "")
                 );
 
-                multipleChoiceVragen.add(mc);
+
                 alleVragen.add(mc);
             } else {
                 break;
@@ -51,7 +45,7 @@ public class QuestionLoader {
                 HashMap<String, String> puzzleItems = loadPuzzleItems(questionPath);
 
                 if (!puzzleItems.isEmpty()) {
-                    puzzelVragen.add(new PuzzleQuestion(puzzleItems));
+
                     alleVragen.add(new PuzzleQuestion(puzzleItems));
                 }
             } else {
@@ -75,7 +69,7 @@ public class QuestionLoader {
                         hints.getOrDefault("funnyHint", "")
                 );
 
-               openVragen.add(oq);
+
                alleVragen.add(oq);
             } else {
                 break;
