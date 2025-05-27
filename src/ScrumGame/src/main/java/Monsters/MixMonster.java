@@ -12,7 +12,7 @@ public class MixMonster extends Monster {
     int questionCount;
     String asciiArt;
     Scanner scanner = new Scanner(System.in);
-    ArrayList<Question> questions = Game.questionLoader.getAlleVragen();
+    ArrayList<IQuestion> questions = Game.questionLoader.getAlleVragen();
 
     public MixMonster(String filePath, int questionCount, String asciiArt) {
         this.filePath = filePath;
@@ -44,7 +44,7 @@ public class MixMonster extends Monster {
         while (correcteAntwoorden < 2) {
             Random random = new Random();
             int randomIndex = random.nextInt(questions.size());
-            Question randomQuestion = questions.get(randomIndex);
+            IQuestion randomQuestion = questions.get(randomIndex);
 
             if (randomQuestion.isGoedBeantwoord()) {
                 continue;

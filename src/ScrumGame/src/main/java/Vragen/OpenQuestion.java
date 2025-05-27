@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 
-public class OpenQuestion implements Question {
+public class OpenQuestion implements IQuestion {
     private String question;
     private String correctAnswer;
     private String helpHint;
@@ -63,4 +63,5 @@ public class OpenQuestion implements Question {
     public boolean isGoedBeantwoord() {
         return goedBeantwoord;
     }
+    public QuestionType getQuestionType() { return QuestionType.Open; }
 }

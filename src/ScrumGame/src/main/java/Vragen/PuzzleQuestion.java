@@ -2,7 +2,7 @@ package Vragen;
 
 import java.util.*;
 
-public class PuzzleQuestion implements Question {
+public class PuzzleQuestion implements IQuestion {
     private String question;
     private Map<String, String> matchPairs;
     private List<String> terms;
@@ -99,4 +99,5 @@ public class PuzzleQuestion implements Question {
     public boolean isGoedBeantwoord() {
         return goedBeantwoord;
     }
+    public QuestionType getQuestionType() { return QuestionType.Puzzle; }
 }
