@@ -1,5 +1,6 @@
 package org.game;
 
+import Vragen.IQuestion;
 import Vragen.QuestionLoader;
 import Monsters.MonsterLoader;
 import Monsters.Monster;

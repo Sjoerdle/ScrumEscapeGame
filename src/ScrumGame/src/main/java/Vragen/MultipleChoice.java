@@ -26,7 +26,6 @@ public class MultipleChoice implements IQuestion {
         this.helpHint = helpHint;
         this.funnyHint = funnyHint;
         this.random = new Random();
-
     }
 
     @Override
@@ -55,9 +54,9 @@ public class MultipleChoice implements IQuestion {
                              (funnyHint.isEmpty() ? true : random.nextBoolean());
 
                      if(useHelpHint) {
-                         System.out.println("\nHINT: " + helpHint);
+                         System.out.println("\nHelp Hint: " + helpHint);
                      }else{
-                         System.out.println("\nHINT: " + funnyHint);
+                         System.out.println("\nFunny Hint: " + funnyHint);
                      }
                  } else {
                      System.out.println("Dat is helaas niet juist.");
