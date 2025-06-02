@@ -1,15 +1,15 @@
 package org.game;
 
-import Vragen.Question;
 import Vragen.QuestionLoader;
 import Monsters.MonsterLoader;
 import Monsters.Monster;
+import org.game.rooms.Emojis;
 import org.game.rooms.Room;
 import org.jline.terminal.Terminal;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Game {
@@ -26,6 +26,56 @@ public class Game {
     public static org.game.Console console;
     public static QuestionLoader questionLoader;
     public static MonsterLoader monsterLoader;
+
+    // Render the current room to the console using emojis
+    public void renderRoomFancy(String message) {
+        String[] emojiMap = currentRoom.getTransliteratedMap();
+
+        Console.clearConsole();
+
+        // Show room name and instruction
+        System.out.println("Room: " + currentRoom.getName());
+        if (!currentRoom.getInstruction().isEmpty()) {
+            System.out.println(currentRoom.getInstruction());
+        }
+        System.out.println();
+
+        // Render the map with emojis and the player position
+        for (int y = 0; y < currentRoom.getMapHeight(); y++) {
+            StringBuilder row = new StringBuilder();
+            for (int x = 0; x < currentRoom.getMapWidth(); x++) {
+                if (x == speler.getX() && y == speler.getY()) {
+                    // Show player emoji at current position
+                    row.append("\uD83E\uDDD9\u200D♂\uFE0F"); // 🧙‍♂️
+                } else {
+                    char originalChar = currentRoom.getMap()[y][x];
+                    if (originalChar == 'P') {
+                        // Don't show the original P, show empty space
+                        row.append("  "); // Double space to match emoji width
+                    } else {
+                        // Get the emoji for this position from the transliterated map
+                        // Extract the character at this position and get its emoji representation
+                        String charAtPosition = getEmojiForPosition(x, y, emojiMap[y]);
+                        row.append(charAtPosition);
+                    }
+                }
+            }
+            System.out.println(row.toString());
+        }
+        System.out.println();
+        System.out.println(message);
+    }
+
+    // Helper method to extract emoji at specific position from emoji row string
+    private String getEmojiForPosition(int x, int y, String emojiRow) {
+        char originalChar = currentRoom.getMap()[y][x];
+
+        try {
+            return Emojis.getEmojiForCharacter(originalChar);
+        } catch (Exception e) {
+            return "ERROR";
+        }
+    }
 
     // Render the current room to the console
     public void renderRoom(String message) {
@@ -164,7 +214,7 @@ public class Game {
                     speler.setLocation(newX, newY);
                 }
 
-                renderRoom(message);
+                renderRoomFancy(message);
             } else {
                 System.out.println("You can't move there - there's a wall!");
             }
@@ -204,7 +254,7 @@ public class Game {
     // Main game loop
     public void start() {
         System.out.println("Welcome to the Game!");
-        renderRoom("");
+        renderRoomFancy("");
 
         try {
             handleInput();
