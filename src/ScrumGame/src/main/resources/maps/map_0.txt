@@ -3,8 +3,8 @@ instruction=Reach the exit to go to the next room!
 nextRoom=map_1.txt
 monsters=monster_0.txt
 +---------------+
-|P|     K   M| E|
-| | |       M|  |
+|P|     K   M# E|
+| | |       M#  |
 | | |        D  |
-|   |       M|  |
+|   |       M#  |
 +---------------+

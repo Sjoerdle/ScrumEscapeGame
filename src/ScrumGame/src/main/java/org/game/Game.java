@@ -245,7 +245,7 @@ public class Game {
         }
 
         // Can't move into walls
-        if (cell == '+' || cell == '-' || cell == '|') {
+        if (cell == '+' || cell == '-' || cell == '|' || cell == '#') {
             return false;
         }
 
