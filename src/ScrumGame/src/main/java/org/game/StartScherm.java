@@ -1,23 +1,36 @@
 package org.game;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.InputStreamReader;
 
 public class StartScherm {
-    private Scanner scanner;
+    private BufferedReader reader;
     private boolean running;
 
     public StartScherm() {
-        scanner = new Scanner(System.in);
+        reader = new BufferedReader(new InputStreamReader(System.in));
         running = true;
     }
 
     public void start() {
-        while (running) {
-            displayMenu();
-            handleUserInput();
+        try {
+            while (running) {
+                displayMenu();
+                handleUserInput();
+            }
+        } catch (Exception e) {
+            System.err.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Error closing reader: " + e.getMessage());
+            }
         }
-        scanner.close();
     }
 
     private void displayMenu() {
@@ -35,90 +48,96 @@ public class StartScherm {
     }
 
     private void handleUserInput() {
-        String input = scanner.nextLine();
+        try {
+            String input = reader.readLine();
+            if (input == null) {
+                running = false;
+                return;
+            }
 
-        switch(input) {
-            case "1":
-                startGame();
-                break;
-            case "2":
-                showInstructions();
-                break;
-            case "3":
-                showCommands();
-                break;
-            case "4":
-                showCredits();
-                break;
-            case "5":
-                exitGame();
-                break;
-            default:
-                System.out.println("Ongeldige optie. Druk op Enter om terug te gaan.");
-                scanner.nextLine();
-                break;
+            input = input.trim();
+
+            switch(input) {
+                case "1":
+                    startGame();
+                    break;
+                case "2":
+                    showInstructions();
+                    break;
+                case "3":
+                    showCommands();
+                    break;
+                case "4":
+                    showCredits();
+                    break;
+                case "5":
+                    System.out.println("Bedankt voor het spelen! Tot ziens!");
+                    running = false;
+                    return;
+                default:
+                    System.out.println("Ongeldige keuze. Probeer opnieuw.");
+                    waitForEnter();
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading input: " + e.getMessage());
+            running = false;
         }
     }
 
     private void startGame() {
-        System.out.println("\nGame wordt gestart...");
         Game game = new Game();
-        game.start();
-        System.out.println("Druk op Enter om terug te gaan naar het menu.");
-        scanner.nextLine();
+        game.renderRoomFancy("Welkom in de game! Gebruik WASD om te bewegen en Q om af te sluiten.");
+
+        try (BufferedReader gameReader = new BufferedReader(new InputStreamReader(System.in))) {
+            while (true) {
+                String input = gameReader.readLine();
+                if (input == null || input.equalsIgnoreCase("q")) {
+                    break;
+                }
+                game.handleInput(input);
+            }
+        } catch (IOException e) {
+            System.err.println("Error in game: " + e.getMessage());
+        }
     }
 
     private void showInstructions() {
         Console.clearConsole();
-        System.out.println("===============================================");
-        System.out.println("UITLEG SCRUM ESCAPE BUILDING");
-        System.out.println("===============================================");
-        System.out.println("Je zit opgesloten in een Scrum gebouw en moet ontsnappen.");
-        System.out.println("Navigeer door de verschillende ruimtes, vecht monster, ");
-        System.out.println("los puzzels op, en gebruik Scrum-principes om te ontsnappen.");
-        System.out.println("===============================================");
-        System.out.println("Druk op Enter om terug te gaan naar het menu.");
-        scanner.nextLine();
+        System.out.println("=== Speluitleg ===");
+        System.out.println("Je bent een programmeur die vastzit in een gebouw vol met monsters.");
+        System.out.println("Verzamel sleutels om deuren te openen en ontsnap uit het gebouw!");
+        System.out.println("\nItems:");
+        System.out.println("- H: Health Potion (herstelt 20 HP)");
+        System.out.println("- K: Sleutel (opent deuren)");
+        System.out.println("\nDruk op Enter om terug te keren naar het hoofdmenu...");
+        waitForEnter();
     }
 
     private void showCommands() {
         Console.clearConsole();
-        System.out.println("===============================================");
-        System.out.println("COMMANDS EN CONTROLS");
-        System.out.println("===============================================");
-        System.out.println("Voorbeeld commandos");
-        System.out.println("W: beweeg naar voren");
-        System.out.println("S: beweeg naar achteren");
-        System.out.println("A: beweeg naar links");
-        System.out.println("D: beweeg naar rechts");
-        System.out.println("- help/h: Toon beschikbare commands");
-        System.out.println("===============================================");
-        System.out.println("Druk op Enter om terug te gaan naar het menu.");
-        scanner.nextLine();
+        System.out.println("=== Commands en Controls ===");
+        System.out.println("WASD: Beweeg je karakter");
+        System.out.println("1-9: Gebruik een item uit je inventaris");
+        System.out.println("Q: Stop het spel");
+        System.out.println("\nDruk op Enter om terug te keren naar het hoofdmenu...");
+        waitForEnter();
     }
 
     private void showCredits() {
         Console.clearConsole();
-        System.out.println("===============================================");
-        System.out.println("CREDITS");
-        System.out.println("===============================================");
-        System.out.println("Scrum Escape Building");
-        System.out.println("Een terminal avonturenspel");
-        System.out.println("\nOntworpen en ontwikkeld door:");
-        System.out.println("Stefaan Molenaar");
-        System.out.println("Benjamin van Teeseling");
-        System.out.println("Roderick Schravendeel");
-        System.out.println("Sjoerd Lunshof");
-        System.out.println("\n© 2025 Alle rechten voorbehouden");
-        System.out.println("===============================================");
-        System.out.println("Druk op Enter om terug te gaan naar het menu.");
-        scanner.nextLine();
+        System.out.println("=== Credits ===");
+        System.out.println("Ontwikkeld door: [Jouw Naam]");
+        System.out.println("Special thanks to: [Teamleden]");
+        System.out.println("\nDruk op Enter om terug te keren naar het hoofdmenu...");
+        waitForEnter();
     }
 
-    private void exitGame() {
-        System.out.println("\nBedankt voor het spelen van Scrum Escape Building!");
-        System.out.println("Tot de volgende keer!");
-        running = false;
+    private void waitForEnter() {
+        System.out.println("Druk op Enter om door te gaan...");
+        try {
+            reader.readLine();
+        } catch (IOException e) {
+            System.err.println("Error reading input: " + e.getMessage());
+        }
     }
-
 }
