@@ -6,13 +6,17 @@ import java.util.Scanner;
 public class StartScherm {
     private Scanner scanner;
     private boolean running;
+    private GeluidSpeler speler;
+
 
     public StartScherm() {
         scanner = new Scanner(System.in);
         running = true;
+        speler = new GeluidSpeler();
     }
 
     public void start() {
+        speler.speel("startscherm.wav", true); // true = herhalen
         while (running) {
             displayMenu();
             handleUserInput();
@@ -118,6 +122,7 @@ public class StartScherm {
     private void exitGame() {
         System.out.println("\nBedankt voor het spelen van Scrum Escape Building!");
         System.out.println("Tot de volgende keer!");
+        speler.stop();
         running = false;
     }
 
