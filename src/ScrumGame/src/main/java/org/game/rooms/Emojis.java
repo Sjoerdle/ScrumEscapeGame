@@ -18,6 +18,8 @@ public class Emojis {
             case '+':
             case '-':
                 return WALL;
+            case '#':
+                return WALL_CHAIN;
             case 'E':
                 return EXIT;
             case '*':
@@ -32,6 +34,7 @@ public class Emojis {
     }
 
     public static final String WALL = "🧱";
+    public static final String WALL_CHAIN = "⛓\uFE0F";
     public static final String PLAYER = "🧙‍♂️";
     public static final String MONSTER = "👻";
     public static final String KEY = "🗝️";
@@ -40,5 +43,5 @@ public class Emojis {
     public static final String HEALTH = "❤";
     public static final String EXIT = "🪜";
     public static final String LOCK = "🔒";
-    public static final String EMPTY = "⬛";
+    public static final String EMPTY = "  "; // "⬜";
 }
