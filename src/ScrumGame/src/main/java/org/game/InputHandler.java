@@ -173,6 +173,24 @@ public class InputHandler {
                 System.out.println("You used your monster skip ability!");
                 speler.useMonsterSkip();
                 message = "Monster avoided successfully!";
+            } else if (speler.hasItem("Scroll of Monster Evasion")) {
+                System.out.println("You encountered a monster!");
+                System.out.print("Do you want to use a Scroll of Monster Evasion? (y/n): ");
+                char choice = Character.toLowerCase((char) readSingleKey());
+                System.out.println();
+
+                if (choice == 'y') {
+                    speler.useItem("Scroll of Monster Evasion");
+                    message = "Used Scroll of Monster Evasion to skip the monster!";
+                    currentRoom.getMap()[newY][newX] = ' ';
+                    speler.setLocation(newX, newY);
+                    gameRenderer.renderRoomFancy(message);
+                    return;
+                } else {
+                    System.out.println("You chose to face the monster!");
+                    Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
+                    monster.geefOpdracht();
+                }
             } else {
                 System.out.println("You encountered a monster!");
                 Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
@@ -200,17 +218,14 @@ public class InputHandler {
             speler.addItem(healthPotion);
             message = "Je hebt een " + healthPotion.getName() + " opgepakt!";
 
+            //empty tile
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
         } else if (destination == '*') {
-            // Magic item - could be score multiplier or skip monster
+            // Magic item pickup - randomly choose between score multiplier and monster skip
             Item magicItem;
-            // Randomly choose between the two magic items
-            if (Math.random() < 0.5) {
-                magicItem = new ScoreMultiplier();
-            } else {
-                magicItem = new SkipMonster();
-            }
+            magicItem = new SkipMonster();
+
 
             speler.addItem(magicItem);
             message = "Je hebt een " + magicItem.getName() + " opgepakt!";
