@@ -1,5 +1,5 @@
 questionType=open,puzzle
-questionCount=2
+questionCount=1
                             ,-.
        ___,---.__          /'|`\          __,---,___
     ,-'    \`    `-.____,-'  |  `-.____,-'    //    `-.

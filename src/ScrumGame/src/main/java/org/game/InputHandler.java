@@ -171,8 +171,12 @@ public class InputHandler {
             // Monster encounter
             if (speler.canSkipMonster()) {
                 System.out.println("You used your monster skip ability!");
-                speler.useMonsterSkip();
+                speler.useMonsterSkip();  // This will set skipNextMonster to false
                 message = "Monster avoided successfully!";
+                currentRoom.getMap()[newY][newX] = ' ';  // Remove the monster
+                speler.setLocation(newX, newY);
+                gameRenderer.renderRoomFancy(message);
+                return;
             } else if (speler.hasItem("Scroll of Monster Evasion")) {
                 System.out.println("You encountered a monster!");
                 System.out.print("Do you want to use a Scroll of Monster Evasion? (y/n): ");
@@ -180,9 +184,13 @@ public class InputHandler {
                 System.out.println();
 
                 if (choice == 'y') {
+                    // First remove the item from inventory
                     speler.useItem("Scroll of Monster Evasion");
+                    // Then use the skip ability
+                    speler.activateMonsterSkip();
+                    speler.useMonsterSkip();  // This will consume the skip immediately
                     message = "Used Scroll of Monster Evasion to skip the monster!";
-                    currentRoom.getMap()[newY][newX] = ' ';
+                    currentRoom.getMap()[newY][newX] = ' ';  // Remove the monster
                     speler.setLocation(newX, newY);
                     gameRenderer.renderRoomFancy(message);
                     return;
