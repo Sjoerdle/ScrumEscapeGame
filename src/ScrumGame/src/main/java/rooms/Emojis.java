@@ -26,6 +26,10 @@ public class Emojis {
                 return MAGIC;
             case 'H':
                 return HEALTH;
+            case 'I':
+                return ITEM;
+            case 'S':
+                return SCROLL;
             case ' ':
                 return EMPTY;
             default:
@@ -40,8 +44,10 @@ public class Emojis {
     public static final String KEY = "🗝️";
     public static final String DOOR = "🚪";
     public static final String MAGIC = "✨";
-    public static final String HEALTH = "❤";
+    public static final String HEALTH = "❤️";
     public static final String EXIT = "🪜";
     public static final String LOCK = "🔒";
+    public static final String ITEM = "📦";
+    public static final String SCROLL = "📜";
     public static final String EMPTY = "  "; // "⬜";
 }

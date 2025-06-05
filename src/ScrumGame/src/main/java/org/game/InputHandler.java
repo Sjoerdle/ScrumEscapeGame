@@ -1,6 +1,7 @@
 package org.game;
 
 import Monsters.Monster;
+import items.*;
 import rooms.Room;
 import org.jline.terminal.Terminal;
 import player.Speler;
@@ -41,23 +42,34 @@ public class InputHandler {
         }
     }
 
-    // Take user input and process movement
+    // Take user input and process movement and item usage
     public void handleInput() throws IOException {
         Scanner scanner = new Scanner(System.in);
         // Haal de terminal uit de console klasse
         Terminal terminal = gameState.getConsole().getTerminal();
 
         while (true) {
-            System.out.println("Use WASD to move (W=up, A=left, S=down, D=right), Q to quit:");
+            System.out.println("Use WASD to move (W=up, A=left, S=down, D=right)");
+            System.out.println("Use 1/2/3 to use items, I for inventory, Q to quit:");
 
             int key = readSingleKey();
-
-//            while (key == -2) key = terminal.reader().read(1);
             char c = Character.toLowerCase((char) key);
 
             if (c == 'q') {
                 System.out.println("Thanks for playing!");
                 break;
+            }
+
+            // Handle item usage
+            if (c >= '1' && c <= '9') {
+                handleItemUsage(c - '0');
+                continue;
+            }
+
+            // Show inventory
+            if (c == 'i') {
+                showInventory();
+                continue;
             }
 
             Speler speler = gameState.getSpeler();
@@ -92,6 +104,50 @@ public class InputHandler {
         }
     }
 
+    private void handleItemUsage(int itemSlot) {
+        Speler speler = gameState.getSpeler();
+        String[] itemNames = {"Healing Potion", "Score Multiplier", "Scroll of Monster Evasion"};
+
+        if (itemSlot >= 1 && itemSlot <= itemNames.length) {
+            String itemName = itemNames[itemSlot - 1];
+            if (speler.hasItem(itemName)) {
+                boolean used = speler.useItem(itemName);
+                if (used) {
+                    gameRenderer.renderRoomFancy("Used " + itemName + "!");
+                } else {
+                    gameRenderer.renderRoomFancy("Failed to use " + itemName + "!");
+                }
+            } else {
+                gameRenderer.renderRoomFancy("You don't have a " + itemName + "!");
+            }
+        }
+    }
+
+    private void showInventory() {
+        Speler speler = gameState.getSpeler();
+        System.out.println("\n=== INVENTORY ===");
+        System.out.println("Health: " + speler.getHp() + "/100");
+        System.out.println("Keys: " + speler.getKeyCount());
+        System.out.println("\nItems:");
+
+        String[] itemNames = {"Healing Potion", "Score Multiplier", "Scroll of Monster Evasion"};
+        for (int i = 0; i < itemNames.length; i++) {
+            if (speler.hasItem(itemNames[i])) {
+                System.out.println((i + 1) + ". " + itemNames[i]);
+            } else {
+                System.out.println((i + 1) + ". [Empty]");
+            }
+        }
+
+        System.out.println("\nPress any key to continue...");
+        try {
+            readSingleKey();
+        } catch (Exception e) {
+            // Ignore
+        }
+        gameRenderer.renderRoomFancy("");
+    }
+
     private void processMovement(int newX, int newY) {
         Room currentRoom = gameState.getCurrentRoom();
         Speler speler = gameState.getSpeler();
@@ -112,11 +168,16 @@ public class InputHandler {
                 return;
             }
         } else if (destination == 'M') {
-            // Monster encounter - empty implementation for now
-            System.out.println("You encountered a monster!");
-
-            Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
-            monster.geefOpdracht();
+            // Monster encounter
+            if (speler.canSkipMonster()) {
+                System.out.println("You used your monster skip ability!");
+                speler.useMonsterSkip();
+                message = "Monster avoided successfully!";
+            } else {
+                System.out.println("You encountered a monster!");
+                Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
+                monster.geefOpdracht();
+            }
 
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
@@ -131,6 +192,29 @@ public class InputHandler {
         } else if (destination == 'D') {
             //Door, needs a key to open
             message = "Je hebt een deur geopend!";
+            currentRoom.getMap()[newY][newX] = ' ';
+            speler.setLocation(newX, newY);
+        } else if (destination == 'H') {
+            // Health potion pickup
+            Item healthPotion = new HealthPotion();
+            speler.addItem(healthPotion);
+            message = "Je hebt een " + healthPotion.getName() + " opgepakt!";
+
+            currentRoom.getMap()[newY][newX] = ' ';
+            speler.setLocation(newX, newY);
+        } else if (destination == '*') {
+            // Magic item - could be score multiplier or skip monster
+            Item magicItem;
+            // Randomly choose between the two magic items
+            if (Math.random() < 0.5) {
+                magicItem = new ScoreMultiplier();
+            } else {
+                magicItem = new SkipMonster();
+            }
+
+            speler.addItem(magicItem);
+            message = "Je hebt een " + magicItem.getName() + " opgepakt!";
+
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
         } else {

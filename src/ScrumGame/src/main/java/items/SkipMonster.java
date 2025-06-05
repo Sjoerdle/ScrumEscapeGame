@@ -18,6 +18,7 @@ public class SkipMonster implements Item {
 
     @Override
     public void use(Speler speler) {
-
+        speler.activateMonsterSkip();
+        System.out.println("Monster skip activated! You can now avoid the next monster encounter.");
     }
 }

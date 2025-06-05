@@ -5,6 +5,7 @@ import Monsters.MonsterLoader;
 import rooms.Room;
 import player.Speler;
 import ui.Console;
+import ui.GameUIObserver;
 
 public class GameState {
     private Room currentRoom;
@@ -12,6 +13,7 @@ public class GameState {
     private Console console;
     private QuestionLoader questionLoader;
     private MonsterLoader monsterLoader;
+    private GameUIObserver uiObserver;
 
     public GameState() {
         currentRoom = new Room("map_0.txt");
@@ -19,6 +21,10 @@ public class GameState {
         console = new Console();
         questionLoader = new QuestionLoader();
         monsterLoader = new MonsterLoader();
+
+        // Set up observer pattern
+        uiObserver = new GameUIObserver(false); // Set to true for debug mode
+        speler.addObserver(uiObserver);
     }
 
     public Room getCurrentRoom() {
@@ -43,5 +49,14 @@ public class GameState {
 
     public MonsterLoader getMonsterLoader() {
         return monsterLoader;
+    }
+
+    public GameUIObserver getUiObserver() {
+        return uiObserver;
+    }
+
+    // Method to toggle debug mode
+    public void toggleDebugMode() {
+        uiObserver.setDebugMode(!uiObserver.getClass().equals(GameUIObserver.class));
     }
 }
