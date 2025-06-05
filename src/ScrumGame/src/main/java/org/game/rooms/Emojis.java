@@ -1,44 +1,36 @@
 package org.game.rooms;
 
 public class Emojis {
-    public static String getEmojiForCharacter(char character) {
-        // Handle all possible characters from the map
+
+    public static String getEmojiForCharacter(char character) throws Exception {
         switch (character) {
-            case 'P':  // Player
+            case 'P':
                 return PLAYER;
-            case 'M':  // Monster
+            case 'M':
                 return MONSTER;
-            case 'K':  // Key
+            case 'K':
                 return KEY;
-            case 'D':  // Door
+            case 'D':
                 return DOOR;
-            case 'L':  // Lock
+            case 'L':
                 return LOCK;
-            case '|':  // Wall
-            case '+':  // Wall corner
-            case '-':  // Wall horizontal
+            case '|':
+            case '+':
+            case '-':
                 return WALL;
-            case 'E':  // Exit
+            case 'E':
                 return EXIT;
-            case '*':  // Magic/Power-up
+            case '*':
                 return MAGIC;
-            case 'H':  // Health potion
+            case 'H':
                 return HEALTH;
-            case ' ':  // Empty space
+            case ' ':
                 return EMPTY;
-            case '\n': // Newline (shouldn't be rendered)
-            case '\r': // Carriage return (shouldn't be rendered)
-                return "";
-            case '\0': // Null character
-                return " ";
             default:
-                // For any unexpected character, return a space
-                return " ";
+                throw new Exception("Char not implemented: " + character);
         }
     }
 
-    
-    // Emoji constants
     public static final String WALL = "🧱";
     public static final String PLAYER = "🧙‍♂️";
     public static final String MONSTER = "👻";
@@ -48,5 +40,5 @@ public class Emojis {
     public static final String HEALTH = "❤";
     public static final String EXIT = "🪜";
     public static final String LOCK = "🔒";
-    public static final String EMPTY = "⬜";  // Changed to white square for better visibility
+    public static final String EMPTY = "⬛";
 }
