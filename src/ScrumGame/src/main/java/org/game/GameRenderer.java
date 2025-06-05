@@ -1,15 +1,68 @@
 package org.game;
 
+import items.Item;
 import rooms.Emojis;
 import rooms.Room;
 import player.Speler;
 import ui.Console;
+
+import java.util.Map;
 
 public class GameRenderer {
     private GameState gameState;
 
     public GameRenderer(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    // Helper method to create HP bar with hearts
+    private String createHpBar(int currentHp, int maxHp) {
+        int hearts = (int) Math.ceil((double) currentHp / 20); // 5 hearts for 100 HP (20 HP per heart)
+        int maxHearts = maxHp / 20;
+        StringBuilder bar = new StringBuilder("HP: ");
+
+        // Add filled hearts
+        for (int i = 0; i < hearts; i++) {
+            bar.append("❤️");
+        }
+
+        // Add empty hearts
+        for (int i = hearts; i < maxHearts; i++) {
+            bar.append("🤍");
+        }
+
+        return bar.append(" ").append(currentHp).append("/").append(maxHp).toString();
+    }
+
+    // Helper method to get inventory summary
+    private String getInventorySummary(Speler speler) {
+        StringBuilder summary = new StringBuilder();
+        
+        // Show keys separately
+        if (speler.getKeyCount() > 0) {
+            summary.append("Keys: 🗝️x").append(speler.getKeyCount());
+        }
+        
+        // Get other items (excluding keys)
+        Map<String, Item> inventory = speler.getInventory();
+        if (!inventory.isEmpty() || speler.getKeyCount() > 0) {
+            if (speler.getKeyCount() > 0) {
+                summary.append(" | ");
+            }
+            summary.append("Items: ");
+            boolean firstItem = true;
+            for (Map.Entry<String, Item> entry : inventory.entrySet()) {
+                if (!entry.getKey().equals("Key")) {  // Skip keys as they're shown separately
+                    if (!firstItem) {
+                        summary.append(", ");
+                    }
+                    summary.append(entry.getKey());
+                    firstItem = false;
+                }
+            }
+        }
+        
+        return summary.toString().isEmpty() ? "No items" : summary.toString();
     }
 
     // Render the current room to the console using emojis
@@ -19,6 +72,11 @@ public class GameRenderer {
         String[] emojiMap = currentRoom.getTransliteratedMap();
 
         Console.clearConsole();
+
+        // Always show HP and inventory at the top
+        System.out.println(createHpBar(speler.getHp(), 100));
+        System.out.println(getInventorySummary(speler));
+        System.out.println("-".repeat(40));
 
         // Show room name and instruction
         System.out.println("Room: " + currentRoom.getName());
@@ -33,7 +91,7 @@ public class GameRenderer {
             for (int x = 0; x < currentRoom.getMapWidth(); x++) {
                 if (x == speler.getX() && y == speler.getY()) {
                     // Show player emoji at current position
-                    row.append(Emojis.PLAYER); // 🧙‍♂️
+                    row.append(Emojis.PLAYER);
                 } else {
                     char originalChar = currentRoom.getMap()[y][x];
                     if (originalChar == 'P') {
@@ -41,7 +99,6 @@ public class GameRenderer {
                         row.append("  "); // Double space to match emoji width
                     } else {
                         // Get the emoji for this position from the transliterated map
-                        // Extract the character at this position and get its emoji representation
                         String charAtPosition = getEmojiForPosition(x, y, emojiMap[y]);
                         row.append(charAtPosition);
                     }
@@ -61,7 +118,7 @@ public class GameRenderer {
         try {
             return Emojis.getEmojiForCharacter(originalChar);
         } catch (Exception e) {
-            return "ERROR";
+            return "  ";
         }
     }
 
@@ -72,6 +129,11 @@ public class GameRenderer {
         char[][] map = currentRoom.getMap();
 
         Console.clearConsole();
+
+        // Always show HP and inventory at the top
+        System.out.println(createHpBar(speler.getHp(), 100));
+        System.out.println(getInventorySummary(speler));
+        System.out.println("-".repeat(40));
 
         // Show room name and instruction
         System.out.println("Room: " + currentRoom.getName());
