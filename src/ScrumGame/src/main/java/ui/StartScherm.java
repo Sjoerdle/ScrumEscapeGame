@@ -1,6 +1,8 @@
-package org.game;
+package ui;
 
-import java.io.IOException;
+import org.game.Game;
+import audio.GeluidSpeler;
+
 import java.util.Scanner;
 
 public class StartScherm {

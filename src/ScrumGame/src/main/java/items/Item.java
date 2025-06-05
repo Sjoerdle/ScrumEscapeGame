@@ -1,6 +1,6 @@
-package org.game.items;
+package items;
 
-import org.game.Speler;
+import player.Speler;
 
 public interface Item {
     String getName();

@@ -1,8 +1,9 @@
 package org.game;
 
 import Monsters.Monster;
-import org.game.rooms.Room;
+import rooms.Room;
 import org.jline.terminal.Terminal;
+import player.Speler;
 
 import java.io.IOException;
 import java.io.Reader;

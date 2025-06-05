@@ -1,4 +1,4 @@
-package org.game;
+package player;
 
 public interface PlayerObserver {
     void onPlayerHealthChanged(int newHealth);

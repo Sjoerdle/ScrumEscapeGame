@@ -1,5 +1,5 @@
 // in package org.game
-package org.game;
+package audio;
 
 import javax.sound.sampled.*;
 import java.io.IOException;

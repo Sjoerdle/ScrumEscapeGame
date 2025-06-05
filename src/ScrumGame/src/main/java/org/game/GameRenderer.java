@@ -1,7 +1,9 @@
 package org.game;
 
-import org.game.rooms.Emojis;
-import org.game.rooms.Room;
+import rooms.Emojis;
+import rooms.Room;
+import player.Speler;
+import ui.Console;
 
 public class GameRenderer {
     private GameState gameState;

@@ -1,6 +1,6 @@
-package org.game.items;
+package items;
 
-import org.game.Speler;
+import player.Speler;
 
 public class ScoreMultiplier implements Item {
     private final String name = "Score Multiplier";

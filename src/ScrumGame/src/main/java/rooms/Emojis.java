@@ -1,4 +1,4 @@
-package org.game.rooms;
+package rooms;
 
 public class Emojis {
 

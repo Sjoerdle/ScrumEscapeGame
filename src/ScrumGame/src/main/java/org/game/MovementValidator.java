@@ -1,6 +1,7 @@
 package org.game;
 
-import org.game.rooms.Room;
+import rooms.Room;
+import player.Speler;
 
 public class MovementValidator {
     private GameState gameState;

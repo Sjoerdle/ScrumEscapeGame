@@ -1,6 +1,6 @@
 package Vragen;
 
-import org.game.Resources;
+import ui.Resources;
 
 import java.util.*;
 

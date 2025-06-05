@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import org.game.Game;
-import org.game.Resources;
+import ui.Resources;
 
 public class MonsterLoader {
     private ArrayList<OpenMonster> openMonsters;

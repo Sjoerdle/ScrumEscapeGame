@@ -1,4 +1,4 @@
-package org.game;
+package ui;
 
 import org.jline.reader.*;
 import org.jline.terminal.*;

@@ -1,6 +1,6 @@
-package org.game.items;
+package items;
 
-import org.game.Speler;
+import player.Speler;
 
 public class HealthPotion implements Item {
     private final int healAmount = 50;

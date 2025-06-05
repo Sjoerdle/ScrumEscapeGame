@@ -1,6 +1,6 @@
-package org.game.items;
+package items;
 
-import org.game.Speler;
+import player.Speler;
 
 public class SkipMonster implements Item {
     private final String name = "Scroll of Monster Evasion";

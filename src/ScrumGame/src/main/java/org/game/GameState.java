@@ -2,12 +2,14 @@ package org.game;
 
 import Vragen.QuestionLoader;
 import Monsters.MonsterLoader;
-import org.game.rooms.Room;
+import rooms.Room;
+import player.Speler;
+import ui.Console;
 
 public class GameState {
     private Room currentRoom;
     private Speler speler;
-    private org.game.Console console;
+    private Console console;
     private QuestionLoader questionLoader;
     private MonsterLoader monsterLoader;
 
@@ -31,7 +33,7 @@ public class GameState {
         return speler;
     }
 
-    public org.game.Console getConsole() {
+    public Console getConsole() {
         return console;
     }
 

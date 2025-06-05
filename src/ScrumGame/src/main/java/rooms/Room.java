@@ -1,10 +1,9 @@
-package org.game.rooms;
+package rooms;
 
-import org.game.Resources;
+import ui.Resources;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class Room {
     private String name;
