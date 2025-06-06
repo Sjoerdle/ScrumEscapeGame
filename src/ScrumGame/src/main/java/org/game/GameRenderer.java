@@ -15,18 +15,15 @@ public class GameRenderer {
         this.gameState = gameState;
     }
 
-    // Helper method to create HP bar with hearts
     private String createHpBar(int currentHp, int maxHp) {
-        int hearts = (int) Math.ceil((double) currentHp / 20); // 5 hearts for 100 HP (20 HP per heart)
+        int hearts = (int) Math.ceil((double) currentHp / 20);
         int maxHearts = maxHp / 20;
         StringBuilder bar = new StringBuilder("HP: ");
 
-        // Add filled hearts
         for (int i = 0; i < hearts; i++) {
             bar.append("❤️");
         }
 
-        // Add empty hearts
         for (int i = hearts; i < maxHearts; i++) {
             bar.append("🤍");
         }
@@ -52,7 +49,7 @@ public class GameRenderer {
             summary.append("Items: ");
             boolean firstItem = true;
             for (Map.Entry<String, Item> entry : inventory.entrySet()) {
-                if (!entry.getKey().equals("Key")) {  // Skip keys as they're shown separately
+                if (!entry.getKey().equals("Key")) {
                     if (!firstItem) {
                         summary.append(", ");
                     }
