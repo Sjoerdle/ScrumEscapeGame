@@ -23,18 +23,6 @@ public class GameUIObserver implements PlayerObserver {
     }
 
     @Override
-    public void onPlayerScoreChanged(int newScore) {
-        if (debugMode) {
-            System.out.println("[DEBUG] Score changed to: " + newScore);
-        }
-
-        // Show milestone messages
-        if (newScore > 0 && newScore % 100 == 0) {
-            System.out.println("🎉 Score milestone reached: " + newScore + " points!");
-        }
-    }
-
-    @Override
     public void onPlayerPositionChanged(int x, int y) {
         if (debugMode) {
             System.out.println("[DEBUG] Player moved to position: (" + x + ", " + y + ")");

@@ -106,7 +106,7 @@ public class InputHandler {
 
     private void handleItemUsage(int itemSlot) {
         Speler speler = gameState.getSpeler();
-        String[] itemNames = {"Healing Potion", "Score Multiplier", "Scroll of Monster Evasion"};
+        String[] itemNames = {"Healing Potion", "Scroll of Monster Evasion"};
 
         if (itemSlot >= 1 && itemSlot <= itemNames.length) {
             String itemName = itemNames[itemSlot - 1];
@@ -130,7 +130,7 @@ public class InputHandler {
         System.out.println("Keys: " + speler.getKeyCount());
         System.out.println("\nItems:");
 
-        String[] itemNames = {"Healing Potion", "Score Multiplier", "Scroll of Monster Evasion"};
+        String[] itemNames = {"Healing Potion", "Scroll of Monster Evasion"};
         for (int i = 0; i < itemNames.length; i++) {
             if (speler.hasItem(itemNames[i])) {
                 System.out.println((i + 1) + ". " + itemNames[i]);
@@ -230,7 +230,6 @@ public class InputHandler {
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
         } else if (destination == '*') {
-            // Magic item pickup - randomly choose between score multiplier and monster skip
             Item magicItem;
             magicItem = new SkipMonster();
 
