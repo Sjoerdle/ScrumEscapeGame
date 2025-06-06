@@ -3,6 +3,7 @@ package Vragen;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
+import player.Speler;
 
 public class MultipleChoice implements IQuestion {
     private String question;
@@ -38,7 +39,7 @@ public class MultipleChoice implements IQuestion {
     }
 
     @Override
-    public boolean askQuestion(Scanner scanner) {
+    public boolean askQuestion(Scanner scanner, Speler speler) {
         alGehad = true;
         displayQuestion();
 
@@ -49,19 +50,22 @@ public class MultipleChoice implements IQuestion {
                 goedBeantwoord = true;
                 return true;
             } else {
-                 if (!helpHint.isEmpty() || !funnyHint.isEmpty()) {
-                     boolean useHelpHint = helpHint.isEmpty() ? false :
-                             (funnyHint.isEmpty() ? true : random.nextBoolean());
+                System.out.println("Fout antwoord! Je verliest gezondheid.");
+                speler.takeDamage();
 
-                     if(useHelpHint) {
-                         System.out.println("\nHelp Hint: " + helpHint);
-                     }else{
-                         System.out.println("\nFunny Hint: " + funnyHint);
-                     }
-                 } else {
-                     System.out.println("Dat is helaas niet juist.");
-                 };
-                 return false;
+                if (!helpHint.isEmpty() || !funnyHint.isEmpty()) {
+                    boolean useHelpHint = helpHint.isEmpty() ? false :
+                            (funnyHint.isEmpty() ? true : random.nextBoolean());
+
+                    if(useHelpHint) {
+                        System.out.println("\nHelp Hint: " + helpHint);
+                    }else{
+                        System.out.println("\nFunny Hint: " + funnyHint);
+                    }
+                } else {
+                    System.out.println("Dat is helaas niet juist.");
+                }
+                return false;
             }
         } catch (NumberFormatException e) {
             System.out.println("Ongeldige invoer. Voer een nummer in tussen 1 en " + options.size());
@@ -72,5 +76,8 @@ public class MultipleChoice implements IQuestion {
     public boolean isGoedBeantwoord() {
         return goedBeantwoord;
     }
-    public QuestionType getQuestionType() { return QuestionType.MultipleChoice;}
+
+    public QuestionType getQuestionType() {
+        return QuestionType.MultipleChoice;
+    }
 }

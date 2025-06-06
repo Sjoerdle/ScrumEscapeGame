@@ -1,6 +1,7 @@
 package Vragen;
 
 import java.util.*;
+import player.Speler;
 
 public class PuzzleQuestion implements IQuestion {
     private String question;
@@ -55,7 +56,7 @@ public class PuzzleQuestion implements IQuestion {
     }
 
     @Override
-    public boolean askQuestion(Scanner scanner) {
+    public boolean askQuestion(Scanner scanner, Speler speler) {
         alGehad = true;
         displayQuestion();
 
@@ -88,6 +89,9 @@ public class PuzzleQuestion implements IQuestion {
             goedBeantwoord = true;
             return true;
         } else {
+            System.out.println("Fout antwoord! Je verliest gezondheid.");
+            speler.takeDamage();
+
             System.out.println("De correcte antwoorden waren:");
             for (String term : terms) {
                 System.out.println(term + " → " + matchPairs.get(term));
@@ -99,5 +103,8 @@ public class PuzzleQuestion implements IQuestion {
     public boolean isGoedBeantwoord() {
         return goedBeantwoord;
     }
-    public QuestionType getQuestionType() { return QuestionType.Puzzle; }
+
+    public QuestionType getQuestionType() {
+        return QuestionType.Puzzle;
+    }
 }

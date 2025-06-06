@@ -2,7 +2,7 @@ package Vragen;
 
 import java.util.Scanner;
 import java.util.Random;
-
+import player.Speler;
 
 public class OpenQuestion implements IQuestion {
     private String question;
@@ -33,7 +33,7 @@ public class OpenQuestion implements IQuestion {
     }
 
     @Override
-    public boolean askQuestion(Scanner scanner) {
+    public boolean askQuestion(Scanner scanner, Speler speler) {
         alGehad = true;
         displayQuestion();
 
@@ -42,8 +42,10 @@ public class OpenQuestion implements IQuestion {
             System.out.println("Correct! Goed gedaan.");
             goedBeantwoord = true;
             return true;
-
         } else {
+            System.out.println("Fout antwoord! Je verliest gezondheid.");
+            speler.takeDamage();
+
             if (!helpHint.isEmpty() || !funnyHint.isEmpty()) {
                 boolean useHelpHint = helpHint.isEmpty() ? false :
                         (funnyHint.isEmpty() ? true : random.nextBoolean());
@@ -63,5 +65,8 @@ public class OpenQuestion implements IQuestion {
     public boolean isGoedBeantwoord() {
         return goedBeantwoord;
     }
-    public QuestionType getQuestionType() { return QuestionType.Open; }
+
+    public QuestionType getQuestionType() {
+        return QuestionType.Open;
+    }
 }

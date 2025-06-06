@@ -22,6 +22,7 @@ public class MonsterLoader {
 
     /**
      * Leest een monster configuratie bestand en maakt het bijbehorende monster object aan
+     *
      * @param filePath Het pad naar het configuratie bestand
      */
     public void loadMonsterFromFile(String filePath) {
@@ -41,8 +42,8 @@ public class MonsterLoader {
             } else if (!line.trim().isEmpty()) {
                 isReadingAscii = true;
                 asciiBuilder.append(line).append("\n");
-        }else {
-            asciiBuilder.append(line).append("\n");
+            } else {
+                asciiBuilder.append(line).append("\n");
             }
         }
         String asciiArt = asciiBuilder.toString().trim();
@@ -97,6 +98,7 @@ public class MonsterLoader {
 
     /**
      * Laadt alle monster bestanden uit een directory
+     *
      * @param directoryPath Het pad naar de directory met monster bestanden
      */
     public void loadAllMonstersFromDirectory(String directoryPath) {
@@ -179,64 +181,5 @@ public class MonsterLoader {
         }
 
         return getAllMonsters();
-    }
-
-    /**
-     * Voorbeeld van hoe de klasse te gebruiken
-     */
-    public static void main(String[] args) {
-        // 1. Maak een MonsterLoader aan
-        MonsterLoader loader = new MonsterLoader();
-        Game game = new Game();
-
-        // 3. Krijg alle monsters in één ArrayList
-        ArrayList<Monster> alleMonsters = loader.loadAllMonsters();
-
-        // 4. Check of er monsters zijn geladen
-        if (alleMonsters.isEmpty()) {
-            System.out.println("Geen monsters geladen!");
-            return;
-        }
-
-        // 5. Print informatie over geladen monsters
-        loader.printMonsterInfo();
-
-        // 6. Selecteer een random monster
-        Random random = new Random();
-        int randomIndex = random.nextInt(alleMonsters.size());
-        Monster randomMonster = alleMonsters.get(randomIndex);
-
-        // 7. Gebruik het random monster
-        System.out.println("\n=== Random Monster Geselecteerd ===");
-        randomMonster.geefOpdracht();
-
-        // Extra: Als je meerdere random monsters wilt
-        System.out.println("\n=== 3 Random Monsters ===");
-        for (int i = 0; i < 3 && i < alleMonsters.size(); i++) {
-            int index = random.nextInt(alleMonsters.size());
-            Monster monster = alleMonsters.get(index);
-            System.out.println("Monster " + (i + 1) + ":");
-            monster.toonAsciiArt();
-            System.out.println();
-        }
-    }
-
-    // Helper methode om een random monster te krijgen
-    public static Monster getRandomMonster(ArrayList<Monster> monsters) {
-        if (monsters.isEmpty()) {
-            return null;
-        }
-        Random random = new Random();
-        return monsters.get(random.nextInt(monsters.size()));
-    }
-
-    // Helper methode om een random monster van een specifiek type te krijgen
-    public static OpenMonster getRandomOpenMonster(MonsterLoader loader) {
-        ArrayList<OpenMonster> openMonsters = loader.getOpenMonsters();
-        if (openMonsters.isEmpty()) {
-            return null;
-        }
-        Random random = new Random();
-        return openMonsters.get(random.nextInt(openMonsters.size()));
     }
 }

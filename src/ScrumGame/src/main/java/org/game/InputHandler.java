@@ -197,12 +197,12 @@ public class InputHandler {
                 } else {
                     System.out.println("You chose to face the monster!");
                     Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
-                    monster.geefOpdracht();
+                    monster.geefOpdracht(speler);
                 }
             } else {
                 System.out.println("You encountered a monster!");
                 Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
-                monster.geefOpdracht();
+                monster.geefOpdracht(speler);
             }
 
             currentRoom.getMap()[newY][newX] = ' ';

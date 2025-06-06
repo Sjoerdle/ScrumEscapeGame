@@ -3,7 +3,7 @@ package items;
 import player.Speler;
 
 public class HealthPotion implements Item {
-    private final int healAmount = 50;
+    private final int healAmount = 30;
     private final String name = "Healing Potion";
     private final String description = "Restores " + healAmount + " health points";
 
@@ -19,6 +19,6 @@ public class HealthPotion implements Item {
 
     @Override
     public void use(Speler speler) {
-        speler.heal();
+        speler.heal(healAmount);
     }
 }

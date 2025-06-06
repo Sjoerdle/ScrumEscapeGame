@@ -3,6 +3,7 @@ package Monsters;
 import Vragen.MultipleChoice;
 import Vragen.IQuestion;
 import org.game.Game;
+import player.Speler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,22 +40,22 @@ public class MultiChoiceMonster extends Monster {
     }
 
     @Override
-    public void geefOpdracht() {
+    public void geefOpdracht(Speler speler) {
         toonIntroductie();
         int correcteAntwoorden = 0;
         int pogingen = 0;
-        final int MAX_POGINGEN = questionCount * 3; // Voorkom oneindige lus
+        final int MAX_POGINGEN = 3; // Voorkom oneindige lus
 
-        while (correcteAntwoorden < questionCount && pogingen < MAX_POGINGEN) {
+        while (correcteAntwoorden < 1 && pogingen < MAX_POGINGEN) {
             Random random = new Random();
             int randomIndex = random.nextInt(questions.size());
             IQuestion randomQuestion = questions.get(randomIndex);
 
             if (randomQuestion.isGoedBeantwoord()){
                 continue;
-        }
+            }
 
-            boolean isCorrect = randomQuestion.askQuestion(scanner);
+            boolean isCorrect = randomQuestion.askQuestion(scanner, speler);
             pogingen++;
 
             if (isCorrect){
@@ -65,7 +66,6 @@ public class MultiChoiceMonster extends Monster {
 
     @Override
     protected boolean controleerAntwoord(String antwoord){
-
         return false;
     }
 }

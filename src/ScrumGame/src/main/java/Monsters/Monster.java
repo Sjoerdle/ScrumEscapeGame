@@ -1,23 +1,23 @@
 package Monsters;
 
 import java.util.Scanner;
+import player.Speler;
 
 public abstract class Monster {
 
-    public final void doorLoopKamer() {
+    public final void doorLoopKamer(Speler speler) {
         toonIntroductie();
-        geefOpdracht();
+        geefOpdracht(speler);
         String antwoord = vraagAntwoord();
         boolean isCorrect = controleerAntwoord(antwoord);
         toonResultaat(isCorrect);
         geefFeedback(isCorrect);
     }
-        // Deze 3 methoden MOETEN worden geïmplementeerd door elke subklasse
 
+    // Deze 3 methoden MOETEN worden geïmplementeerd door elke subklasse
     public abstract void toonIntroductie();
-    public abstract void geefOpdracht();
+    public abstract void geefOpdracht(Speler speler);
     protected abstract boolean controleerAntwoord(String antwoord);
-
 
     // Deze 3 methodes kunnen worden overschreven, maar hebben al een standaardimplementatie
     // als je deze methodes wil wijzigen MOET je ze overriden anders worden deze methodes automatisch gebruikt

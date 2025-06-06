@@ -163,13 +163,13 @@ public class Speler {
     }
 
     public void takeDamage() {
-        this.hp -= 33;
+        this.hp -= 20;
         if (this.hp < 0) this.hp = 0;
         notifyHealthChanged();
     }
 
-    public void heal() {
-        this.hp += 50; // HealthPotion heals 50 HP
+    public void heal(int amount) {
+        this.hp += amount;
         if (this.hp > 100) this.hp = 100;
         notifyHealthChanged();
     }
