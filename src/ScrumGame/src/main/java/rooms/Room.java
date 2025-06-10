@@ -1,6 +1,8 @@
 package rooms;
 
+import org.game.Game;
 import ui.Resources;
+import ui.StartScherm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +13,7 @@ public class Room {
     private String currentRoom;
     private String nextRoom;
     private ArrayList<String> monsters;
+    private String music;
     private char[][] map;
     private int mapWidth;
     private int mapHeight;
@@ -21,6 +24,7 @@ public class Room {
     {
         currentRoom = mapPath;
         LoadMap(mapPath);
+        StartScherm.speler.speel (getMusic(),true);
     }
 
     public String[] getTransliteratedMap()
@@ -83,6 +87,8 @@ public class Room {
                 this.name = line.substring(5);
             } else if (line.startsWith("instruction=")) {
                 this.instruction = line.substring(12);
+            } else if (line.startsWith("music=")) {
+                this.music = line.substring(6);
             } else if (line.startsWith("nextRoom=")) {
                 this.nextRoom = line.substring(9);
             } else if (line.startsWith("monsters=")) {
@@ -176,6 +182,8 @@ public class Room {
     public ArrayList<String> getMonsters() {
         return monsters;
     }
+
+    public String getMusic() {return music;}
 
     public void setMonsters(ArrayList<String> monsters) {
         this.monsters = monsters;

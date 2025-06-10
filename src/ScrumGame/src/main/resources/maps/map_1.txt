@@ -2,6 +2,7 @@ name=Room 2
 instruction=
 nextRoom=map_2.txt
 monsters=monster_0.txt;monster_1.txt
+music=room2.wav
 +---------------------------+
 |P|                         |
 | |        +-------+        |

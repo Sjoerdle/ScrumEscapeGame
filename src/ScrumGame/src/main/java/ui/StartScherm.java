@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class StartScherm {
     private Scanner scanner;
     private boolean running;
-    private GeluidSpeler speler;
+    public static GeluidSpeler speler;
 
 
     public StartScherm() {
@@ -104,6 +104,8 @@ public class StartScherm {
     }
 
     private void showCredits() {
+        speler.stop();
+        speler.speel("credits.wav", false);
         Console.clearConsole();
         System.out.println("===============================================");
         System.out.println("CREDITS");
@@ -119,6 +121,7 @@ public class StartScherm {
         System.out.println("===============================================");
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
         scanner.nextLine();
+        speler.speel("startscherm.wav", true);
     }
 
     private void exitGame() {
