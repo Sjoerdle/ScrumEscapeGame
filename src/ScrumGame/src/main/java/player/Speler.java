@@ -1,11 +1,12 @@
 package player;
 
 import items.Item;
-
+import jokers.Joker;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class Speler {
     String naam;
@@ -21,6 +22,7 @@ public class Speler {
     private int scoreMultiplier = 1;
     private long scoreMultiplierEndTime = 0;
     private boolean skipNextMonster = false;
+    private boolean hasUsedKeyJoker = false;
 
     public Speler(String naam, int X, int Y) {
         this.naam = naam;
@@ -194,11 +196,41 @@ public class Speler {
         return false;
     }
 
+    public void removeItem(String itemName) {
+        inventory.remove(itemName);
+    }
+
     public boolean hasItem(String itemName) {
         return inventory.containsKey(itemName);
     }
 
+    public boolean hasJoker(String jokerName) {
+        return inventory.values().stream()
+                .anyMatch(item -> item instanceof Joker &&
+                        item.getName().equalsIgnoreCase(jokerName));
+    }
+
+    public Joker getJoker(String jokerName) {
+        for (Item item : inventory.values()) {
+            if (item instanceof Joker && item.getName().equalsIgnoreCase(jokerName)) {
+                return (Joker) item;
+            }
+        }
+        return null;
+    }
+
+
+    // Key joker methods
+    public boolean hasUsedKeyJoker() {
+        return hasUsedKeyJoker;
+    }
+
+    public void setKeyJokerUsed() {
+        this.hasUsedKeyJoker = true;
+    }
+
     public Map<String, Item> getInventory() {
         return new HashMap<>(inventory); // Return a copy to prevent external modification
+
     }
 }
