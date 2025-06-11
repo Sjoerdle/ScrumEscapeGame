@@ -118,42 +118,4 @@ public class GameRenderer {
             return "  ";
         }
     }
-
-    // Render the current room to the console
-    public void renderRoom(String message) {
-        Room currentRoom = gameState.getCurrentRoom();
-        Speler speler = gameState.getSpeler();
-        char[][] map = currentRoom.getMap();
-
-        Console.clearConsole();
-
-        // Always show HP and inventory at the top
-        System.out.println(createHpBar(speler.getHp(), 100));
-        System.out.println(getInventorySummary(speler));
-        System.out.println("-".repeat(40));
-
-        // Show room name and instruction
-        System.out.println("Room: " + currentRoom.getName());
-        if (!currentRoom.getInstruction().isEmpty()) {
-            System.out.println(currentRoom.getInstruction());
-        }
-        System.out.println();
-
-        // Render the map with the player position
-        for (int y = 0; y < currentRoom.getMapHeight(); y++) {
-            for (int x = 0; x < currentRoom.getMapWidth(); x++) {
-                if (x == speler.getX() && y == speler.getY()) {
-                    System.out.print('P');
-                } else if (map[y][x] == 'P') {
-                    // Don't show the original P, show empty space
-                    System.out.print(' ');
-                } else {
-                    System.out.print(map[y][x]);
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println(message);
-    }
 }
