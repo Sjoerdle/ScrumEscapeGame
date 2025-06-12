@@ -28,6 +28,7 @@ public class StartScherm {
 
     private void displayMenu() {
         Console.clearConsole();
+        displayASCIIArt();
         System.out.println("===============================================");
         System.out.println("Welkom bij de Scrum Escape Building game!");
         System.out.println("Kies een optie: ");
@@ -38,6 +39,16 @@ public class StartScherm {
         System.out.println("5. Afsluiten");
         System.out.println("===============================================");
         System.out.print("Jouw keuze: ");
+    }
+
+    private void displayASCIIArt() {
+        System.out.println("███████╗███████╗ ██████╗ █████╗ ██████╗ ██╗███████╗███╗   ███╗");
+        System.out.println("██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██║██╔════╝████╗ ████║");
+        System.out.println("█████╗  ███████╗██║     ███████║██████╔╝██║███████╗██╔████╔██║");
+        System.out.println("██╔══╝  ╚════██║██║     ██╔══██║██╔═══╝ ██║╚════██║██║╚██╔╝██║");
+        System.out.println("███████╗███████║╚██████╗██║  ██║██║     ██║███████║██║ ╚═╝ ██║");
+        System.out.println("╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝");
+        System.out.println();
     }
 
     private void handleUserInput() {
