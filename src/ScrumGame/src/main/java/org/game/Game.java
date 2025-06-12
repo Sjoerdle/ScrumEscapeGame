@@ -1,8 +1,7 @@
 package org.game;
 
 import Vragen.QuestionLoader;
-import jokers.MonsterJoker;
-import jokers.SleutelJoker;
+import jokers.JokerManager;
 import org.w3c.dom.ls.LSOutput;
 import player.Speler;
 
@@ -16,6 +15,8 @@ public class Game {
     private GameRenderer gameRenderer;
     private InputHandler inputHandler;
     private MovementValidator movementValidator;
+    private final JokerManager jokerManager;
+
 
     public Game() {
         questionLoader = new QuestionLoader();
@@ -23,6 +24,7 @@ public class Game {
         gameRenderer = new GameRenderer(gameState);
         movementValidator = new MovementValidator(gameState);
         inputHandler = new InputHandler(gameState, gameRenderer, movementValidator);
+        jokerManager = new JokerManager(gameState.getSpeler());
     }
 
     public void start() {
@@ -30,7 +32,9 @@ public class Game {
 
 
         //asks for joker at start
-        askForJokersAtStart();
+        if (jokerManager.askToUseJoker()) {
+            jokerManager.chooseAndAddJoker();
+        }
 
         //shows the room
         gameRenderer.renderRoomFancy("");
@@ -42,48 +46,6 @@ public class Game {
         }
     }
 
-    public void askForJokersAtStart() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("wil je een joker gebruiken (is de uitdaging te groot voor je?)");
-        System.out.println("[1] ja");
-        System.out.println("[2] nee");
-        System.out.println("maak je keuze (1-2): ");
-
-        String choice = scanner.nextLine().trim();
-        if (choice.equals("1")) {
-            chooseJoker();
-        }
-    }
-
-    public void chooseJoker() {
-        Scanner scanner = new Scanner(System.in);
-        Speler speler = gameState.getSpeler();
-
-        System.out.println("\nWelke joker wil je gebruiken?");
-        System.out.println("1. Monster Joker (2x monster overslaan)");
-        System.out.println("2. Sleutel Joker (1x deur openen)");
-        System.out.println("3. Toch geen joker");
-        System.out.print("Keuze (1-3): ");
-
-        String choice = scanner.nextLine().trim();
-        switch (choice) {
-            case "1":
-                speler.addItem(new MonsterJoker());
-                System.out.println("Monster Joker toegevoegd aan je inventaris!");
-                break;
-            case "2":
-                speler.addItem(new SleutelJoker());
-                System.out.println("Sleutel Joker toegevoegd aan je inventaris!");
-                break;
-            case "3":
-                System.out.println("Geen joker geselecteerd.");
-                break;
-            default:
-                System.out.println("Ongeldige keuze, geen joker geselecteerd.");
-        }
-        System.out.println("Druk op Enter om door te gaan...");
-        scanner.nextLine();
-    }
 
     public static void main(String[] args) {
         Game game = new Game();
