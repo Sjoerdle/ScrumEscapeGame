@@ -1,6 +1,10 @@
 package ui;
 
+import org.game.InputHandler;
+import org.game.Main;
 import player.PlayerObserver;
+
+import java.util.Scanner;
 
 public class GameUIObserver implements PlayerObserver {
     private boolean debugMode;
@@ -16,7 +20,10 @@ public class GameUIObserver implements PlayerObserver {
         }
 
         if (newHealth <= 0) {
-            System.out.println("💀 You have died! Game Over!");
+            System.out.println("💀 You have died! Game Over! Press any key to return to the main menu.");
+            InputHandler.readSingleKey();
+            Main.startScherm.start();
+
         } else if (newHealth <= 25) {
             System.out.println("⚠️  Warning: Low health (" + newHealth + "/100)!");
         }
