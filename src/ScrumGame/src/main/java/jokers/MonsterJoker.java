@@ -14,7 +14,6 @@ public class MonsterJoker implements Joker {
     @Override
     public void use(Speler speler) {
         if (usesLeft > 0) {
-            speler.activateMonsterSkip();
             usesLeft--;
             System.out.println("Je gebruikt een Monster Joker! vlucht nu het nog kan!");
             System.out.println("Je kan MonsterJoker nog " + usesLeft + " keer gebruiken");

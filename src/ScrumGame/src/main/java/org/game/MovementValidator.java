@@ -1,7 +1,6 @@
 package org.game;
 
-import Monsters.Monster;
- import rooms.Room;
+import rooms.Room;
 import player.Speler;
 import java.util.Scanner;
 
@@ -24,7 +23,6 @@ public class MovementValidator {
         }
 
         char cell = currentRoom.getMap()[y][x];
-        Scanner scanner = new Scanner(System.in);
 
         // check for walls
         if (isWall(cell)) {
@@ -37,14 +35,8 @@ public class MovementValidator {
             return false;
         }
 
-
-        // Check for monster
-        if (cell == 'M') {
-            System.out.println("Je komt een monster tegen!");
-            Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
-            monster.geefOpdracht(speler);
-            return false;
-        }
+        // Monster encounters worden nu afgehandeld in InputHandler.processMovement()
+        // Hier alleen checken of de move geldig is, niet de encounter zelf afhandelen
 
         return true;
     }
@@ -52,6 +44,4 @@ public class MovementValidator {
     private boolean isWall(char cell) {
         return cell == '+' || cell == '-' || cell == '|' || cell == '#';
     }
-
 }
-
