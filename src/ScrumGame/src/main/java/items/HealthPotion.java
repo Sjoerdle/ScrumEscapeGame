@@ -2,7 +2,7 @@ package items;
 
 import player.Speler;
 
-public class HealthPotion implements Item {
+public class HealthPotion implements ItemInfo, Usable {
     private final int healAmount = 20;
     private final String name = "Healing Potion";
     private final String description = "Restores " + healAmount + " health points";

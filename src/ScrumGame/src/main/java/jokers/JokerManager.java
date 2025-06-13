@@ -1,7 +1,6 @@
 package jokers;
 
 import player.Speler;
-import items.Item;
 
 import java.util.List;
 import java.util.Map;
@@ -17,12 +16,13 @@ public class JokerManager {
         this.scanner = new Scanner(System.in);
     }
 
-    public boolean hasJoker(Map<String, Item> inventory, String jokerName) {
-        return inventory.containsKey(jokerName);
+    public boolean hasJoker(Map<String, Object> inventory, String jokerName) {
+        return inventory.containsKey(jokerName) &&
+                inventory.get(jokerName) instanceof Joker;
     }
 
-    public Joker getJoker(Map<String, Item> inventory, String jokerName) {
-        Item item = inventory.get(jokerName);
+    public Joker getJoker(Map<String, Object> inventory, String jokerName) {
+        Object item = inventory.get(jokerName);
         return (item instanceof Joker) ? (Joker) item : null;
     }
 
@@ -37,7 +37,7 @@ public class JokerManager {
         }
     }
 
-    public List<Joker> getAvailableJokers(Map<String, Item> inventory) {
+    public List<Joker> getAvailableJokers(Map<String, Object> inventory) {
         return inventory.values().stream()
                 .filter(item -> item instanceof Joker)
                 .map(item -> (Joker) item)

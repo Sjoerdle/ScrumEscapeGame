@@ -1,9 +1,11 @@
 package jokers;
 
-import items.Item;
+import items.ItemInfo;
+import items.Usable;
 import player.Speler;
 
-public interface Joker extends Item {
+public interface Joker extends ItemInfo, Usable {
     int getUsesLeft();
-    void use(Speler speler);
+    // use() method komt van Usable interface
+    // getName() en getDescription() komen van ItemInfo interface
 }
