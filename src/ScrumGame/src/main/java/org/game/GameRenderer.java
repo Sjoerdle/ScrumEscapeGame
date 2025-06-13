@@ -23,12 +23,12 @@ public class GameRenderer {
 
         // Add filled hearts
         for (int i = 0; i < hearts; i++) {
-            bar.append("❤️");
+            bar.append(Emojis.HEALTH);
         }
 
         // Add empty hearts
         for (int i = hearts; i < maxHearts; i++) {
-            bar.append("🤍");
+            bar.append(Emojis.HEALTH_EMPTY);
         }
 
         return bar.append(" ").append(currentHp).append("/").append(maxHp).toString();

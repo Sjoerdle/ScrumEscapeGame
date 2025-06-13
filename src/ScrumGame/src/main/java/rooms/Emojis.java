@@ -45,6 +45,7 @@ public class Emojis {
     public static final String DOOR = "🚪";
     public static final String MAGIC = "✨";
     public static final String HEALTH = "❤️";
+    public static final String HEALTH_EMPTY = "🤍";
     public static final String EXIT = "🪜";
     public static final String LOCK = "🔒";
     public static final String ITEM = "📦";
