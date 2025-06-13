@@ -2,6 +2,7 @@ name=Room 3
 instruction=Reach the exit to go to the next room!
 nextRoom=
 monsters=monster_0.txt
+music=room3.wav
 +----------------------------------------+
 |                |     D                 |
 | |   +------+   |     |   +--+    |     |

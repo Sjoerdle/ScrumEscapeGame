@@ -15,18 +15,15 @@ public class GameRenderer {
         this.gameState = gameState;
     }
 
-    // Helper method to create HP bar with hearts
     private String createHpBar(int currentHp, int maxHp) {
-        int hearts = (int) Math.ceil((double) currentHp / 20); // 5 hearts for 100 HP (20 HP per heart)
+        int hearts = (int) Math.ceil((double) currentHp / 20);
         int maxHearts = maxHp / 20;
         StringBuilder bar = new StringBuilder("HP: ");
 
-        // Add filled hearts
         for (int i = 0; i < hearts; i++) {
             bar.append(Emojis.HEALTH);
         }
 
-        // Add empty hearts
         for (int i = hearts; i < maxHearts; i++) {
             bar.append(Emojis.HEALTH_EMPTY);
         }
@@ -52,7 +49,7 @@ public class GameRenderer {
             summary.append("Items: ");
             boolean firstItem = true;
             for (Map.Entry<String, Item> entry : inventory.entrySet()) {
-                if (!entry.getKey().equals("Key")) {  // Skip keys as they're shown separately
+                if (!entry.getKey().equals("Key")) {
                     if (!firstItem) {
                         summary.append(", ");
                     }
@@ -120,43 +117,5 @@ public class GameRenderer {
         } catch (Exception e) {
             return "  ";
         }
-    }
-
-    // Render the current room to the console
-    public void renderRoom(String message) {
-        Room currentRoom = gameState.getCurrentRoom();
-        Speler speler = gameState.getSpeler();
-        char[][] map = currentRoom.getMap();
-
-        Console.clearConsole();
-
-        // Always show HP and inventory at the top
-        System.out.println(createHpBar(speler.getHp(), 100));
-        System.out.println(getInventorySummary(speler));
-        System.out.println("-".repeat(40));
-
-        // Show room name and instruction
-        System.out.println("Room: " + currentRoom.getName());
-        if (!currentRoom.getInstruction().isEmpty()) {
-            System.out.println(currentRoom.getInstruction());
-        }
-        System.out.println();
-
-        // Render the map with the player position
-        for (int y = 0; y < currentRoom.getMapHeight(); y++) {
-            for (int x = 0; x < currentRoom.getMapWidth(); x++) {
-                if (x == speler.getX() && y == speler.getY()) {
-                    System.out.print('P');
-                } else if (map[y][x] == 'P') {
-                    // Don't show the original P, show empty space
-                    System.out.print(' ');
-                } else {
-                    System.out.print(map[y][x]);
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println(message);
     }
 }

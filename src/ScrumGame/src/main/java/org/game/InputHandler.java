@@ -2,9 +2,13 @@ package org.game;
 
 import Monsters.Monster;
 import items.*;
+import jokers.*;
 import rooms.Room;
 import org.jline.terminal.Terminal;
 import player.Speler;
+
+import jokers.MonsterJoker;
+import jokers.SleutelJoker;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -44,7 +48,7 @@ public class InputHandler {
 
     // Take user input and process movement and item usage
     public void handleInput() throws IOException {
-        Scanner scanner = new Scanner(System.in);
+
         // Haal de terminal uit de console klasse
         Terminal terminal = gameState.getConsole().getTerminal();
 
@@ -106,7 +110,7 @@ public class InputHandler {
 
     private void handleItemUsage(int itemSlot) {
         Speler speler = gameState.getSpeler();
-        String[] itemNames = {"Healing Potion", "Score Multiplier", "Scroll of Monster Evasion"};
+        String[] itemNames = {"Healing Potion", "Scroll of Monster Evasion"};
 
         if (itemSlot >= 1 && itemSlot <= itemNames.length) {
             String itemName = itemNames[itemSlot - 1];
@@ -130,7 +134,7 @@ public class InputHandler {
         System.out.println("Keys: " + speler.getKeyCount());
         System.out.println("\nItems:");
 
-        String[] itemNames = {"Healing Potion", "Score Multiplier", "Scroll of Monster Evasion"};
+        String[] itemNames = {"Healing Potion", "Scroll of Monster Evasion"};
         for (int i = 0; i < itemNames.length; i++) {
             if (speler.hasItem(itemNames[i])) {
                 System.out.println((i + 1) + ". " + itemNames[i]);
@@ -167,6 +171,7 @@ public class InputHandler {
                 System.out.println("You've completed all rooms! Congratulations!");
                 return;
             }
+
         } else if (destination == 'M') {
             // Monster encounter
             if (speler.canSkipMonster()) {
@@ -230,7 +235,6 @@ public class InputHandler {
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
         } else if (destination == '*') {
-            // Magic item pickup - randomly choose between score multiplier and monster skip
             Item magicItem;
             magicItem = new SkipMonster();
 
@@ -246,5 +250,21 @@ public class InputHandler {
         }
 
         gameRenderer.renderRoomFancy(message);
+    }
+
+    private int getIntInput(int min, int max) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            try {
+                System.out.print("\nVoer je keuze in (" + min + "-" + max + "): ");
+                int input = Integer.parseInt(scanner.nextLine().trim());
+                if (input >= min && input <= max) {
+                    return input;
+                }
+                System.out.println("Ongeldige keuze. Voer een getal in tussen " + min + " en " + max + ".");
+            } catch (NumberFormatException e) {
+                System.out.println("Voer alstublieft een geldig getal in.");
+            }
+        }
     }
 }

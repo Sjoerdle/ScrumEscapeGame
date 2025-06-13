@@ -1,7 +1,9 @@
 package org.game;
 
-import rooms.Room;
+import Monsters.Monster;
+ import rooms.Room;
 import player.Speler;
+import java.util.Scanner;
 
 public class MovementValidator {
     private GameState gameState;
@@ -22,24 +24,34 @@ public class MovementValidator {
         }
 
         char cell = currentRoom.getMap()[y][x];
+        Scanner scanner = new Scanner(System.in);
 
-        if (cell == 'D')
-        {
-            if (speler.hasKey())
-            {
-                speler.removeKey();
-                return true;
-            } else {
-                System.out.println("This door is locked, you need a key!");
-                return false;
-            }
+        // check for walls
+        if (isWall(cell)) {
+            return false;
         }
 
-        // Can't move into walls
-        if (cell == '+' || cell == '-' || cell == '|' || cell == '#') {
+        // check for doors
+        if (cell == 'D' && !speler.hasKey()) {
+            System.out.println("De deur is op slot.. had je maar een sleutel");
+            return false;
+        }
+
+
+        // Check for monster
+        if (cell == 'M') {
+            System.out.println("Je komt een monster tegen!");
+            Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
+            monster.geefOpdracht(speler);
             return false;
         }
 
         return true;
     }
+
+    private boolean isWall(char cell) {
+        return cell == '+' || cell == '-' || cell == '|' || cell == '#';
+    }
+
 }
+

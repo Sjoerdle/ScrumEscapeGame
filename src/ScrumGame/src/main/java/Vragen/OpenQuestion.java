@@ -1,7 +1,7 @@
 package Vragen;
 
+import hints.HintManager;
 import java.util.Scanner;
-import java.util.Random;
 import player.Speler;
 
 public class OpenQuestion implements IQuestion {
@@ -9,7 +9,7 @@ public class OpenQuestion implements IQuestion {
     private String correctAnswer;
     private String helpHint;
     private String funnyHint;
-    private Random random;
+    private HintManager hintManager;
 
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
@@ -23,7 +23,7 @@ public class OpenQuestion implements IQuestion {
         this.correctAnswer = correctAnswer.toLowerCase();
         this.helpHint = helpHint;
         this.funnyHint = funnyHint;
-        this.random = new Random();
+        this.hintManager = new HintManager(); // Dependency via interface
     }
 
     @Override
@@ -46,15 +46,9 @@ public class OpenQuestion implements IQuestion {
             System.out.println("Fout antwoord! Je verliest gezondheid.");
             speler.takeDamage();
 
+            // Gebruik DIP: HintManager werkt via HintProvider interface
             if (!helpHint.isEmpty() || !funnyHint.isEmpty()) {
-                boolean useHelpHint = helpHint.isEmpty() ? false :
-                        (funnyHint.isEmpty() ? true : random.nextBoolean());
-
-                if (useHelpHint) {
-                    System.out.println("\nHINT: " + helpHint);
-                } else {
-                    System.out.println("\nHINT: " + funnyHint);
-                }
+                hintManager.offerHint(scanner, helpHint, funnyHint);
             } else {
                 System.out.println("Dat is helaas niet juist.");
             }
