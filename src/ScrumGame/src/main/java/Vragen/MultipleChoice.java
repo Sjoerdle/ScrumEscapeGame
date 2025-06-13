@@ -1,8 +1,8 @@
 package Vragen;
 
+import hints.HintManager;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Random;
 import player.Speler;
 
 public class MultipleChoice implements IQuestion {
@@ -11,7 +11,7 @@ public class MultipleChoice implements IQuestion {
     private int correctAnswer;
     private String helpHint;
     private String funnyHint;
-    private Random random;
+    private HintManager hintManager;
 
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
@@ -26,7 +26,7 @@ public class MultipleChoice implements IQuestion {
         this.correctAnswer = correctAnswer;
         this.helpHint = helpHint;
         this.funnyHint = funnyHint;
-        this.random = new Random();
+        this.hintManager = new HintManager(); // Dependency via interface
     }
 
     @Override
@@ -53,15 +53,9 @@ public class MultipleChoice implements IQuestion {
                 System.out.println("Fout antwoord! Je verliest gezondheid.");
                 speler.takeDamage();
 
+                // Gebruik DIP: HintManager werkt via HintProvider interface
                 if (!helpHint.isEmpty() || !funnyHint.isEmpty()) {
-                    boolean useHelpHint = helpHint.isEmpty() ? false :
-                            (funnyHint.isEmpty() ? true : random.nextBoolean());
-
-                    if(useHelpHint) {
-                        System.out.println("\nHelp Hint: " + helpHint);
-                    }else{
-                        System.out.println("\nFunny Hint: " + funnyHint);
-                    }
+                    hintManager.offerHint(scanner, helpHint, funnyHint);
                 } else {
                     System.out.println("Dat is helaas niet juist.");
                 }
