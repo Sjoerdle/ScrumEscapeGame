@@ -23,7 +23,6 @@ public class Speler {
     // Score multiplier fields
     private int scoreMultiplier = 1;
     private long scoreMultiplierEndTime = 0;
-    private boolean skipNextMonster = false;
     private boolean hasUsedKeyJoker = false;
 
     public Speler(String naam, int X, int Y) {
@@ -112,19 +111,6 @@ public class Speler {
             return scoreMultiplier;
         }
         return 1;
-    }
-
-    // Skip monster methods
-    public void activateMonsterSkip() {
-        this.skipNextMonster = true;
-    }
-
-    public boolean canSkipMonster() {
-        return skipNextMonster;
-    }
-
-    public void useMonsterSkip() {
-        this.skipNextMonster = false;
     }
 
     // Observer pattern methods

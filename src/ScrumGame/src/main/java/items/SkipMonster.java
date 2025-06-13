@@ -18,7 +18,8 @@ public class SkipMonster implements ItemInfo, Usable {
 
     @Override
     public void use(Speler speler) {
-        speler.activateMonsterSkip();
-        System.out.println("Monster skip activated! You can now avoid the next monster encounter.");
+        // Deze method wordt aangeroepen wanneer het item wordt gebruikt
+        // De eigenlijke skip logica wordt afgehandeld in InputHandler
+        System.out.println("Scroll of Monster Evasion activated!");
     }
 }
