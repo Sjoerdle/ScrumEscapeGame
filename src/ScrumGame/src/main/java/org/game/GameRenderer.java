@@ -1,6 +1,5 @@
 package org.game;
 
-import items.Item;
 import rooms.Emojis;
 import rooms.Room;
 import player.Speler;
@@ -31,24 +30,24 @@ public class GameRenderer {
         return bar.append(" ").append(currentHp).append("/").append(maxHp).toString();
     }
 
-    // Helper method to get inventory summary
+    // Helper method to get inventory summary - aangepast voor ISP
     private String getInventorySummary(Speler speler) {
         StringBuilder summary = new StringBuilder();
-        
+
         // Show keys separately
         if (speler.getKeyCount() > 0) {
             summary.append("Keys: 🗝️x").append(speler.getKeyCount());
         }
-        
-        // Get other items (excluding keys)
-        Map<String, Item> inventory = speler.getInventory();
+
+        // Get other items (excluding keys) - aangepast voor Object inventory
+        Map<String, Object> inventory = speler.getInventory();
         if (!inventory.isEmpty() || speler.getKeyCount() > 0) {
             if (speler.getKeyCount() > 0) {
                 summary.append(" | ");
             }
             summary.append("Items: ");
             boolean firstItem = true;
-            for (Map.Entry<String, Item> entry : inventory.entrySet()) {
+            for (Map.Entry<String, Object> entry : inventory.entrySet()) {
                 if (!entry.getKey().equals("Key")) {
                     if (!firstItem) {
                         summary.append(", ");
@@ -58,7 +57,7 @@ public class GameRenderer {
                 }
             }
         }
-        
+
         return summary.toString().isEmpty() ? "No items" : summary.toString();
     }
 

@@ -2,7 +2,7 @@ package items;
 
 import player.Speler;
 
-public class SkipMonster implements Item {
+public class SkipMonster implements ItemInfo, Usable {
     private final String name = "Scroll of Monster Evasion";
     private final String description = "Allows you to skip the next monster encounter";
 

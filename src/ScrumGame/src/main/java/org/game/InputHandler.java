@@ -7,9 +7,6 @@ import rooms.Room;
 import org.jline.terminal.Terminal;
 import player.Speler;
 
-import jokers.MonsterJoker;
-import jokers.SleutelJoker;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Scanner;
@@ -226,21 +223,19 @@ public class InputHandler {
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
         } else if (destination == 'H') {
-            // Health potion pickup
-            Item healthPotion = new HealthPotion();
+            // Health potion pickup - aangepast voor ISP
+            Object healthPotion = new HealthPotion();
             speler.addItem(healthPotion);
-            message = "Je hebt een " + healthPotion.getName() + " opgepakt!";
+            message = "Je hebt een " + ((ItemInfo)healthPotion).getName() + " opgepakt!";
 
             //empty tile
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
         } else if (destination == '*') {
-            Item magicItem;
-            magicItem = new SkipMonster();
-
-
+            // Magic item pickup - aangepast voor ISP
+            Object magicItem = new SkipMonster();
             speler.addItem(magicItem);
-            message = "Je hebt een " + magicItem.getName() + " opgepakt!";
+            message = "Je hebt een " + ((ItemInfo)magicItem).getName() + " opgepakt!";
 
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);

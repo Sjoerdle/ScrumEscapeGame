@@ -1,15 +1,13 @@
 package jokers;
 
-import items.Item;
 import player.Speler;
 
 public class MonsterJoker implements Joker {
-      int usesLeft = 2;
-      final String name = "Monster Joker";
-
+    int usesLeft = 2;
+    final String name = "Monster Joker";
 
     @Override
-    public  int getUsesLeft() {
+    public int getUsesLeft() {
         return usesLeft;
     }
 
@@ -27,7 +25,6 @@ public class MonsterJoker implements Joker {
         }
     }
 
-
     @Override
     public String getName() {
         return name;
@@ -35,6 +32,6 @@ public class MonsterJoker implements Joker {
 
     @Override
     public String getDescription() {
-        return "";
+        return "Allows you to skip 2 monster encounters";
     }
 }

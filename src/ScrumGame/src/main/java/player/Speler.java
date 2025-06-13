@@ -1,12 +1,12 @@
 package player;
 
-import items.Item;
+import items.ItemInfo;
+import items.Usable;
 import jokers.Joker;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class Speler {
     String naam;
@@ -15,7 +15,9 @@ public class Speler {
     int hp;
     int deathCount;
     int keyCount = 0;
-    private Map<String, Item> inventory = new HashMap<>();
+
+    // Flexibele inventory - kan alle soorten objecten bevatten
+    private Map<String, Object> inventory = new HashMap<>();
     private List<PlayerObserver> observers = new ArrayList<>();
 
     // Score multiplier fields
@@ -176,19 +178,21 @@ public class Speler {
         notifyHealthChanged();
     }
 
-    // Inventory methods
-    public void addItem(Item item) {
-        // Check if we already have this type of item, if so don't add duplicate
-        if (!inventory.containsKey(item.getName())) {
-            inventory.put(item.getName(), item);
-            notifyItemCollected(item.getName());
+    // Inventory methods - aangepast voor ISP
+    public void addItem(Object item) {
+        if (item instanceof ItemInfo) {
+            ItemInfo itemInfo = (ItemInfo) item;
+            if (!inventory.containsKey(itemInfo.getName())) {
+                inventory.put(itemInfo.getName(), item);
+                notifyItemCollected(itemInfo.getName());
+            }
         }
     }
 
     public boolean useItem(String itemName) {
-        Item item = inventory.get(itemName);
-        if (item != null) {
-            item.use(this);
+        Object item = inventory.get(itemName);
+        if (item instanceof Usable) {
+            ((Usable) item).use(this);
             inventory.remove(itemName);
             notifyItemUsed(itemName);
             return true;
@@ -207,18 +211,18 @@ public class Speler {
     public boolean hasJoker(String jokerName) {
         return inventory.values().stream()
                 .anyMatch(item -> item instanceof Joker &&
-                        item.getName().equalsIgnoreCase(jokerName));
+                        ((Joker) item).getName().equalsIgnoreCase(jokerName));
     }
 
     public Joker getJoker(String jokerName) {
-        for (Item item : inventory.values()) {
-            if (item instanceof Joker && item.getName().equalsIgnoreCase(jokerName)) {
+        for (Object item : inventory.values()) {
+            if (item instanceof Joker &&
+                    ((Joker) item).getName().equalsIgnoreCase(jokerName)) {
                 return (Joker) item;
             }
         }
         return null;
     }
-
 
     // Key joker methods
     public boolean hasUsedKeyJoker() {
@@ -229,8 +233,7 @@ public class Speler {
         this.hasUsedKeyJoker = true;
     }
 
-    public Map<String, Item> getInventory() {
+    public Map<String, Object> getInventory() {
         return new HashMap<>(inventory); // Return a copy to prevent external modification
-
     }
 }

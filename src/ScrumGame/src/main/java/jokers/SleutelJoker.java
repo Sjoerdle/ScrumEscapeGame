@@ -1,14 +1,9 @@
 package jokers;
 
-import items.Item;
-import org.w3c.dom.ls.LSOutput;
 import player.Speler;
 
 public class SleutelJoker implements Joker {
     final String name = "Sleutel Joker";
-
-
-
 
     @Override
     public int getUsesLeft() {
@@ -22,13 +17,12 @@ public class SleutelJoker implements Joker {
 
     @Override
     public String getDescription() {
-        return "";
+        return "Opens any locked door";
     }
 
     @Override
     public void use(Speler speler) {
         System.out.println("Sleutel Joker gebruikt om de deur te openen!");
-
     }
 }
 
