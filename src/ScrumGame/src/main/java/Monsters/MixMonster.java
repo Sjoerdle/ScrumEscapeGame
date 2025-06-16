@@ -9,32 +9,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MixMonster extends Monster {
-    String filePath;
-    int questionCount;
-    String asciiArt;
-    Scanner scanner = new Scanner(System.in);
-    ArrayList<IQuestion> questions = Game.questionLoader.getAlleVragen();
+    private ArrayList<IQuestion> questions = Game.questionLoader.getAlleVragen();
 
     public MixMonster(String filePath, int questionCount, String asciiArt) {
-        this.filePath = filePath;
-        this.questionCount = questionCount;
-        this.asciiArt = asciiArt;
-    }
-
-    @Override
-    public void toonIntroductie() {
-        System.out.println("Je bent een monster tegengekomen!");
-        System.out.println("beantwoord de vragen om te ontsnappen!");
-        toonAsciiArt();
-    }
-
-    @Override
-    public void toonAsciiArt(){
-        if(asciiArt != null && !asciiArt.isEmpty()) {
-            System.out.println(asciiArt);
-        }else{
-            System.out.println("[Geen ASCII-art beschikbaar]");
-        }
+        super(filePath, questionCount, asciiArt);
     }
 
     @Override
