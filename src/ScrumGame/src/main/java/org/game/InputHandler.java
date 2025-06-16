@@ -158,14 +158,22 @@ public class InputHandler {
         String message = "";
 
         if (destination == 'E') {
-            // Exit - load next room
+            // Exit - load next room and save game
             if (!currentRoom.getNextRoom().isEmpty()) {
                 Room nextRoom = new Room(currentRoom.getNextRoom());
                 gameState.setCurrentRoom(nextRoom);
                 speler.setLocation(nextRoom.getStartX(), nextRoom.getStartY());
-                System.out.println("Entering next room...");
+
+                // Auto-save when completing a level
+                SaveManager.saveGame(gameState);
+
+                System.out.println("Entering next room... Game saved!");
             } else {
                 System.out.println("You've completed all rooms! Congratulations!");
+
+                // Save final completion state
+                SaveManager.saveGame(gameState);
+
                 return;
             }
 

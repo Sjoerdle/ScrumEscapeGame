@@ -2,6 +2,7 @@ package ui;
 
 import org.game.Game;
 import org.game.GameState;
+import org.game.SaveManager;
 import player.Speler;
 import audio.GeluidSpeler;
 
@@ -34,10 +35,20 @@ public class StartScherm {
         System.out.println("Welkom bij de Scrum Escape Building game!");
         System.out.println("Kies een optie: ");
         System.out.println("1. Start");
-        System.out.println("2. Uitleg");
-        System.out.println("3. Commands en controls");
-        System.out.println("4. Credits");
-        System.out.println("5. Afsluiten");
+
+        // Only show load option if save file exists
+        if (SaveManager.saveFileExists()) {
+            System.out.println("2. Load Saved Game");
+            System.out.println("3. Uitleg");
+            System.out.println("4. Commands en controls");
+            System.out.println("5. Credits");
+            System.out.println("6. Afsluiten");
+        } else {
+            System.out.println("2. Uitleg");
+            System.out.println("3. Commands en controls");
+            System.out.println("4. Credits");
+            System.out.println("5. Afsluiten");
+        }
         System.out.println("===============================================");
         System.out.print("Jouw keuze: ");
     }
@@ -118,32 +129,62 @@ public class StartScherm {
 
     private void handleUserInput() {
         String input = scanner.nextLine();
+        boolean hasSaveFile = SaveManager.saveFileExists();
 
-        switch(input) {
-            case "1":
-                startGame();
-                break;
-            case "2":
-                showInstructions();
-                break;
-            case "3":
-                showCommands();
-                break;
-            case "4":
-                showCredits();
-                break;
-            case "5":
-                exitGame();
-                break;
-            default:
-                System.out.println("Ongeldige optie. Druk op Enter om terug te gaan.");
-                scanner.nextLine();
-                break;
+        if (hasSaveFile) {
+            // Menu with save file present (1-6)
+            switch(input) {
+                case "1":
+                    startNewGame();
+                    break;
+                case "2":
+                    loadSavedGame();
+                    break;
+                case "3":
+                    showInstructions();
+                    break;
+                case "4":
+                    showCommands();
+                    break;
+                case "5":
+                    showCredits();
+                    break;
+                case "6":
+                    exitGame();
+                    break;
+                default:
+                    System.out.println("Ongeldige optie. Druk op Enter om terug te gaan.");
+                    scanner.nextLine();
+                    break;
+            }
+        } else {
+            // Menu without save file (1-5)
+            switch(input) {
+                case "1":
+                    startNewGame();
+                    break;
+                case "2":
+                    showInstructions();
+                    break;
+                case "3":
+                    showCommands();
+                    break;
+                case "4":
+                    showCredits();
+                    break;
+                case "5":
+                    exitGame();
+                    break;
+                default:
+                    System.out.println("Ongeldige optie. Druk op Enter om terug te gaan.");
+                    scanner.nextLine();
+                    break;
+            }
         }
     }
 
-    private void startGame() {
-        System.out.println("\nGame wordt gestart...");
+    private void startNewGame() {
+        System.out.println("\nNieuw spel wordt gestart...");
 
         // Reset death status for new game
         Speler currentPlayer = GameState.getCurrentPlayer();
@@ -153,6 +194,22 @@ public class StartScherm {
 
         Game game = new Game();
         game.start();
+        System.out.println("Druk op Enter om terug te gaan naar het menu.");
+        scanner.nextLine();
+    }
+
+    private void loadSavedGame() {
+        System.out.println("\nOpgeslagen spel wordt geladen...");
+
+        GameState savedGameState = SaveManager.loadGame();
+        if (savedGameState != null) {
+            // Create a game with the loaded state
+            Game game = new Game(savedGameState); // We'll need to modify Game constructor
+            game.start();
+        } else {
+            System.out.println("Fout bij het laden van het opgeslagen spel.");
+        }
+
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
         scanner.nextLine();
     }
