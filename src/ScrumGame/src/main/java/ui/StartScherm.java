@@ -63,8 +63,6 @@ public class StartScherm {
                     "Je bent gestorven in het",
                     "Scrum Escape Building!",
                     "",
-                    "Deaths: " + currentPlayer.getDeathCount(),
-                    "",
                     "Probeer het nog eens!"
             };
 
@@ -91,8 +89,6 @@ public class StartScherm {
                 if (i < deathMessages.length) {
                     if (i == 0) { // GAME OVER line - make it red/bold
                         line.append("\u001B[31m\u001B[1m").append(deathMessages[i]).append("\u001B[0m");
-                    } else if (deathMessages[i].contains("Deaths:")) {
-                        line.append("\u001B[33m").append(deathMessages[i]).append("\u001B[0m"); // Yellow for death count
                     } else {
                         line.append(deathMessages[i]);
                     }

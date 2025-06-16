@@ -25,7 +25,7 @@ public class GameUIObserver implements PlayerObserver {
             // Get the current player and mark them as having died
             Speler currentPlayer = GameState.getCurrentPlayer();
             if (currentPlayer != null) {
-                currentPlayer.addDeath(1); // This will set hasDied to true
+                currentPlayer.setHasDied(true); // Just mark as died, no counter
             }
 
             System.out.println("💀 You have died! Game Over! Press any key to return to the main menu.");
