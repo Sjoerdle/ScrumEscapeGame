@@ -2,7 +2,6 @@ package org.game;
 
 import Vragen.QuestionLoader;
 import jokers.JokerManager;
-import org.w3c.dom.ls.LSOutput;
 import player.Speler;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class Game {
     private MovementValidator movementValidator;
     private final JokerManager jokerManager;
 
-
+    // Default constructor for new games
     public Game() {
         questionLoader = new QuestionLoader();
         gameState = new GameState();
@@ -27,13 +26,24 @@ public class Game {
         jokerManager = new JokerManager(gameState.getSpeler());
     }
 
+    // Constructor for loading saved games
+    public Game(GameState loadedGameState) {
+        questionLoader = new QuestionLoader();
+        gameState = loadedGameState;
+        gameRenderer = new GameRenderer(gameState);
+        movementValidator = new MovementValidator(gameState);
+        inputHandler = new InputHandler(gameState, gameRenderer, movementValidator);
+        jokerManager = new JokerManager(gameState.getSpeler());
+    }
+
     public void start() {
         System.out.println("Welcome to the Game!");
 
-
-        //asks for joker at start
-        if (jokerManager.askToUseJoker()) {
-            jokerManager.chooseAndAddJoker();
+        //asks for joker at start (only for new games, not loaded games)
+        if (gameState.getSpeler().getHp() == 100 && gameState.getSpeler().getDeathCount() == 0) {
+            if (jokerManager.askToUseJoker()) {
+                jokerManager.chooseAndAddJoker();
+            }
         }
 
         //shows the room
@@ -45,7 +55,6 @@ public class Game {
             ex.printStackTrace(System.out);
         }
     }
-
 
     public static void main(String[] args) {
         Game game = new Game();
