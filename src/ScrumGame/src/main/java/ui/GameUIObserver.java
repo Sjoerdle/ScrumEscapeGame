@@ -1,8 +1,10 @@
 package ui;
 
+import org.game.GameState;
 import org.game.InputHandler;
 import org.game.Main;
 import player.PlayerObserver;
+import player.Speler;
 
 import java.util.Scanner;
 
@@ -20,6 +22,12 @@ public class GameUIObserver implements PlayerObserver {
         }
 
         if (newHealth <= 0) {
+            // Get the current player and mark them as having died
+            Speler currentPlayer = GameState.getCurrentPlayer();
+            if (currentPlayer != null) {
+                currentPlayer.addDeath(1); // This will set hasDied to true
+            }
+
             System.out.println("💀 You have died! Game Over! Press any key to return to the main menu.");
             InputHandler.readSingleKey();
             Main.startScherm.start();

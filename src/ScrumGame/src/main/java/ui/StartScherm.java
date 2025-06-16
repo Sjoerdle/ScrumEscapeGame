@@ -1,6 +1,8 @@
 package ui;
 
 import org.game.Game;
+import org.game.GameState;
+import player.Speler;
 import audio.GeluidSpeler;
 
 import java.util.Scanner;
@@ -9,7 +11,6 @@ public class StartScherm {
     private Scanner scanner;
     private boolean running;
     public static GeluidSpeler speler;
-
 
     public StartScherm() {
         scanner = new Scanner(System.in);
@@ -28,7 +29,7 @@ public class StartScherm {
 
     private void displayMenu() {
         Console.clearConsole();
-        displayASCIIArt();
+        displayMenuWithDeathMessage();
         System.out.println("===============================================");
         System.out.println("Welkom bij de Scrum Escape Building game!");
         System.out.println("Kies een optie: ");
@@ -39,6 +40,74 @@ public class StartScherm {
         System.out.println("5. Afsluiten");
         System.out.println("===============================================");
         System.out.print("Jouw keuze: ");
+    }
+
+    private void displayMenuWithDeathMessage() {
+        String[] asciiLines = {
+                "███████╗███████╗ ██████╗ █████╗ ██████╗ ██╗███████╗███╗   ███╗",
+                "██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██║██╔════╝████╗ ████║",
+                "█████╗  ███████╗██║     ███████║██████╔╝██║███████╗██╔████╔██║",
+                "██╔══╝  ╚════██║██║     ██╔══██║██╔═══╝ ██║╚════██║██║╚██╔╝██║",
+                "███████╗███████║╚██████╗██║  ██║██║     ██║███████║██║ ╚═╝ ██║",
+                "╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝"
+        };
+
+        // Check if player has died
+        Speler currentPlayer = GameState.getCurrentPlayer();
+        boolean showDeathMessage = currentPlayer != null && currentPlayer.hasDied();
+
+        if (showDeathMessage) {
+            String[] deathMessages = {
+                    "💀 GAME OVER! 💀",
+                    "",
+                    "Je bent gestorven in het",
+                    "Scrum Escape Building!",
+                    "",
+                    "Deaths: " + currentPlayer.getDeathCount(),
+                    "",
+                    "Probeer het nog eens!"
+            };
+
+            // Calculate padding to center the death message
+            int maxWidth = 60; // Approximate width of ASCII art
+            int deathMessageWidth = 25; // Approximate width of death message
+            int padding = maxWidth - deathMessageWidth + 10;
+
+            // Display ASCII art with death message on the right
+            for (int i = 0; i < Math.max(asciiLines.length, deathMessages.length); i++) {
+                StringBuilder line = new StringBuilder();
+
+                // Add ASCII art if available
+                if (i < asciiLines.length) {
+                    line.append(asciiLines[i]);
+                } else {
+                    line.append(" ".repeat(asciiLines[0].length()));
+                }
+
+                // Add spacing
+                line.append(" ".repeat(5));
+
+                // Add death message if available
+                if (i < deathMessages.length) {
+                    if (i == 0) { // GAME OVER line - make it red/bold
+                        line.append("\u001B[31m\u001B[1m").append(deathMessages[i]).append("\u001B[0m");
+                    } else if (deathMessages[i].contains("Deaths:")) {
+                        line.append("\u001B[33m").append(deathMessages[i]).append("\u001B[0m"); // Yellow for death count
+                    } else {
+                        line.append(deathMessages[i]);
+                    }
+                }
+
+                System.out.println(line.toString());
+            }
+        } else {
+            // Display normal ASCII art
+            for (String line : asciiLines) {
+                System.out.println(line);
+            }
+        }
+
+        System.out.println();
     }
 
     private void displayASCIIArt() {
@@ -79,6 +148,13 @@ public class StartScherm {
 
     private void startGame() {
         System.out.println("\nGame wordt gestart...");
+
+        // Reset death status for new game
+        Speler currentPlayer = GameState.getCurrentPlayer();
+        if (currentPlayer != null) {
+            currentPlayer.resetDeathStatus();
+        }
+
         Game game = new Game();
         game.start();
         System.out.println("Druk op Enter om terug te gaan naar het menu.");
@@ -141,5 +217,4 @@ public class StartScherm {
         speler.stop();
         running = false;
     }
-
 }

@@ -15,6 +15,7 @@ public class Speler {
     int hp;
     int deathCount;
     int keyCount = 0;
+    private boolean hasDied = false; // NEW: Track if player has died this session
 
     // Flexibele inventory - kan alle soorten objecten bevatten
     private Map<String, Object> inventory = new HashMap<>();
@@ -31,6 +32,7 @@ public class Speler {
         this.Y = Y;
         this.hp = 100;
         this.deathCount = 0;
+        this.hasDied = false;
     }
 
     public String getNaam() {
@@ -70,6 +72,17 @@ public class Speler {
 
     public void addDeath(int deathCount) {
         this.deathCount += 1;
+        this.hasDied = true; // NEW: Mark that player has died
+    }
+
+    // NEW: Getter for death status
+    public boolean hasDied() {
+        return hasDied;
+    }
+
+    // NEW: Reset death status (for new games)
+    public void resetDeathStatus() {
+        this.hasDied = false;
     }
 
     public int getKeyCount() {
@@ -154,7 +167,11 @@ public class Speler {
 
     public void takeDamage() {
         this.hp -= 20;
-        if (this.hp < 0) this.hp = 0;
+        if (this.hp <= 0) {
+            this.hp = 0;
+            this.hasDied = true; // NEW: Mark death when HP reaches 0
+            addDeath(1); // This will also set hasDied to true
+        }
         notifyHealthChanged();
     }
 
