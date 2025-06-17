@@ -97,46 +97,6 @@ public class MonsterLoader {
     }
 
     /**
-     * Laadt alle monster bestanden uit een directory
-     *
-     * @param directoryPath Het pad naar de directory met monster bestanden
-     */
-    public void loadAllMonstersFromDirectory(String directoryPath) {
-        java.io.File directory = new java.io.File(directoryPath);
-
-        if (!directory.exists() || !directory.isDirectory()) {
-            System.err.println("Directory bestaat niet of is geen directory: " + directoryPath);
-            return;
-        }
-
-        java.io.File[] files = directory.listFiles();
-        if (files != null) {
-            for (java.io.File file : files) {
-                if (file.isFile() && file.getName().endsWith(".txt")) {
-                    loadMonsterFromFile(file.getAbsolutePath());
-                }
-            }
-        }
-    }
-
-    // Getter methoden voor de verschillende monster ArrayLists
-    public ArrayList<OpenMonster> getOpenMonsters() {
-        return openMonsters;
-    }
-
-    public ArrayList<MultiChoiceMonster> getMultiChoiceMonsters() {
-        return multiChoiceMonsters;
-    }
-
-    public ArrayList<PuzzleMonster> getPuzzleMonsters() {
-        return puzzleMonsters;
-    }
-
-    public ArrayList<MixMonster> getMixMonsters() {
-        return mixMonsters;
-    }
-
-    /**
      * Geeft alle monsters terug in één lijst
      */
     public ArrayList<Monster> getAllMonsters() {
@@ -148,18 +108,6 @@ public class MonsterLoader {
         Collections.shuffle(allMonsters); // Tijdelijke functie???
 
         return allMonsters;
-    }
-
-    /**
-     * Print informatie over alle geladen monsters
-     */
-    public void printMonsterInfo() {
-        System.out.println("=== Monster Loader Informatie ===");
-        System.out.println("Open Monsters: " + openMonsters.size());
-        System.out.println("Multiple Choice Monsters: " + multiChoiceMonsters.size());
-        System.out.println("Puzzle Monsters: " + puzzleMonsters.size());
-        System.out.println("Mix Monsters: " + mixMonsters.size());
-        System.out.println("Totaal aantal monsters: " + getAllMonsters().size());
     }
 
     public ArrayList<Monster> loadAllMonsters() {

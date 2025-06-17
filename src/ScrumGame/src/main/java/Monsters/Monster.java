@@ -66,33 +66,6 @@ public abstract class Monster {
         // 60% kans op niets (100% - 40% = 60%)
     }
 
-    // Deze methode is niet meer nodig voor de template, maar behouden voor compatibiliteit
-    protected boolean controleerAntwoord(String antwoord) {
-        return false;
-    }
-
-    // Deze methodes kunnen worden overschreven, maar hebben al een standaardimplementatie
-    protected String vraagAntwoord() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("val aan met je antwoord!: ");
-        return scanner.nextLine();
-    }
-
-    protected void toonResultaat(boolean isCorrect) {
-        if (isCorrect) {
-            System.out.println("je hebt de uitdaging gehaald!");
-            System.out.print("Ga door naar de volgende kamer");
-        } else {
-            System.out.println("Helaas je hebt gefaald..");
-            System.out.print("Maak je klaar voor het gevecht!");
-        }
-    }
-
-    protected void geefFeedback(boolean isCorrect) {
-        if (isCorrect ) return;
-        System.out.println("Probeer het nog eens. Hint: ...");
-    }
-
     public void toonAsciiArt(){
         if(asciiArt != null && !asciiArt.isEmpty()) {
             System.out.println(asciiArt);
