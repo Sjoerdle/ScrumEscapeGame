@@ -24,11 +24,13 @@ public abstract class Monster {
         this.scanner = new Scanner(System.in);
     }
 
-    // Template methode - nu met 3 stappen
+    // Template methode - nu met 3 stappen, maar giveReward alleen bij succes
     public final void monsterEncounter(Speler speler) {
         toonIntroductie();
-        geefOpdracht(speler);
-        giveReward(speler);
+        boolean isDefeated = geefOpdracht(speler);
+        if (isDefeated) {
+            giveReward(speler);
+        }
     }
 
     // Stap 1: Introductie tonen (kan worden overschreven)
@@ -39,9 +41,10 @@ public abstract class Monster {
     }
 
     // Stap 2: Deze methode MOET worden geïmplementeerd door elke subklasse
-    public abstract void geefOpdracht(Speler speler);
+    // Nu retourneert het een boolean om aan te geven of het monster is verslagen
+    public abstract boolean geefOpdracht(Speler speler);
 
-    // Stap 3: Encounter afronden (kan worden overschreven)
+    // Stap 3: Encounter afronden met beloningen (alleen bij succes)
     protected void giveReward(Speler speler) {
         // Willekeurige beloningen na het verslaan van een monster
         Random random = new Random();
@@ -98,7 +101,7 @@ public abstract class Monster {
         }
     }
 
-    protected void executeQuestionLoop(Speler speler, List<IQuestion> questionList) {
+    protected boolean executeQuestionLoop(Speler speler, List<IQuestion> questionList) {
         int correcteAntwoorden = 0;
         int pogingen = 0;
         final int MAX_POGINGEN = 3;
@@ -119,5 +122,8 @@ public abstract class Monster {
                 correcteAntwoorden++;
             }
         }
+
+        // Return true als het monster is verslagen (minimaal 1 correct antwoord)
+        return correcteAntwoorden >= 1;
     }
 }

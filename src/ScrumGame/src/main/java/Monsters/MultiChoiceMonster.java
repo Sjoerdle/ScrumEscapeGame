@@ -14,7 +14,7 @@ public class MultiChoiceMonster extends Monster {
     }
 
     @Override
-    public void geefOpdracht(Speler speler) {
-        executeQuestionLoop(speler, questions);
+    public boolean geefOpdracht(Speler speler) {
+        return executeQuestionLoop(speler, questions);
     }
 }

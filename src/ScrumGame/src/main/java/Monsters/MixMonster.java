@@ -16,7 +16,7 @@ public class MixMonster extends Monster {
     }
 
     @Override
-    public void geefOpdracht(Speler speler) {
+    public boolean geefOpdracht(Speler speler) {
         int correcteAntwoorden = 0;
         int pogingen = 0;
         final int MAX_POGINGEN = 3; // Voorkom oneindige lus
@@ -37,5 +37,8 @@ public class MixMonster extends Monster {
                 correcteAntwoorden++;
             }
         }
+
+        // Return true als het monster is verslagen (minimaal 1 correct antwoord)
+        return correcteAntwoorden >= 1;
     }
 }
