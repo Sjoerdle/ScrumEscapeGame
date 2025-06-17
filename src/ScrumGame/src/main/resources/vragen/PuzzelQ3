@@ -1,13 +1,13 @@
-definitie1=Teamcompetentie waarbij leden meerdere disciplines beheersen zodat zij zelfstandig waarde kunnen leveren
-definitie2=Eigenschap van een team dat zelf beslist hoe het werk wordt uitgevoerd zonder hiërarchische sturing
-definitie3=Visueel hulpmiddel waarop de status van werk in kolommen zoals “To Do, In Progress, Done” wordt bijgehouden
-definitie4=Alles wat de voortgang van het team belemmert en door de Scrum Master wordt geadresseerd
+definitie1=Een verhaal over wat een gebruiker wil kunnen doen
+definitie2=Schatting van hoe moeilijk een taak is om te doen
+definitie3=Het werkende product dat elke sprint wordt opgeleverd
+definitie4=Regels die bepalen wanneer iets echt klaar is
 
-term1=Cross-functional
-term2=Self-organizing
-term3=Scrum Board
-term4=Impediment
+term1=User Story
+term2=Story Points
+term3=Product Increment
+term4=Definition of Done
 
-helpHint=Cross-functional = verschillende vaardigheden, Self-organizing = zelf beslissen, Scrum Board = visueel bord, Impediment = obstakel.
+helpHint=User Story = wens van gebruiker, Story Points = moeilijkheidsgraad, Product Increment = werkend resultaat, Definition of Done = klaar-checklist.
 
-funnyHint=Cross-functional team kan alles, Self-organizing heeft geen baas nodig, Scrum Board is digitale post-its, Impediment blokkeert je sprint!
+funnyHint=User Story: "Als gebruiker wil ik...", Story Points: "Dit is zo moeilijk als...", Product Increment: wat je trots kunt laten zien, Definition of Done: geen "bijna klaar" meer!

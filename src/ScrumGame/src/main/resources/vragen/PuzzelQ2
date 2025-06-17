@@ -1,13 +1,13 @@
-definitie1=Bijeenkomst waarin het team en de Product Owner bepalen welke backlog-items in de komende sprint gaan
-definitie2=Terugkerende sessie waarin het team het proces evalueert en verbeter­acties kiest
-definitie3=Doorlopende activiteit waarin backlog-items worden verduidelijkt, gesplitst en ingeschat
-definitie4=Maximale vaste duur die een Scrum-event beschermt tegen uitlopen
+definitie1=Lijst met alle dingen die nog gebouwd moeten worden
+definitie2=Dagelijkse korte bijeenkomst om voortgang te bespreken
+definitie3=Bijeenkomst waar het gemaakte werk wordt getoond
+definitie4=Bijeenkomst waar het team kijkt hoe ze beter kunnen werken
 
-term1=Sprint Planning
-term2=Sprint Retrospective
-term3=Backlog Refinement
-term4=Time-box
+term1=Product Backlog
+term2=Daily Scrum
+term3=Sprint Review
+term4=Sprint Retrospective
 
-helpHint=Sprint Planning = plannen van de komende sprint, Sprint Retrospective = terugkijken en verbeteren, Backlog Refinement = backlog items verfijnen, Time-box = tijdslimiet.
+helpHint=Product Backlog = to-do lijst, Daily Scrum = dagelijkse check-in, Sprint Review = show and tell, Sprint Retrospective = verbeter-sessie.
 
-funnyHint=Sprint Planning: "Wat gaan we doen?", Sprint Retrospective: "Hoe ging het?", Backlog Refinement: backlog poetsen tot het glanst, Time-box: de wekker die Scrum meetings eindigt!
+funnyHint=Product Backlog: eindeloze boodschappenlijst, Daily Scrum: dagelijkse koffie-update, Sprint Review: talent-show, Sprint Retrospective: groepstherapie voor teams!

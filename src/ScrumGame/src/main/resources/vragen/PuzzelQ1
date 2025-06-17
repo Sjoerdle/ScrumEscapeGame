@@ -1,14 +1,13 @@
-definitie1=Grafiek die visueel toont hoeveel werk nog resteert gedurende een sprint
-definitie2=Gemiddeld aantal story-points dat een team per sprint oplevert
-definitie3=Voltooid productdeel dat aan het einde van de sprint potentieel releasable is
-definitie4=Checklist die bepaalt of een backlog-item genoeg detail heeft om in een sprint te worden opgepakt
+definitie1=Persoon die het team helpt door obstakels weg te nemen en Scrum goed toe te passen
+definitie2=Persoon die bepaalt wat er gebouwd wordt en de backlog beheert
+definitie3=Groep mensen die samen het product bouwt
+definitie4=Korte periode waarin het team werk plant en oplevert
 
-term1=Increment
-term2=Velocity
-term3=Burndown Chart
-term4=Definition of Ready
+term1=Scrum Master
+term2=Product Owner
+term3=Development Team
+term4=Sprint
 
-helpHint=Increment = werkend product, Velocity = snelheid van het team, Burndown Chart = grafiek van resterend werk, Definition of Ready = checklist voor backlog items.
+helpHint=Scrum Master = coach van het team, Product Owner = baas van de wensen, Development Team = de bouwers, Sprint = werkperiode.
 
-funnyHint=Increment: wat je kunt laten zien aan je baas, Velocity: hoe snel jullie team rent, Burndown Chart: de grafiek die hoopt naar beneden te gaan, Definition of Ready: "Is dit klaar om aan te beginnen?"
-
+funnyHint=Scrum Master: obstakel-verwijderaar, Product Owner: wishlist-manager, Development Team: code-wizards, Sprint: mini-marathon zonder zweten!
