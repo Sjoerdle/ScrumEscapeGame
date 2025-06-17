@@ -17,7 +17,6 @@ public class MixMonster extends Monster {
 
     @Override
     public void geefOpdracht(Speler speler) {
-        toonIntroductie();
         int correcteAntwoorden = 0;
         int pogingen = 0;
         final int MAX_POGINGEN = 3; // Voorkom oneindige lus
@@ -38,10 +37,5 @@ public class MixMonster extends Monster {
                 correcteAntwoorden++;
             }
         }
-    }
-
-    @Override
-    protected boolean controleerAntwoord(String antwoord){
-        return false;
     }
 }

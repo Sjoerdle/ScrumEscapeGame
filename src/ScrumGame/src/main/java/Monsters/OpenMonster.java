@@ -21,9 +21,4 @@ public class OpenMonster extends Monster {
     public void geefOpdracht(Speler speler) {
         executeQuestionLoop(speler, questions);
     }
-
-    @Override
-    protected boolean controleerAntwoord(String antwoord){
-        return false;
-    }
 }

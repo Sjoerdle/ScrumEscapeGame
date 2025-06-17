@@ -217,10 +217,10 @@ public class InputHandler {
                 }
             }
 
-            // Fight the monster
+            // Fight the monster - NU GEBRUIKEN WE DE TEMPLATE METHOD
             System.out.println("You encountered a monster and must fight!");
             Monster monster = gameState.getMonsterLoader().loadAllMonsters().getFirst();
-            monster.geefOpdracht(speler);
+            monster.doorLoopKamer(speler); // Gebruik de template method in plaats van geefOpdracht
 
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);

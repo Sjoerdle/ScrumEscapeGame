@@ -24,22 +24,22 @@ public abstract class Monster {
         this.scanner = new Scanner(System.in);
     }
 
+    // Template methode
     public final void doorLoopKamer(Speler speler) {
         toonIntroductie();
         geefOpdracht(speler);
-        String antwoord = vraagAntwoord();
-        boolean isCorrect = controleerAntwoord(antwoord);
-        toonResultaat(isCorrect);
-        geefFeedback(isCorrect);
+
     }
 
-    // Deze 3 methoden MOETEN worden geïmplementeerd door elke subklasse
-     public abstract void geefOpdracht(Speler speler);
-    protected abstract boolean controleerAntwoord(String antwoord);
+    // Deze methode MOET worden geïmplementeerd door elke subklasse
+    public abstract void geefOpdracht(Speler speler);
 
-    // Deze 3 methodes kunnen worden overschreven, maar hebben al een standaardimplementatie
-    // als je deze methodes wil wijzigen MOET je ze overriden anders worden deze methodes automatisch gebruikt
+    // Deze methode is niet meer nodig voor de template, maar behouden voor compatibiliteit
+    protected boolean controleerAntwoord(String antwoord) {
+        return false;
+    }
 
+    // Deze methodes kunnen worden overschreven, maar hebben al een standaardimplementatie
     protected String vraagAntwoord() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("val aan met je antwoord!: ");
@@ -67,7 +67,6 @@ public abstract class Monster {
         toonAsciiArt();
     }
 
-
     public void toonAsciiArt(){
         if(asciiArt != null && !asciiArt.isEmpty()) {
             System.out.println(asciiArt);
@@ -77,7 +76,6 @@ public abstract class Monster {
     }
 
     protected void executeQuestionLoop(Speler speler, List<IQuestion> questionList) {
-        toonIntroductie();
         int correcteAntwoorden = 0;
         int pogingen = 0;
         final int MAX_POGINGEN = 3;
@@ -99,5 +97,4 @@ public abstract class Monster {
             }
         }
     }
-
- }
+}
