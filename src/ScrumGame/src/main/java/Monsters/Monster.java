@@ -24,15 +24,44 @@ public abstract class Monster {
         this.scanner = new Scanner(System.in);
     }
 
-    // Template methode
-    public final void doorLoopKamer(Speler speler) {
+    // Template methode - nu met 3 stappen
+    public final void monsterEncounter(Speler speler) {
         toonIntroductie();
         geefOpdracht(speler);
-
+        giveReward(speler);
     }
 
-    // Deze methode MOET worden geïmplementeerd door elke subklasse
+    // Stap 1: Introductie tonen (kan worden overschreven)
+    protected void toonIntroductie() {
+        System.out.println("Je bent een monster tegengekomen!");
+        System.out.println("beantwoord de vragen om te ontsnappen!");
+        toonAsciiArt();
+    }
+
+    // Stap 2: Deze methode MOET worden geïmplementeerd door elke subklasse
     public abstract void geefOpdracht(Speler speler);
+
+    // Stap 3: Encounter afronden (kan worden overschreven)
+    protected void giveReward(Speler speler) {
+        // Willekeurige beloningen na het verslaan van een monster
+        Random random = new Random();
+        double chance = random.nextDouble();
+
+        if (chance < 0.05) {
+            // 5% kans op Skip Monster item
+            speler.addItem(new items.SkipMonster());
+            System.out.println("🎉 Zeldzame beloning! Je hebt een Scroll of Monster Evasion gevonden!");
+        } else if (chance < 0.15) {
+            // 10% kans op sleutel (5% + 10% = 15% totaal)
+            speler.addKey();
+            System.out.println("🗝️ Je hebt een sleutel gevonden in de resten van het monster!");
+        } else if (chance < 0.40) {
+            // 25% kans op health boost (15% + 25% = 40% totaal)
+            speler.heal(20);
+            System.out.println("❤️ Gelukkig! Je hebt 20 health teruggekregen na het verslaan van het monster!");
+        }
+        // 60% kans op niets (100% - 40% = 60%)
+    }
 
     // Deze methode is niet meer nodig voor de template, maar behouden voor compatibiliteit
     protected boolean controleerAntwoord(String antwoord) {
@@ -59,12 +88,6 @@ public abstract class Monster {
     protected void geefFeedback(boolean isCorrect) {
         if (isCorrect ) return;
         System.out.println("Probeer het nog eens. Hint: ...");
-    }
-
-    public void toonIntroductie() {
-        System.out.println("Je bent een monster tegengekomen!");
-        System.out.println("beantwoord de vragen om te ontsnappen!");
-        toonAsciiArt();
     }
 
     public void toonAsciiArt(){
