@@ -171,8 +171,9 @@ public class InputHandler {
             } else {
                 System.out.println("You've completed all rooms! Congratulations!");
 
-                // Save final completion state
-                SaveManager.saveGame(gameState);
+                // Mark player as won and delete save file
+                speler.setHasWon(true);
+                SaveManager.deleteSave();
 
                 return;
             }

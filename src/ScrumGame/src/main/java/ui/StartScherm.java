@@ -30,7 +30,7 @@ public class StartScherm {
 
     private void displayMenu() {
         Console.clearConsole();
-        displayMenuWithDeathMessage();
+        displayMenuWithStatusMessage();
         System.out.println("===============================================");
         System.out.println("Welkom bij de Scrum Escape Building game!");
         System.out.println("Kies een optie: ");
@@ -53,7 +53,7 @@ public class StartScherm {
         System.out.print("Jouw keuze: ");
     }
 
-    private void displayMenuWithDeathMessage() {
+    private void displayMenuWithStatusMessage() {
         String[] asciiLines = {
                 "███████╗███████╗ ██████╗ █████╗ ██████╗ ██╗███████╗███╗   ███╗",
                 "██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██║██╔════╝████╗ ████║",
@@ -63,11 +63,25 @@ public class StartScherm {
                 "╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝"
         };
 
-        // Check if player has died
+        // Check player status
         Speler currentPlayer = GameState.getCurrentPlayer();
         boolean showDeathMessage = currentPlayer != null && currentPlayer.hasDied();
+        boolean showWinMessage = currentPlayer != null && currentPlayer.hasWon();
 
-        if (showDeathMessage) {
+        if (showWinMessage) {
+            String[] winMessages = {
+                    "🎉 CONGRATULATIONS! 🎉",
+                    "",
+                    "Je hebt het",
+                    "Scrum Escape Building",
+                    "voltooid!",
+                    "",
+                    "Goed gedaan!"
+            };
+
+            // Display ASCII art with win message on the right
+            displayAsciiWithSideMessage(asciiLines, winMessages, true);
+        } else if (showDeathMessage) {
             String[] deathMessages = {
                     "💀 GAME OVER! 💀",
                     "",
@@ -77,36 +91,8 @@ public class StartScherm {
                     "Probeer het nog eens!"
             };
 
-            // Calculate padding to center the death message
-            int maxWidth = 60; // Approximate width of ASCII art
-            int deathMessageWidth = 25; // Approximate width of death message
-            int padding = maxWidth - deathMessageWidth + 10;
-
             // Display ASCII art with death message on the right
-            for (int i = 0; i < Math.max(asciiLines.length, deathMessages.length); i++) {
-                StringBuilder line = new StringBuilder();
-
-                // Add ASCII art if available
-                if (i < asciiLines.length) {
-                    line.append(asciiLines[i]);
-                } else {
-                    line.append(" ".repeat(asciiLines[0].length()));
-                }
-
-                // Add spacing
-                line.append(" ".repeat(5));
-
-                // Add death message if available
-                if (i < deathMessages.length) {
-                    if (i == 0) { // GAME OVER line - make it red/bold
-                        line.append("\u001B[31m\u001B[1m").append(deathMessages[i]).append("\u001B[0m");
-                    } else {
-                        line.append(deathMessages[i]);
-                    }
-                }
-
-                System.out.println(line.toString());
-            }
+            displayAsciiWithSideMessage(asciiLines, deathMessages, false);
         } else {
             // Display normal ASCII art
             for (String line : asciiLines) {
@@ -115,6 +101,38 @@ public class StartScherm {
         }
 
         System.out.println();
+    }
+
+    private void displayAsciiWithSideMessage(String[] asciiLines, String[] messages, boolean isWinMessage) {
+        // Display ASCII art with message on the right
+        for (int i = 0; i < Math.max(asciiLines.length, messages.length); i++) {
+            StringBuilder line = new StringBuilder();
+
+            // Add ASCII art if available
+            if (i < asciiLines.length) {
+                line.append(asciiLines[i]);
+            } else {
+                line.append(" ".repeat(asciiLines[0].length()));
+            }
+
+            // Add spacing
+            line.append(" ".repeat(5));
+
+            // Add message if available
+            if (i < messages.length) {
+                if (i == 0) { // First line - make it colored/bold
+                    if (isWinMessage) {
+                        line.append("\u001B[32m\u001B[1m").append(messages[i]).append("\u001B[0m"); // Green for win
+                    } else {
+                        line.append("\u001B[31m\u001B[1m").append(messages[i]).append("\u001B[0m"); // Red for death
+                    }
+                } else {
+                    line.append(messages[i]);
+                }
+            }
+
+            System.out.println(line.toString());
+        }
     }
 
     private void displayASCIIArt() {
@@ -186,10 +204,11 @@ public class StartScherm {
     private void startNewGame() {
         System.out.println("\nNieuw spel wordt gestart...");
 
-        // Reset death status for new game
+        // Reset both death and win status for new game
         Speler currentPlayer = GameState.getCurrentPlayer();
         if (currentPlayer != null) {
             currentPlayer.resetDeathStatus();
+            currentPlayer.resetWinStatus();
         }
 
         Game game = new Game();

@@ -16,6 +16,7 @@ public class Speler {
     int deathCount;
     int keyCount = 0;
     private boolean hasDied = false; // Track if player has died this session
+    private boolean hasWon = false; // Track if player has won this session
 
     // Flexibele inventory - kan alle soorten objecten bevatten
     private Map<String, Object> inventory = new HashMap<>();
@@ -33,6 +34,7 @@ public class Speler {
         this.hp = 100;
         this.deathCount = 0;
         this.hasDied = false;
+        this.hasWon = false;
     }
 
     public String getNaam() {
@@ -88,6 +90,21 @@ public class Speler {
     // Setter for death status (for GameUIObserver)
     public void setHasDied(boolean hasDied) {
         this.hasDied = hasDied;
+    }
+
+    // Getter for win status
+    public boolean hasWon() {
+        return hasWon;
+    }
+
+    // Setter for win status
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
+    }
+
+    // Reset win status (for new games)
+    public void resetWinStatus() {
+        this.hasWon = false;
     }
 
     public int getKeyCount() {
