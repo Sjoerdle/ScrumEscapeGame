@@ -54,16 +54,16 @@ public abstract class Monster {
             // 5% kans op Skip Monster item
             speler.addItem(new items.SkipMonster());
             System.out.println("🎉 Zeldzame beloning! Je hebt een Scroll of Monster Evasion gevonden!");
-        } else if (chance < 0.15) {
-            // 10% kans op sleutel (5% + 10% = 15% totaal)
+        } else if (chance < 0.08) {
+            // 3% kans op sleutel (5% + 3% = 8% totaal) - VERLAAGD VAN 10% NAAR 3%
             speler.addKey();
             System.out.println("🗝️ Je hebt een sleutel gevonden in de resten van het monster!");
-        } else if (chance < 0.40) {
-            // 25% kans op health boost (15% + 25% = 40% totaal)
+        } else if (chance < 0.18) {
+            // 25% kans op health boost (8% + 10% = 18% totaal)
             speler.heal(20);
             System.out.println("❤️ Gelukkig! Je hebt 20 health teruggekregen na het verslaan van het monster!");
         }
-        // 60% kans op niets (100% - 40% = 60%)
+        // 67% kans op niets (100% - 33% = 67%)
     }
 
     public void toonAsciiArt(){

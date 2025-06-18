@@ -233,10 +233,16 @@ public class InputHandler {
             currentRoom.getMap()[newY][newX] = ' ';
             speler.setLocation(newX, newY);
         } else if (destination == 'D') {
-            //Door, needs a key to open
-            message = "Je hebt een deur geopend!";
-            currentRoom.getMap()[newY][newX] = ' ';
-            speler.setLocation(newX, newY);
+            //Door, needs a key to open - FIX: Remove a key when opening door
+            if (speler.hasKey()) {
+                speler.removeKey(); // Remove one key from inventory
+                message = "Je hebt een deur geopend met een sleutel!";
+                currentRoom.getMap()[newY][newX] = ' ';
+                speler.setLocation(newX, newY);
+            } else {
+                // This shouldn't happen due to MovementValidator, but just in case
+                message = "Je hebt geen sleutel om deze deur te openen!";
+            }
         } else if (destination == 'H') {
             // Health potion pickup - aangepast voor ISP
             Object healthPotion = new HealthPotion();
