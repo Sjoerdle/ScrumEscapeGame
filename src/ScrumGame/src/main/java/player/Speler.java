@@ -15,8 +15,8 @@ public class Speler {
     int hp;
     int deathCount;
     int keyCount = 0;
-    private boolean hasDied = false; // Track if player has died this session
-    private boolean hasWon = false; // Track if player has won this session
+    private boolean hasDied; // Track if player has died this session
+    private boolean hasWon; // Track if player has won this session
 
     // Flexibele inventory - kan alle soorten objecten bevatten
     private Map<String, Object> inventory = new HashMap<>();
@@ -131,12 +131,6 @@ public class Speler {
         return this.keyCount > 0;
     }
 
-    // Score multiplier methods
-    public void activateScoreMultiplier(int multiplier, int durationSeconds) {
-        this.scoreMultiplier = multiplier;
-        this.scoreMultiplierEndTime = System.currentTimeMillis() + (durationSeconds * 1000L);
-    }
-
     public boolean hasActiveScoreMultiplier() {
         return System.currentTimeMillis() < scoreMultiplierEndTime;
     }
@@ -151,10 +145,6 @@ public class Speler {
     // Observer pattern methods
     public void addObserver(PlayerObserver observer) {
         observers.add(observer);
-    }
-
-    public void removeObserver(PlayerObserver observer) {
-        observers.remove(observer);
     }
 
     private void notifyHealthChanged() {

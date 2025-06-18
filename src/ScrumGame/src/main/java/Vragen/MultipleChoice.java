@@ -16,10 +16,6 @@ public class MultipleChoice implements IQuestion {
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
 
-    public MultipleChoice(String question, List<String> options, int correctAnswer) {
-        this(question, options, correctAnswer, "", "");
-    }
-
     public MultipleChoice(String question, List<String> options, int correctAnswer, String helpHint, String funnyHint) {
         this.question = question;
         this.options = options;

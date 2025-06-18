@@ -64,8 +64,4 @@ public class GameUIObserver implements PlayerObserver {
     public void onItemCollected(String itemName) {
         System.out.println("📦 Collected item: " + itemName);
     }
-
-    public void setDebugMode(boolean debugMode) {
-        this.debugMode = debugMode;
-    }
 }

@@ -135,16 +135,6 @@ public class StartScherm {
         }
     }
 
-    private void displayASCIIArt() {
-        System.out.println("███████╗███████╗ ██████╗ █████╗ ██████╗ ██╗███████╗███╗   ███╗");
-        System.out.println("██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██║██╔════╝████╗ ████║");
-        System.out.println("█████╗  ███████╗██║     ███████║██████╔╝██║███████╗██╔████╔██║");
-        System.out.println("██╔══╝  ╚════██║██║     ██╔══██║██╔═══╝ ██║╚════██║██║╚██╔╝██║");
-        System.out.println("███████╗███████║╚██████╗██║  ██║██║     ██║███████║██║ ╚═╝ ██║");
-        System.out.println("╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝");
-        System.out.println();
-    }
-
     private void handleUserInput() {
         String input = scanner.nextLine();
         boolean hasSaveFile = SaveManager.saveFileExists();

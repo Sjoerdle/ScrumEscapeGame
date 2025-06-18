@@ -16,34 +16,6 @@ public class JokerManager {
         this.scanner = new Scanner(System.in);
     }
 
-    public boolean hasJoker(Map<String, Object> inventory, String jokerName) {
-        return inventory.containsKey(jokerName) &&
-                inventory.get(jokerName) instanceof Joker;
-    }
-
-    public Joker getJoker(Map<String, Object> inventory, String jokerName) {
-        Object item = inventory.get(jokerName);
-        return (item instanceof Joker) ? (Joker) item : null;
-    }
-
-    public boolean canUseJoker(Joker joker) {
-        return joker != null && joker.getUsesLeft() > 0;
-    }
-
-    public void useJoker(Joker joker, Speler speler) {
-        if (joker != null && canUseJoker(joker)) {
-            joker.use(speler);
-            System.out.println("Joker gebruikt: " + joker.getName());
-        }
-    }
-
-    public List<Joker> getAvailableJokers(Map<String, Object> inventory) {
-        return inventory.values().stream()
-                .filter(item -> item instanceof Joker)
-                .map(item -> (Joker) item)
-                .collect(Collectors.toList());
-    }
-
     public void chooseAndAddJoker() {
         System.out.println("\nWelke joker wil je gebruiken?");
         System.out.println("1. Monster Joker (2x monster overslaan)");

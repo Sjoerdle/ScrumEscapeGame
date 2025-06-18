@@ -49,21 +49,8 @@ public class GameState {
         return console;
     }
 
-    public QuestionLoader getQuestionLoader() {
-        return questionLoader;
-    }
-
     public MonsterLoader getMonsterLoader() {
         return monsterLoader;
-    }
-
-    public GameUIObserver getUiObserver() {
-        return uiObserver;
-    }
-
-    // Method to toggle debug mode
-    public void toggleDebugMode() {
-        uiObserver.setDebugMode(!uiObserver.getClass().equals(GameUIObserver.class));
     }
 
     // NEW: Static method to get current player from anywhere
@@ -71,8 +58,4 @@ public class GameState {
         return currentPlayer;
     }
 
-    // NEW: Static method to set current player
-    public static void setCurrentPlayer(Speler player) {
-        currentPlayer = player;
     }
-}

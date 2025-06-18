@@ -14,10 +14,6 @@ public class OpenQuestion implements IQuestion {
     public boolean alGehad = false;
     public boolean goedBeantwoord = false;
 
-    public OpenQuestion(String question, String correctAnswer) {
-        this(question, correctAnswer, "", "");
-    }
-
     public OpenQuestion(String question, String correctAnswer, String helpHint, String funnyHint) {
         this.question = question;
         this.correctAnswer = correctAnswer.toLowerCase();

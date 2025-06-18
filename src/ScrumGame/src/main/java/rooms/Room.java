@@ -159,24 +159,12 @@ public class Room {
         return instruction;
     }
 
-    public void setInstruction(String instruction) {
-        this.instruction = instruction;
-    }
-
     public String getCurrentRoom() {
         return currentRoom;
     }
 
-    public void setCurrentRoom(String currentRoom) {
-        this.currentRoom = currentRoom;
-    }
-
     public String getNextRoom() {
         return nextRoom;
-    }
-
-    public void setNextRoom(String nextRoom) {
-        this.nextRoom = nextRoom;
     }
 
     public ArrayList<String> getMonsters() {
@@ -191,10 +179,6 @@ public class Room {
 
     public char[][] getMap() {
         return map;
-    }
-
-    public void setMap(char[][] map) {
-        this.map = map;
     }
 
     public int getMapWidth() {

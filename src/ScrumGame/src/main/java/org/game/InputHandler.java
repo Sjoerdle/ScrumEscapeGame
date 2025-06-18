@@ -267,20 +267,4 @@ public class InputHandler {
 
         gameRenderer.renderRoomFancy(message);
     }
-
-    private int getIntInput(int min, int max) {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            try {
-                System.out.print("\nVoer je keuze in (" + min + "-" + max + "): ");
-                int input = Integer.parseInt(scanner.nextLine().trim());
-                if (input >= min && input <= max) {
-                    return input;
-                }
-                System.out.println("Ongeldige keuze. Voer een getal in tussen " + min + " en " + max + ".");
-            } catch (NumberFormatException e) {
-                System.out.println("Voer alstublieft een geldig getal in.");
-            }
-        }
-    }
 }
